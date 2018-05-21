@@ -5,7 +5,6 @@ package Vista;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import Control.ProteccionCivil;
 import Modelo.Alerta;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,7 +38,7 @@ import javax.swing.JOptionPane;
 public class AlertasVista extends JFrame implements ActionListener, Observer{
     
     public static AlertasVista instancia = null;
-        
+    
     private MapaVista mapaVista;
     private OyenteVista oyenteVista;
     
@@ -337,7 +336,7 @@ public class AlertasVista extends JFrame implements ActionListener, Observer{
             String info = alerta.informacion();
             listaActivas.addElement(info);
             mapaVista.introducirMarcadores(alerta.getCoordenadas().verX(),
-                alerta.getCoordenadas().verY(), String.valueOf(alerta.getId()));
+                alerta.getCoordenadas().verY(), alerta.getId());
             mapaVista.introducirAlerta(alerta);
         }
         mapaVista.refrescar();
@@ -394,9 +393,6 @@ public class AlertasVista extends JFrame implements ActionListener, Observer{
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
             case MENU_ITEM_PLANES :
-                MenuPlanesProteccion menuPlanes = new MenuPlanesProteccion(oyenteVista);
-                menuPlanes.setVisible(true);
-                this.dispose();
                 break;
             case MENU_ITEM_RECURSOS :
                 break;    
@@ -437,6 +433,11 @@ public class AlertasVista extends JFrame implements ActionListener, Observer{
                     oyenteVista.notificacion(
                                 OyenteVista.Evento.ACTIVAR_PLAN, alerta);
                 }
+                mapaVista.eliminarAlerta(alerta);
+                alertasActivas.remove(alerta);
+                introducirAlertasActivasALista(alertasActivas);
+                mapaVista.actualizarMarcadores();
+                
                 /*oyenteVista.notificacion(
                                 OyenteVista.Evento.SELECCIONAR_ALERTA, null);*/
                 break;
