@@ -393,6 +393,9 @@ public class AlertasVista extends JFrame implements ActionListener, Observer{
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
             case MENU_ITEM_PLANES :
+                MenuPlanesProteccion menuPlanes = new MenuPlanesProteccion(oyenteVista);
+                menuPlanes.setVisible(true);
+                this.dispose();
                 break;
             case MENU_ITEM_RECURSOS :
                 break;    
