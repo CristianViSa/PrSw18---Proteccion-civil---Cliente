@@ -336,8 +336,8 @@ public class AlertasVista extends JFrame implements ActionListener, Observer{
             Alerta alerta = alertasActivas.get(indice);
             String info = alerta.informacion();
             listaActivas.addElement(info);
-            mapaVista.introducirMarcadores(alerta.verCoordenadas().verX(),
-                alerta.verCoordenadas().verY(), String.valueOf(alerta.getId()));
+            mapaVista.introducirMarcadores(alerta.getCoordenadas().verX(),
+                alerta.getCoordenadas().verY(), String.valueOf(alerta.getId()));
             mapaVista.introducirAlerta(alerta);
         }
         mapaVista.refrescar();

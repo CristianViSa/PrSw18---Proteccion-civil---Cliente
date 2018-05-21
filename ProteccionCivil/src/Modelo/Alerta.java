@@ -43,11 +43,11 @@ public class Alerta {
         this.afectados = afectados;
     }
     
-    public Coordenada verCoordenadas(){
+    public Coordenada getCoordenadas(){
         return coordenadas;
     }
     
-    public Emergencia verEmergencia(){
+    public Emergencia getEmergencia(){
         return emergencia;
     }
     
