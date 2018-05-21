@@ -16,6 +16,7 @@ public class VentanPrincipal extends javax.swing.JFrame {
      */
     public VentanPrincipal() {
         initComponents();
+        this.setVisible(true);
     }
 
     /**

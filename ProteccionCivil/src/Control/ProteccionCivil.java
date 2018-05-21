@@ -9,8 +9,8 @@ import Vista.OyenteVista;
 import Vista.AlertasVista;
 import Vista.MenuPlanesProteccion;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import Vista.VentanPrincipal;
 
 /**
  * Trabajo Proteccion Civil
@@ -19,7 +19,8 @@ import java.util.List;
  * @author Cristian, 702364
  */
 public class ProteccionCivil implements OyenteVista {
-    private AlertasVista vista;
+    private VentanPrincipal ventanaPrincipal;
+    private AlertasVista alertaVista;
     private List<Alerta> alertasActivas = new ArrayList<Alerta>(); 
     private Comms comunicaciones;
     private MenuPlanesProteccion menu;
@@ -28,10 +29,12 @@ public class ProteccionCivil implements OyenteVista {
     private List<Emergencia> emergencias;
     private List<Coordenada> coordenadas;
 
-    public ProteccionCivil(AlertasVista vista ) {
-        this.vista = vista;
+    public ProteccionCivil() {
+        this.ventanaPrincipal = new VentanPrincipal();
     }
+    /*
     public ProteccionCivil(){
+        
         vista = AlertasVista.instancia(this);
         comunicaciones = new Comms(5500);
         alertas = comunicaciones.solicitarHistorialDeAlertas();
@@ -42,7 +45,7 @@ public class ProteccionCivil implements OyenteVista {
 	planes.add(new PlanProteccion(this,"plan antiincendios - riesgo 2", 30,15, "Recoger y sacar a la población afectada en la zona"));
 	//emergencias.add(new Emergencia("antiincendios", 1, 3, planes.get(0)));
 	menu.addPlanes(planes);
-    }
+    }*/
     /**
      * @param args the command line arguments
      */
@@ -167,20 +170,20 @@ public class ProteccionCivil implements OyenteVista {
                 case HISTORIAL:
                     //TBD
                     buscarAlertasEnBD();
-                    vista.mostrarVentanaHistorial(alertas);
+                    alertaVista.mostrarVentanaHistorial(alertas);
                     
                     break;
                 case MENU_ITEM_ALERTAS:
                     //TBD
                     buscarAlertasActivasEnBD();
-                    vista.introducirAlertasActivasALista(alertasActivas);
+                    alertaVista.introducirAlertasActivasALista(alertasActivas);
                     break;
                 case ACTIVAR_PLAN:
                     // TBD
                     Alerta alerta = (Alerta)obj;
                     if(comunicaciones.
                             solicitarActivarPlanDeProteccion(String.valueOf(alerta.getId()))){
-                        vista.mensajeConfirmacionPlan(alerta);
+                        alertaVista.mensajeConfirmacionPlan(alerta);
                     }
                     break;
                 case ADD_PLAN:
