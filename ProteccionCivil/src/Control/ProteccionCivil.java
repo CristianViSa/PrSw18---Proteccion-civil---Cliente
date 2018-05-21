@@ -11,6 +11,7 @@ import Vista.MenuPlanesProteccion;
 import java.util.ArrayList;
 import java.util.List;
 import Vista.VentanPrincipal;
+import javax.swing.JPanel;
 
 /**
  * Trabajo Proteccion Civil
@@ -31,6 +32,7 @@ public class ProteccionCivil implements OyenteVista {
 
     public ProteccionCivil() {
         this.ventanaPrincipal = new VentanPrincipal();
+        comunicaciones = new Comms(5500);
     }
     /*
     public ProteccionCivil(){
@@ -157,6 +159,14 @@ public class ProteccionCivil implements OyenteVista {
     	}
     	return null;
     }
+    /**
+     * Carga el panel
+     */
+    public void cargarPanel(JPanel panel){
+        panel.setSize(ventanaPrincipal.getSize());
+        ventanaPrincipal.setContentPane(panel);
+        ventanaPrincipal.revalidate();
+    }
     
     /**
      * Sobreeescribe el metodo notificacion
@@ -175,8 +185,10 @@ public class ProteccionCivil implements OyenteVista {
                     break;
                 case MENU_ITEM_ALERTAS:
                     //TBD
-                    buscarAlertasActivasEnBD();
+                    alertas = comunicaciones.solicitarHistorialDeAlertas();
+                    alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
                     alertaVista.introducirAlertasActivasALista(alertasActivas);
+                    //cargarPanel(alertaVista);
                     break;
                 case ACTIVAR_PLAN:
                     // TBD
