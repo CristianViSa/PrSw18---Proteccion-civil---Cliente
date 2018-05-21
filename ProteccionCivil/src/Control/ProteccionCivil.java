@@ -31,7 +31,7 @@ public class ProteccionCivil implements OyenteVista {
     private List<Coordenada> coordenadas;
 
     public ProteccionCivil() {
-        this.ventanaPrincipal = new VentanPrincipal();
+        this.ventanaPrincipal = new VentanPrincipal(this);
         comunicaciones = new Comms(5500);
     }
     /*
