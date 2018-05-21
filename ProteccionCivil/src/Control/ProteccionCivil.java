@@ -42,6 +42,7 @@ public class ProteccionCivil implements OyenteVista {
 	planes.add(new PlanProteccion(this,"plan antiincendios - riesgo 2", 30,15, "Recoger y sacar a la población afectada en la zona"));
 	//emergencias.add(new Emergencia("antiincendios", 1, 3, planes.get(0)));
 	menu.addPlanes(planes);
+        System.out.println("HOLA");
     }
     /**
      * @param args the command line arguments
