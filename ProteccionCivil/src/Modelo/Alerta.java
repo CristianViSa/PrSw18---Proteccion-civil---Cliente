@@ -59,7 +59,7 @@ public class Alerta {
         return gestionada;
     }
     
-    public Date verFecha(){
+    public Date getFecha(){
         return fecha;
     }
     
@@ -67,7 +67,7 @@ public class Alerta {
         return activa;
     }
     
-    public int verAfectados(){
+    public int getAfectados(){
         return afectados;
     }
     
@@ -75,8 +75,8 @@ public class Alerta {
         return " Coordenadas:(" + coordenadas.verX() + ", " + coordenadas.verY() 
                 + ")\n" + " Emergencia: "+ emergencia.verTipo() +
                 " Nivel " + emergencia.verNivel() + " " + "\n" +
-                " Fecha: " + verFecha() + "\n" +
-                " Afectados: " + verAfectados()+ "\n" +
+                " Fecha: " + getFecha() + "\n" +
+                " Afectados: " + getAfectados()+ "\n" +
                 " Id: " + getId();
     }
     
@@ -86,9 +86,9 @@ public class Alerta {
                 ")\n" + " Emergencia: "+ emergencia.verTipo() + 
                 " Nivel " + emergencia.verNivel() + " " + "\n" +
                 " Gestionada: " + estaGestionada() + "\n" +
-                " Fecha: " + verFecha() + "\n" +
+                " Fecha: " + getFecha() + "\n" +
                 " Activa: " + estaActiva() + " \n" +
-                " Afectados: " + verAfectados();
+                " Afectados: " + getAfectados();
     }
     
 }
