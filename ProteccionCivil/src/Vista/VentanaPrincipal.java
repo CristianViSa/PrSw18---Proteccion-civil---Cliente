@@ -17,14 +17,32 @@ import javax.swing.JPanel;
 public class VentanaPrincipal extends javax.swing.JFrame implements ActionListener {
 
     private OyenteVista oyenteVista;
-    private JPanel panelAuxiliar;
     /**
      * Creates new form VentanPrincipal
      */
     public VentanaPrincipal(OyenteVista oyenteVista) {
         this.oyenteVista = oyenteVista; 
         initComponents();
-        panelAuxiliar = panelCentral;
+        
+        //Hacer que el frame reciba notificaciones del menú
+        jMenuItemAlbergues.addActionListener(this);
+        jMenuItemAlbergues.setActionCommand("Panel Albergues");
+        
+        jMenuItemAlmacenes.addActionListener(this);
+        jMenuItemMapaRecursos.addActionListener(this);
+        jMenuItemVehiculos.addActionListener(this);
+        jMenuItemVoluntarios.addActionListener(this);
+        
+        
+        jMenuItemIniciarSesion.addActionListener(this);
+        jMenuItemRegistrarse.addActionListener(this);
+        
+        jMenuItemAlertas.addActionListener(this);
+        jMenuItemAlertas.setActionCommand("MENU_ITEM_ALERTAS");
+        
+        
+          
+        
         this.setVisible(true);
     }
 
@@ -37,104 +55,115 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        label1 = new java.awt.Label();
         panelCentral = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jToolBar1 = new javax.swing.JToolBar();
-        inicio = new javax.swing.JButton();
-        planes = new javax.swing.JButton();
-        recursos = new javax.swing.JButton();
-        alertas = new javax.swing.JButton();
-        registro = new javax.swing.JButton();
-        inicioSesion = new javax.swing.JButton();
-
-        jMenuItem1.setText("jMenuItem1");
+        jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItemVoluntarios = new javax.swing.JMenuItem();
+        jMenuItemVehiculos = new javax.swing.JMenuItem();
+        jMenuItemAlmacenes = new javax.swing.JMenuItem();
+        jMenuItemAlbergues = new javax.swing.JMenuItem();
+        jMenuItemMapaRecursos = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItemAlertas = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItemIniciarSesion = new javax.swing.JMenuItem();
+        jMenuItemRegistrarse = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setExtendedState(MAXIMIZED_BOTH);
 
-        jButton5.setText("Registrarse");
+        panelCentral.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton6.setText("Iniciar sesion");
-
-        label1.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
-        label1.setText("PROTECCION CIVIL");
-
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Recursos/iconoTitulo.png"))); // NOI18N
-        jLabel2.setText("jLabel2");
 
         javax.swing.GroupLayout panelCentralLayout = new javax.swing.GroupLayout(panelCentral);
         panelCentral.setLayout(panelCentralLayout);
         panelCentralLayout.setHorizontalGroup(
             panelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCentralLayout.createSequentialGroup()
-                .addGap(264, 264, 264)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelCentralLayout.setVerticalGroup(
             panelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCentralLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jToolBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
+        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Protección Civil");
 
-        inicio.setText("Inicio");
-        inicio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        inicio.setFocusable(false);
-        inicio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        inicio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(inicio);
+        jMenu1.setText("Planes de Protección");
+        jMenu1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jMenuBar1.add(jMenu1);
 
-        planes.setText("Planes De Proteccion");
-        planes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        planes.setFocusable(false);
-        planes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        planes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(planes);
+        jMenu2.setText("Gestión de Recursos");
+        jMenu2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
 
-        recursos.setText("Gestion De Recursos");
-        recursos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        recursos.setFocusable(false);
-        recursos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        recursos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(recursos);
-
-        alertas.setText("Gestion De Alertas");
-        alertas.setActionCommand("MENU_ITEM_ALERTAS");
-        alertas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        alertas.setFocusable(false);
-        alertas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        alertas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        alertas.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemVoluntarios.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jMenuItemVoluntarios.setText("Voluntarios");
+        jMenuItemVoluntarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                alertasActionPerformed(evt);
+                jMenuItemVoluntariosActionPerformed(evt);
             }
         });
-        jToolBar1.add(alertas);
+        jMenu2.add(jMenuItemVoluntarios);
 
-        registro.setText("Registrarse");
-        registro.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        registro.setFocusable(false);
-        registro.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        registro.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(registro);
+        jMenuItemVehiculos.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jMenuItemVehiculos.setText("Vehículos");
+        jMenu2.add(jMenuItemVehiculos);
 
-        inicioSesion.setText("Iniciar Sesion");
-        inicioSesion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        inicioSesion.setFocusable(false);
-        inicioSesion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        inicioSesion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(inicioSesion);
+        jMenuItemAlmacenes.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jMenuItemAlmacenes.setText("Almacenes");
+        jMenu2.add(jMenuItemAlmacenes);
+
+        jMenuItemAlbergues.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jMenuItemAlbergues.setText("Albergues");
+        jMenu2.add(jMenuItemAlbergues);
+
+        jMenuItemMapaRecursos.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jMenuItemMapaRecursos.setText("Mapa");
+        jMenu2.add(jMenuItemMapaRecursos);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Gestión de Alertas");
+        jMenu3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+
+        jMenuItemAlertas.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jMenuItemAlertas.setText("Alertas");
+        jMenu3.add(jMenuItemAlertas);
+
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Usuario");
+        jMenu4.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+
+        jMenuItemIniciarSesion.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jMenuItemIniciarSesion.setText("Iniciar Sesión");
+        jMenu4.add(jMenuItemIniciarSesion);
+
+        jMenuItemRegistrarse.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jMenuItemRegistrarse.setText("Registrarse");
+        jMenuItemRegistrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRegistrarseActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItemRegistrarse);
+
+        jMenuBar1.add(jMenu4);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,27 +172,15 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelCentral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5))))
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelCentral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton5)
-                        .addComponent(jButton6))
-                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelCentral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -172,15 +189,17 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void alertasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alertasActionPerformed
-        notificacionAControl(evt.getActionCommand());
-    }//GEN-LAST:event_alertasActionPerformed
+    private void jMenuItemRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrarseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemRegistrarseActionPerformed
+
+    private void jMenuItemVoluntariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVoluntariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemVoluntariosActionPerformed
 
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e);
-        System.out.println("ACCION");
         notificacionAControl(e.getActionCommand());
     }
     
@@ -199,25 +218,28 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
        
       switch(evento) {
         case "MENU_ITEM_ALERTAS":
-            panelCentral.setBackground(Color.yellow);
+           
            oyenteVista.notificacion(OyenteVista.Evento.MENU_ITEM_ALERTAS, null);
            break;
         }
   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton alertas;
-    private javax.swing.JButton inicio;
-    private javax.swing.JButton inicioSesion;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JToolBar jToolBar1;
-    private java.awt.Label label1;
+    public javax.swing.JMenu jMenu1;
+    public javax.swing.JMenu jMenu2;
+    public javax.swing.JMenu jMenu3;
+    public javax.swing.JMenu jMenu4;
+    public javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemAlbergues;
+    private javax.swing.JMenuItem jMenuItemAlertas;
+    private javax.swing.JMenuItem jMenuItemAlmacenes;
+    private javax.swing.JMenuItem jMenuItemIniciarSesion;
+    private javax.swing.JMenuItem jMenuItemMapaRecursos;
+    private javax.swing.JMenuItem jMenuItemRegistrarse;
+    private javax.swing.JMenuItem jMenuItemVehiculos;
+    private javax.swing.JMenuItem jMenuItemVoluntarios;
     private javax.swing.JPanel panelCentral;
-    private javax.swing.JButton planes;
-    private javax.swing.JButton recursos;
-    private javax.swing.JButton registro;
     // End of variables declaration//GEN-END:variables
 }

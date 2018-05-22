@@ -10,11 +10,8 @@ import Vista.AlertasVista;
 import Vista.MenuPlanesProteccion;
 import java.util.ArrayList;
 import java.util.List;
-import Vista.VentanPrincipal;
 import Vista.VentanaPrincipal;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JFrame;
 
 /**
  * Trabajo Proteccion Civil
@@ -167,9 +164,8 @@ public class ProteccionCivil implements OyenteVista {
      * Carga el panel
      */
     public void cargarPanel(JPanel panel){
-        panel.setSize(ventanaPrincipal.getSize());
-        ventanaPrincipal.getPanelCentral().removeAll();
-        ventanaPrincipal.getPanelCentral().add(panel);
+        panel.setSize(ventanaPrincipal.getSize());       
+        ventanaPrincipal.setContentPane(panel);
         ventanaPrincipal.revalidate();
     }
     
@@ -191,9 +187,9 @@ public class ProteccionCivil implements OyenteVista {
                 case MENU_ITEM_ALERTAS:
                     //TBD
                     alertaVista = AlertasVista.instancia(this);
-                    alertas = comunicaciones.solicitarHistorialDeAlertas();
-                    alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
-                    alertaVista.introducirAlertasActivasALista(alertasActivas);
+                    //alertas = comunicaciones.solicitarHistorialDeAlertas();
+                    //alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
+                    //alertaVista.introducirAlertasActivasALista(alertasActivas);
 
                     cargarPanel(alertaVista);
                     break;
