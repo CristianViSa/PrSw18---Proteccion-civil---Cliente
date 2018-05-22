@@ -35,7 +35,7 @@ import javax.swing.JOptionPane;
  *
  * @author Cristian
  */
-public class AlertasVista extends JFrame implements ActionListener, Observer{
+public class AlertasVista extends JPanel implements ActionListener, Observer{
     
     public static AlertasVista instancia = null;
     
@@ -94,7 +94,7 @@ public class AlertasVista extends JFrame implements ActionListener, Observer{
                                                         "Seleccionar alerta";
     public static final String MENU_ITEM_SALIR = "Salir";
     protected AlertasVista(OyenteVista oyenteVista){
-        super(TITULO);
+//        super(TITULO);
         
         this.oyenteVista = oyenteVista;
         
@@ -146,12 +146,12 @@ public class AlertasVista extends JFrame implements ActionListener, Observer{
          */
         creaListas();
         
-        addWindowListener(new WindowAdapter() {
+/*        addWindowListener(new WindowAdapter() {
         @Override
         public void windowClosing(WindowEvent e) {
             oyenteVista.notificacion(OyenteVista.Evento.SALIR, null);
             }
-        });
+        });*/
 
         panelCentral.add(panelRegistro, BorderLayout.NORTH);
 
@@ -161,10 +161,10 @@ public class AlertasVista extends JFrame implements ActionListener, Observer{
         mapaVista = new MapaVista();
         panelCentral.add(mapaVista, BorderLayout.CENTER);
         
-        pack();
-        setExtendedState(MAXIMIZED_BOTH);
+//        pack();
+     //   setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);  
-        setLocationRelativeTo(null);
+       // setLocationRelativeTo(null);
     }
     public static synchronized AlertasVista instancia(OyenteVista oyenteVista){
     if (instancia == null)
@@ -395,7 +395,7 @@ public class AlertasVista extends JFrame implements ActionListener, Observer{
             case MENU_ITEM_PLANES :
                 MenuPlanesProteccion menuPlanes = new MenuPlanesProteccion(oyenteVista);
                 menuPlanes.setVisible(true);
-                this.dispose();
+//                this.dispose();
                 break;
             case MENU_ITEM_RECURSOS :
                 break;    

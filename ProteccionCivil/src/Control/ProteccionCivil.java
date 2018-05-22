@@ -11,7 +11,10 @@ import Vista.MenuPlanesProteccion;
 import java.util.ArrayList;
 import java.util.List;
 import Vista.VentanPrincipal;
+import Vista.VentanaPrincipal;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JFrame;
 
 /**
  * Trabajo Proteccion Civil
@@ -20,7 +23,7 @@ import javax.swing.JPanel;
  * @author Cristian, 702364
  */
 public class ProteccionCivil implements OyenteVista {
-    private VentanPrincipal ventanaPrincipal;
+    private VentanaPrincipal ventanaPrincipal;
     private AlertasVista alertaVista;
     private List<Alerta> alertasActivas = new ArrayList<Alerta>(); 
     private Comms comunicaciones;
@@ -31,8 +34,9 @@ public class ProteccionCivil implements OyenteVista {
     private List<Coordenada> coordenadas;
 
     public ProteccionCivil() {
-        this.ventanaPrincipal = new VentanPrincipal(this);
+        this.ventanaPrincipal = new VentanaPrincipal(this);
         comunicaciones = new Comms(5500);
+        
     }
     /*
     public ProteccionCivil(){
@@ -164,7 +168,8 @@ public class ProteccionCivil implements OyenteVista {
      */
     public void cargarPanel(JPanel panel){
         panel.setSize(ventanaPrincipal.getSize());
-        ventanaPrincipal.setContentPane(panel);
+        ventanaPrincipal.getPanelCentral().removeAll();
+        ventanaPrincipal.getPanelCentral().add(panel);
         ventanaPrincipal.revalidate();
     }
     
@@ -185,10 +190,12 @@ public class ProteccionCivil implements OyenteVista {
                     break;
                 case MENU_ITEM_ALERTAS:
                     //TBD
+                    alertaVista = AlertasVista.instancia(this);
                     alertas = comunicaciones.solicitarHistorialDeAlertas();
                     alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
                     alertaVista.introducirAlertasActivasALista(alertasActivas);
-                    //cargarPanel(alertaVista);
+
+                    cargarPanel(alertaVista);
                     break;
                 case ACTIVAR_PLAN:
                     // TBD
