@@ -59,15 +59,18 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
     private JScrollPane barra;
     private JScrollPane barraActivas;
     
-    private JPanel panelNorte;
     private JPanel panelSur;
-    private JPanel panelCentral;
-    private JPanel panelHistorial;
+    private JPanel panelListaHistorial;
     private JPanel panelBotonHistorial;
     private JPanel panelRegistro;
     private JPanel panelLista;
     private JPanel panelBotonesAlertas;
+    ////
+    private JPanel panelMapa;
+    private JPanel panelAlertas;
     
+    private JPanel aplicacionAlertas;
+    private JPanel aplicacionHistorial;
     
     private JButton menuPrincipal;
     private JButton historial;
@@ -94,77 +97,36 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
                                                         "Seleccionar alerta";
     public static final String MENU_ITEM_SALIR = "Salir";
     protected AlertasVista(OyenteVista oyenteVista){
-//        super(TITULO);
-        
+        this.setLayout(new BorderLayout());
         this.oyenteVista = oyenteVista;
         
-        panelNorte = new JPanel();
-        panelNorte.setLayout(new BorderLayout());
-        add(panelNorte, BorderLayout.NORTH);
-        creaBarraMenu(panelNorte);
+        aplicacionAlertas = new JPanel(new BorderLayout());
+        aplicacionHistorial = new JPanel(new FlowLayout());
         
-        panelCentral = new JPanel();
-        panelCentral.setLayout(new BorderLayout());
-        
-        panelCentral.setVisible(true);
-        add(panelCentral, BorderLayout.CENTER);
+        panelMapa = new JPanel(new FlowLayout());
+        panelAlertas = new JPanel(new BorderLayout());
+        panelSur = new JPanel(new FlowLayout());
 
-        panelHistorial = new JPanel();
-        panelHistorial.setLayout(new BorderLayout());
-        panelHistorial.setVisible(false);
+        panelListaHistorial = new JPanel(new BorderLayout());
+        panelBotonHistorial = new JPanel(new FlowLayout());
+     
+        panelLista = new JPanel(new FlowLayout());
+        panelBotonesAlertas = new JPanel(new BorderLayout());
         
-        panelBotonHistorial = new JPanel();
-        panelBotonHistorial.setLayout(new FlowLayout());
-        
-        
-        panelSur = new JPanel();
-        panelSur.setLayout(new BorderLayout());
-        add(panelSur, BorderLayout.SOUTH);
-        
-        panelRegistro = new JPanel();
-        panelRegistro.setLayout(new BorderLayout());
-
-        panelLista = new JPanel();
-        panelLista.setLayout(new BorderLayout());
-        
-        panelBotonesAlertas = new JPanel();
-        panelBotonesAlertas.setLayout(new FlowLayout());
-        
-        titulo = new JLabel(TITULO);
-        titulo.setFont(new java.awt.Font("Arial Black", 0, 32));
-        titulo.setPreferredSize(new Dimension(400, 100));
-        
-
-        panelRegistro.add(titulo, BorderLayout.WEST);
-        
-        /**
-         * Crea los botones
-         */
         creaBotones();
-        /**
-         * Crea las listas
-         */
         creaListas();
-        
-/*        addWindowListener(new WindowAdapter() {
-        @Override
-        public void windowClosing(WindowEvent e) {
-            oyenteVista.notificacion(OyenteVista.Evento.SALIR, null);
-            }
-        });*/
-
-        panelCentral.add(panelRegistro, BorderLayout.NORTH);
-
-        //panelCentral.add(titulo, BorderLayout.NORTH);
-        
-        //Crea el mapa
+ 
         mapaVista = new MapaVista();
-        panelCentral.add(mapaVista, BorderLayout.CENTER);
+        panelMapa.add(mapaVista);
         
-//        pack();
-     //   setExtendedState(MAXIMIZED_BOTH);
+        aplicacionAlertas.add(panelMapa, BorderLayout.EAST);
+        aplicacionAlertas.add(panelAlertas, BorderLayout.CENTER);
+        
+        aplicacionHistorial.add(panelListaHistorial);
+        
+        
+        add(aplicacionAlertas);
         setVisible(true);  
-       // setLocationRelativeTo(null);
     }
     public static synchronized AlertasVista instancia(OyenteVista oyenteVista){
     if (instancia == null)
@@ -206,6 +168,9 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
         
         panelBotonesAlertas.add(seleccionarAlerta, BorderLayout.WEST);
         panelBotonesAlertas.add(historial, BorderLayout.EAST);
+        
+        panelBotonHistorial.add(volverAtras);
+        panelListaHistorial.add(panelBotonHistorial, BorderLayout.SOUTH);
 
     }
     /**
@@ -226,16 +191,16 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
                 // No hace nada
             }
         } );
+        
         barraActivas = new JScrollPane(listaAlertasActivas);
-        barraActivas.setPreferredSize(new Dimension(700, 800));
+        barraActivas.setPreferredSize(new Dimension(600, 600));
         
         infoAlertas = new JLabel(TEXTO_ALERTAS);
-        
+       
         panelLista.add(infoAlertas, BorderLayout.NORTH);
         panelLista.add(barraActivas, BorderLayout.CENTER);
         panelLista.add(panelBotonesAlertas, BorderLayout.SOUTH);
-        
-        panelCentral.add(panelLista, BorderLayout.EAST);
+        panelAlertas.add(panelLista);
         
         /**
          * Crea la lista de alertas 
@@ -252,70 +217,9 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
             }
         } );
         barra = new JScrollPane(listaAlertas);
-        barra.setPreferredSize(new Dimension(1000, 1000));
-        panelHistorial.add(barra, BorderLayout.NORTH);
+        barra.setPreferredSize(new Dimension(1200, 620));
+        panelListaHistorial.add(barra, BorderLayout.CENTER);
     }
-    
-    /**
-     * Metodo empleado para cambiar el boton del panel sur
-     */
-    protected void cambiarBotonAlerta(){
-        //panelSur.removeAll();
-        panelBotonHistorial.remove(historial);
-        panelBotonHistorial.add(volverAtras);
-        panelSur.add(panelBotonHistorial);
-        repaint();
-    }
-    
-     /**
-     * Metodo empleado para cambiar el boton del panel sur
-     */
-    protected void cambiarBotonVolver(){
-        panelBotonHistorial.remove(volverAtras);
-        panelBotonesAlertas.add(historial);
-        repaint();
-    }
-    
-    /**
-     * Crea la barra de herramientas
-     */
-    protected void creaBarraMenu(JPanel panel){
-        JToolBar barra = new JToolBar();
-        barra.setFloatable(false);
-
-        menuPrincipal = new JButton(MENU_PRINCIPAL);
-        menuPrincipal.setToolTipText(MENU_PRINCIPAL);
-        menuPrincipal.setActionCommand(MENU_PRINCIPAL);
-        menuPrincipal.addActionListener(this);
-        menuPrincipal.setEnabled(true);
-        
-        planes = new JButton(MENU_ITEM_PLANES);
-        planes.setToolTipText(MENU_ITEM_PLANES);
-        planes.setActionCommand(MENU_ITEM_PLANES);
-        planes.addActionListener(this);
-        planes.setEnabled(true);
-        
-        
-        recursos = new JButton(MENU_ITEM_RECURSOS);
-        recursos.setToolTipText(MENU_ITEM_RECURSOS);
-        recursos.setActionCommand(MENU_ITEM_RECURSOS);
-        recursos.addActionListener(this);
-        recursos.setEnabled(true);
-
-        alertas = new JButton(MENU_ITEM_ALERTAS);
-        alertas.setToolTipText(MENU_ITEM_ALERTAS);
-        alertas.setActionCommand(MENU_ITEM_ALERTAS);
-        alertas.addActionListener(this);
-        alertas.setEnabled(true);
-        
-        barra.add(menuPrincipal);
-        barra.add(planes);
-        barra.add(recursos);
-        barra.add(alertas);
-        
-        panel.add(barra);
-    }
-    
     
     /**
      * Rellena la lista(Coleccion) con el historial y rellena la lista(JList)
@@ -341,6 +245,7 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
         }
         mapaVista.refrescar();
     }
+    
      /**
      * Introduce un elemento a la lista de alertas
      */
@@ -365,6 +270,7 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
         } 
         return null;
     }
+    
     /**
      * Busca una alerta en la lista de alertas activas
      */
@@ -378,6 +284,15 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
         return null;
     }
       
+    /**
+     * Pone el panel con el mapa y la lista de alertas
+     */  
+    public void ponerPanelAlertas(){
+        removeAll();
+        add(aplicacionAlertas);
+    }
+        
+    
     /**
      * Muestra un mensaje de confirmacion, resultado de activar un plan
      */
@@ -407,19 +322,15 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
                 oyenteVista.notificacion(OyenteVista.Evento.SALIR, null);
                 break;
             case BOTON_HISTORIAL :
-                panelCentral.setVisible(false);
-                this.remove(panelCentral);
-                panelHistorial.setVisible(true);
-                add(panelHistorial);
-                cambiarBotonAlerta();
+                remove(aplicacionAlertas);
+                add(aplicacionHistorial);
+                revalidate();
                 oyenteVista.notificacion(OyenteVista.Evento.HISTORIAL, null);
                 break;
             case VOLVER_ATRAS :
-                panelHistorial.setVisible(false);
-                this.remove(panelHistorial);
-                panelCentral.setVisible(true);
-                add(panelCentral);
-                cambiarBotonVolver();
+                remove(aplicacionHistorial);
+                add(aplicacionAlertas);
+                repaint();
                 oyenteVista.notificacion(
                                 OyenteVista.Evento.MENU_ITEM_ALERTAS, null);
                 break;
@@ -440,9 +351,7 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
                 alertasActivas.remove(alerta);
                 introducirAlertasActivasALista(alertasActivas);
                 mapaVista.actualizarMarcadores();
-                
-                /*oyenteVista.notificacion(
-                                OyenteVista.Evento.SELECCIONAR_ALERTA, null);*/
+
                 break;
         }        
     }
