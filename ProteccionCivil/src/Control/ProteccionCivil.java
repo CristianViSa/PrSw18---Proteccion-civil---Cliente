@@ -182,15 +182,15 @@ public class ProteccionCivil implements OyenteVista {
                     //TBD
                     buscarAlertasEnBD();
                     alertaVista.mostrarVentanaHistorial(alertas);
-                    
+                    cargarPanel(alertaVista);
                     break;
                 case MENU_ITEM_ALERTAS:
                     //TBD
                     alertaVista = AlertasVista.instancia(this);
-                    //alertas = comunicaciones.solicitarHistorialDeAlertas();
-                    //alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
-                    //alertaVista.introducirAlertasActivasALista(alertasActivas);
-
+                    alertas = comunicaciones.solicitarHistorialDeAlertas();
+                    alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
+                    alertaVista.introducirAlertasActivasALista(alertasActivas);
+                    alertaVista.ponerPanelAlertas();
                     cargarPanel(alertaVista);
                     break;
                 case ACTIVAR_PLAN:
