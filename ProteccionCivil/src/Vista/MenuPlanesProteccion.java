@@ -38,16 +38,16 @@ import javax.swing.SwingConstants;
  * @version P01 - 15/4/18
  */
 
-public class MenuPlanesProteccion extends JFrame implements ActionListener, Observer, ListSelectionListener {
+public class MenuPlanesProteccion extends JPanel implements ActionListener, Observer, ListSelectionListener {
 	
-	private JPanel contentPane;
+	//private JPanel contentPane;
 	private JTextField txtProteccinCivil;
 	private OyenteVista oyenteVista;
 	private List<PlanProteccion> planes;
 	private DefaultListModel<String> listaPlanes;
 	private JList lista;
 	private JTextPane textPane;
-	private final OyenteVista pCivil;
+	//private final OyenteVista pCivil;
 	private PlanProteccion selectedPlan;
 	
 	public static final String BTN_MENU_PLANES= "Menu Planes";
@@ -72,43 +72,43 @@ public class MenuPlanesProteccion extends JFrame implements ActionListener, Obse
 	/**
 	 * Crea el frame
 	 */
-	public MenuPlanesProteccion(OyenteVista pCivil) {
-		this.pCivil = pCivil;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public MenuPlanesProteccion(OyenteVista oyenteVista) {
+		this.oyenteVista = oyenteVista;
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 732, 498);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		//this = new JPanel();
+		this.setBorder(new EmptyBorder(5, 5, 5, 5));
+		//setContentPane(this);
+		this.setLayout(new BorderLayout(0, 0));
 		
-		JToolBar toolbar_subsistemas = new JToolBar();
-		toolbar_subsistemas.setFloatable(false);
-		contentPane.add(toolbar_subsistemas, BorderLayout.NORTH);
-		
-		JButton button_menu_principal = new JButton(" Menu Principal ");
-		button_menu_principal.setActionCommand(BTN_MENU_PLANES);
-		button_menu_principal.addActionListener(this);
-		
-		toolbar_subsistemas.add(button_menu_principal);
-		
-		JButton button_planes_proteccion = new JButton(" Planes de Protecci\u00F3n ");
-		button_planes_proteccion.setEnabled(false);
-		toolbar_subsistemas.add(button_planes_proteccion);
-		
-		JButton button_emergencias_alertas = new JButton(" Gesti\u00F3n de emergencias y alertas ");
-		button_emergencias_alertas.setActionCommand(BTN_MENU_EMERGENCIAS);
-		button_emergencias_alertas.addActionListener(this);
-		toolbar_subsistemas.add(button_emergencias_alertas);
-		
-		JButton button_reursos_medios = new JButton(" Recursos y medios ");
-		button_reursos_medios.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		toolbar_subsistemas.add(button_reursos_medios);
-		
+//		JToolBar toolbar_subsistemas = new JToolBar();
+//		toolbar_subsistemas.setFloatable(false);
+//		this.add(toolbar_subsistemas, BorderLayout.NORTH);
+//		
+//		JButton button_menu_principal = new JButton(" Menu Principal ");
+//		button_menu_principal.setActionCommand(BTN_MENU_PLANES);
+//		button_menu_principal.addActionListener(this);
+//		
+//		toolbar_subsistemas.add(button_menu_principal);
+//		
+//		JButton button_planes_proteccion = new JButton(" Planes de Protecci\u00F3n ");
+//		button_planes_proteccion.setEnabled(false);
+//		toolbar_subsistemas.add(button_planes_proteccion);
+//		
+//		JButton button_emergencias_alertas = new JButton(" Gesti\u00F3n de emergencias y alertas ");
+//		button_emergencias_alertas.setActionCommand(BTN_MENU_EMERGENCIAS);
+//		button_emergencias_alertas.addActionListener(this);
+//		toolbar_subsistemas.add(button_emergencias_alertas);
+//		
+//		JButton button_reursos_medios = new JButton(" Recursos y medios ");
+//		button_reursos_medios.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//			}
+//		});
+//		toolbar_subsistemas.add(button_reursos_medios);
+//		
 		JPanel panel_gestion_planes = new JPanel();
-		contentPane.add(panel_gestion_planes, BorderLayout.SOUTH);
+		this.add(panel_gestion_planes, BorderLayout.SOUTH);
 		panel_gestion_planes.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton button_anadir_plan = new JButton("A\u00F1adir Plan protecci\u00F3n");
@@ -124,7 +124,7 @@ public class MenuPlanesProteccion extends JFrame implements ActionListener, Obse
 		panel_gestion_planes.add(button_eliminar_plan);
 		
 		JPanel panel_principal = new JPanel();
-		contentPane.add(panel_principal, BorderLayout.CENTER);
+		this.add(panel_principal, BorderLayout.CENTER);
 		panel_principal.setLayout(new BorderLayout(0, 0));
 		
 		JSplitPane splitPane = new JSplitPane();
@@ -160,12 +160,12 @@ public class MenuPlanesProteccion extends JFrame implements ActionListener, Obse
 	}
 	
 	public void addPlan() {
-		MenuAddPlan frame = new MenuAddPlan(pCivil);
+		MenuAddPlan frame = new MenuAddPlan(oyenteVista);
 		frame.setVisible(true);
 	}
 	
 	public void modPlan() {
-		MenuModPlan frame = new MenuModPlan(pCivil, selectedPlan);
+		MenuModPlan frame = new MenuModPlan(oyenteVista, selectedPlan);
 		frame.setVisible(true);
 		//MenuAddPlan frame = new MenuAddPlan(pCivil);
 		//frame.setVisible(true);
@@ -173,7 +173,7 @@ public class MenuPlanesProteccion extends JFrame implements ActionListener, Obse
 	
 	public void eliminarPlan() {
 		System.out.println("eliminarPlan");
-		VentanaConfirmarEliminar jDialog = new VentanaConfirmarEliminar(pCivil, selectedPlan);
+		VentanaConfirmarEliminar jDialog = new VentanaConfirmarEliminar(oyenteVista, selectedPlan);
 		jDialog.setVisible(true);
 		//MenuAddPlan frame = new MenuAddPlan(pCivil);
 		//frame.setVisible(true);
@@ -216,11 +216,11 @@ public class MenuPlanesProteccion extends JFrame implements ActionListener, Obse
 			break;
 		case BTN_MENU_EMERGENCIAS:
 			System.out.println("menu emergencias");
-                        AlertasVista menuAlertas = new AlertasVista(pCivil);
+                        AlertasVista menuAlertas = new AlertasVista(oyenteVista);
 			//MenuEmergenciasAlertas menuEmer = new MenuEmergenciasAlertas(pCivil);
 			//menuEmer.setVisible(true);
 			//oyenteVista.notificacion(OyenteVista.Evento.BTN_MAIN_MENU, null);
-			this.dispose();
+			//this.dispose();
 			break;
 		}
 	}
