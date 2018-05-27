@@ -1,6 +1,6 @@
 package Control;
 
-
+import Modelo.Mensaje;
 import Modelo.Coordenada;
 import Modelo.Emergencia;
 import Modelo.Alerta;
@@ -11,6 +11,8 @@ import Vista.MenuPlanesProteccion;
 import java.util.ArrayList;
 import java.util.List;
 import Vista.VentanaPrincipal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
@@ -76,7 +78,7 @@ public class ProteccionCivil implements OyenteVista {
       /**
      * Busca las alertas  activas y no gestionadas en la BD del servidor
      */
-    public void buscarAlertasActivasEnBD(){
+    public void buscarAlertasActivasEnBD() throws ClassNotFoundException{
         // TBD
         alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
     }
@@ -188,7 +190,13 @@ public class ProteccionCivil implements OyenteVista {
                     //TBD
                     alertaVista = AlertasVista.instancia(this);
                     alertas = comunicaciones.solicitarHistorialDeAlertas();
-                    alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
+                    {
+                        try {
+                            alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(ProteccionCivil.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                     alertaVista.introducirAlertasActivasALista(alertasActivas);
                     alertaVista.ponerPanelAlertas();
                     cargarPanel(alertaVista);

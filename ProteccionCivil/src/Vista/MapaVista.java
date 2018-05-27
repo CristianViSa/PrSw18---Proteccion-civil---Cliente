@@ -132,7 +132,7 @@ public class MapaVista extends JLabel{
         
         if(conexion){
             ImageIcon icon = new ImageIcon(bytes);
-            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(700, 700, 0));
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(500, 670, 0));
             setIcon(icono);  
         }
     }

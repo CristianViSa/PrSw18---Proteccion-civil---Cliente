@@ -5,15 +5,17 @@
  */
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Cristian
  */
-public class Mensaje {
-    private String operacion;
+public class Mensaje implements Serializable {
+    private Operacion operacion;
     private String parametros;
     
-    public Mensaje(String operacion, String parametros){    
+    public Mensaje(Operacion operacion, String parametros){    
         ponerParametros(parametros);
         ponerOperacion(operacion);
     }
@@ -25,7 +27,7 @@ public class Mensaje {
     /*
     ** Setter
     */
-    public void ponerOperacion(String operacion){
+    public void ponerOperacion(Operacion operacion){
         this.operacion = operacion;
     }
     
@@ -48,7 +50,14 @@ public class Mensaje {
     /**
      * Getter
      */
-    public String verOperacion(){
+    public Operacion verOperacion(){
         return operacion;
+    }
+    
+    /**
+     * Añade un parametro a los parametros
+     */
+    public void anadirParametro(String parametro){
+        parametros += "," + parametro;
     }
 }

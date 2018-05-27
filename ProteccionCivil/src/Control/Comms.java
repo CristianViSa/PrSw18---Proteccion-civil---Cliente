@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ConnectException;
@@ -32,60 +34,73 @@ import java.util.logging.Logger;
  */
 public class Comms {
     private Socket socket;
-    private static final int puerto = 5500;
+    private int puerto;
+    private String ip;
     private static final String ipServidor = "localhost";
     
     private static final String ACTIVAR_PLAN = "ACTIVARPLAN";
     private static final String ALERTAS_MAPA = "ALERTASMAPA";
     private static final String HISTORIAL_ALERTAS = "HISTORIALALERTAS";
 
+    ObjectOutputStream salida;
+    ObjectInputStream entrada;
     
     List<Alerta> alertas;
     
     public Comms(int puerto){
+        socket = null;
+        this.puerto = puerto;
+        ip = "localhost";
     }
 
 
     /**
      * Solicita las alertas no gestionadas a la BD del servidor
      */
-    public synchronized List<Alerta>  solicitarMapaAlertasNoGestionadas (){
+    public synchronized List<Alerta>  solicitarMapaAlertasNoGestionadas () throws ClassNotFoundException{
         try {
             // TBD
-            socket = new Socket(ipServidor, puerto);
-            BufferedReader entrada = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-            PrintWriter salida = new PrintWriter(new BufferedWriter(
-                 new OutputStreamWriter(socket.getOutputStream())), true);
-
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+ 
             alertas = new ArrayList<Alerta>();
-            salida.println(ALERTAS_MAPA);
             alertas.clear();
-            try {
-                int cantidadAlertas = Integer.parseInt(entrada.readLine());
-                for(int i = 0;i < cantidadAlertas; i++){
-                    int id = Integer.parseInt(entrada.readLine());
+            
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.ALERTAS_MAPA); 
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String parametros = mensajeRX.verParametros();
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            int numAlertas = Integer.parseInt(tokens[0]);
+            int longitudParametros = 10;
+            int posicion;
+            for(int i = 0; i < numAlertas; i++){
+                posicion = i*longitudParametros;
+                int id = Integer.parseInt(tokens[1+posicion]);
 
-                    String tipoEmergencia = entrada.readLine();
-                    int nivelEmergencia = 
-                            Integer.parseInt(entrada.readLine());
-                    int x = Integer.parseInt(entrada.readLine());
-                    int y = Integer.parseInt(entrada.readLine());
-                    Coordenada coordenadas = new Coordenada(x, y);
-                    int afectados = Integer.parseInt(entrada.readLine());
-                    boolean activada = Boolean.parseBoolean(entrada.readLine());
-                    int dia = Integer.parseInt(entrada.readLine());
-                    int mes = Integer.parseInt(entrada.readLine());
-                    int anio = Integer.parseInt(entrada.readLine());
-                    Date fecha = new Date(anio, mes, dia);
-                    Emergencia emergencia = new Emergencia(tipoEmergencia, nivelEmergencia);
-                    Alerta alerta = new Alerta(coordenadas, emergencia, id, false, fecha,
-                        activada, afectados);
-                    alertas.add(alerta);
+                String tipoEmergencia = tokens[2+posicion];
+                int nivelEmergencia = 
+                        Integer.parseInt(tokens[3+posicion]);
+                int x = Integer.parseInt(tokens[4+posicion]);
+                int y = Integer.parseInt(tokens[5+posicion]);
+                Coordenada coordenadas = new Coordenada(x, y);
+                int afectados = Integer.parseInt(tokens[6+posicion]);
+                boolean activada = Boolean.parseBoolean(tokens[7+posicion]);
+                int dia = Integer.parseInt(tokens[8+posicion]);
+                int mes = Integer.parseInt(tokens[9+posicion]);
+                int anio = Integer.parseInt(tokens[10+posicion]);
+                Date fecha = new Date(anio, mes, dia);
+                Emergencia emergencia = new Emergencia(tipoEmergencia, nivelEmergencia);
+                Alerta alerta = new Alerta(coordenadas, emergencia, id, false, fecha,
+                    activada, afectados);
+                alertas.add(alerta);    
             }
-            } catch (IOException ex) {
-                Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        socket.close();
         } catch (IOException ex) {
             Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -97,20 +112,33 @@ public class Comms {
      */
     public synchronized boolean solicitarActivarPlanDeProteccion(String id){
         try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            alertas = new ArrayList<Alerta>();
+            alertas.clear();
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.ACTIVAR_PLAN); 
+            salida.writeObject(mensajeTX);
             
-            socket = new Socket(ipServidor, puerto);
-            BufferedReader entrada = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-            PrintWriter salida = new PrintWriter(new BufferedWriter(
-                    new OutputStreamWriter(socket.getOutputStream())), true);
-            salida.println(ACTIVAR_PLAN);
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
             
-            Boolean respuesta = Boolean.parseBoolean(entrada.readLine());
-            return respuesta;
+            String parametros = mensajeRX.verParametros();
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
             
-    } catch (IOException ex) {
-        Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
-    }
+            if(tokens[0] == "true"){
+                socket.close();
+                return true;
+            }  
+            socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
         return false;
     }
     
@@ -119,42 +147,51 @@ public class Comms {
      */
     public synchronized List<Alerta> solicitarHistorialDeAlertas(){
         try {
-            socket = new Socket(ipServidor, puerto);
-            BufferedReader entrada = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-            PrintWriter salida = new PrintWriter(new BufferedWriter(
-                    new OutputStreamWriter(socket.getOutputStream())), true);
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
             alertas = new ArrayList<Alerta>();
-            salida.println(HISTORIAL_ALERTAS);
             alertas.clear();
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.HISTORIAL_ALERTAS); 
+            salida.writeObject(mensajeTX);
             
-            try {
-                int cantidadAlertas = Integer.parseInt(entrada.readLine());
-                for(int i = 0;i < cantidadAlertas; i++){
-                    int id = Integer.parseInt(entrada.readLine());
-                    
-                    String tipoEmergencia = entrada.readLine();
-                    int nivelEmergencia =
-                            Integer.parseInt(entrada.readLine());
-                    int x = Integer.parseInt(entrada.readLine());
-                    int y = Integer.parseInt(entrada.readLine());
-                    Coordenada coordenadas = new Coordenada(x, y);
-                    int afectados = Integer.parseInt(entrada.readLine());
-                    boolean activada = Boolean.parseBoolean(entrada.readLine());
-                    int dia = Integer.parseInt(entrada.readLine());
-                    int mes = Integer.parseInt(entrada.readLine());
-                    int anio = Integer.parseInt(entrada.readLine());
-                    Date fecha = new Date(anio, mes, dia);
-                    Emergencia emergencia = new Emergencia(tipoEmergencia, nivelEmergencia);
-                    Alerta alerta = new Alerta(coordenadas, emergencia, id, false, fecha,
-                            activada, afectados);
-                    alertas.add(alerta);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String parametros = mensajeRX.verParametros();
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            int numAlertas = Integer.parseInt(tokens[0]);
+            int longitudParametros = 10;
+            int posicion;
+            for(int i = 0; i < numAlertas; i++){
+                posicion = i*longitudParametros;
+                int id = Integer.parseInt(tokens[1+posicion]);
+
+                String tipoEmergencia = tokens[2+posicion];
+                int nivelEmergencia = 
+                        Integer.parseInt(tokens[3+posicion]);
+                int x = Integer.parseInt(tokens[4+posicion]);
+                int y = Integer.parseInt(tokens[5+posicion]);
+                Coordenada coordenadas = new Coordenada(x, y);
+                int afectados = Integer.parseInt(tokens[6+posicion]);
+                boolean activada = Boolean.parseBoolean(tokens[7+posicion]);
+                int dia = Integer.parseInt(tokens[8+posicion]);
+                int mes = Integer.parseInt(tokens[9+posicion]);
+                int anio = Integer.parseInt(tokens[10+posicion]);
+                Date fecha = new Date(anio, mes, dia);
+                Emergencia emergencia = new Emergencia(tipoEmergencia, nivelEmergencia);
+                Alerta alerta = new Alerta(coordenadas, emergencia, id, false, fecha,
+                    activada, afectados);
+                alertas.add(alerta);    
             }
+            socket.close();
         } catch (IOException ex) {
-            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
         return alertas;
     }

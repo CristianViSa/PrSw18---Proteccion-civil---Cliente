@@ -193,7 +193,7 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
         } );
         
         barraActivas = new JScrollPane(listaAlertasActivas);
-        barraActivas.setPreferredSize(new Dimension(600, 600));
+        barraActivas.setPreferredSize(new Dimension(500, 600));
         
         infoAlertas = new JLabel(TEXTO_ALERTAS);
        
@@ -217,7 +217,7 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
             }
         } );
         barra = new JScrollPane(listaAlertas);
-        barra.setPreferredSize(new Dimension(1200, 620));
+        barra.setPreferredSize(new Dimension(900, 620));
         panelListaHistorial.add(barra, BorderLayout.CENTER);
     }
     
@@ -272,7 +272,50 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
     }
     
     /**
-     * Busca una alerta en la lista de alertas activas
+     * Bucase MENU_ITEM_SALIR :
+                oyenteVista.notificacion(OyenteVista.Evento.SALIR, null);
+                break;
+            case BOTON_HISTORIAL :
+                remove(aplicacionAlertas);
+                add(aplicacionHistorial);
+                revalidate();
+                oyenteVista.notificacion(OyenteVista.Evento.HISTORIAL, null);
+                break;
+            case VOLVER_ATRAS :
+                remove(aplicacionHistorial);
+                add(aplicacionAlertas);
+                repaint();
+                oyenteVista.notificacion(
+                                OyenteVista.Evento.MENU_ITEM_ALERTAS, null);
+                break;
+            case MENU_ITEM_SELECCIONAR_ALERTA :
+                String id = (String)listaAlertasActivas.getSelectedValue();
+                Alerta alerta = buscarAlertaActivaLista(id);
+                int seleccion = JOptionPane.showConfirmDialog
+                        (null, 
+                        "¿Activar el plan de proteccion para esta alerta?",
+                        "Activar plan",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if (seleccion == JOptionPane.YES_OPTION){
+                    oyenteVista.notificacion(
+                                OyenteVista.Evento.ACTIVAR_PLAN, alerta);
+                }
+                mapaVista.eliminarAlerta(alerta);
+                alertasActivas.remove(alerta);
+                introducirAlertasActivasALista(alertasActivas);
+                mapaVista.actualizarMarcadores();
+
+                break;
+        }        
+    }
+
+    @Override
+    public void update(Observable o, Object o1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}
+sca una alerta en la lista de alertas activas
      */
       public Alerta buscarAlertaActivaLista(String id){
         for(int indice = 0; indice<alertasActivas.size();indice++){
