@@ -48,7 +48,7 @@ public class MenuAddPlan extends JFrame implements ActionListener, Observer{
 	private JTextField txtVoluntariosRequeridos;
 	private JTextField txtActuacionesNecesarias_1;
 	
-	private final OyenteVista pCivil;
+	private final OyenteVista oyenteVista;
 	
 	private static final String BTN_VOLVER = "Volver";
 	private static final String BTN_ADD_PLAN = "Add Plan";
@@ -72,8 +72,8 @@ public class MenuAddPlan extends JFrame implements ActionListener, Observer{
 	/**
 	 * Create the frame.
 	 */
-	public MenuAddPlan(OyenteVista pCivil) {
-		this.pCivil = pCivil;
+	public MenuAddPlan(OyenteVista oyenteVista) {
+		this.oyenteVista = oyenteVista;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 732, 498);
 		contentPane = new JPanel();
@@ -226,8 +226,8 @@ public class MenuAddPlan extends JFrame implements ActionListener, Observer{
 				int vehiculos = Integer.parseInt(txtVehiculosForm.getText());
 				int voluntarios = Integer.parseInt(txtVoluntariosForm.getText());
 				String actuaciones = txtActuacionesNecesariasForm.getText();
-				PlanProteccion plan = new PlanProteccion(pCivil, nombre, vehiculos, voluntarios, actuaciones);
-				pCivil.notificacion(OyenteVista.Evento.ADD_PLAN,plan);
+				PlanProteccion plan = new PlanProteccion(oyenteVista, nombre, vehiculos, voluntarios, actuaciones);
+				oyenteVista.notificacion(OyenteVista.Evento.ADD_PLAN,plan);
 				this.dispose();
 			}catch(Exception e1) {
 				VentanaAlertaGenerica vAlerta = new VentanaAlertaGenerica("--Datos no v�lidos--\n\nLos veh�culos y voluntarios\ndeben ser un n�mero");

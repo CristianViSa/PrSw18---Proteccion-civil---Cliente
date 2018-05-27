@@ -8,6 +8,7 @@ import Modelo.PlanProteccion;
 import Vista.OyenteVista;
 import Vista.AlertasVista;
 import Vista.MenuPlanesProteccion;
+import Vista.MenuEmergenciasAlertas;
 import java.util.ArrayList;
 import java.util.List;
 import Vista.VentanaPrincipal;
@@ -26,7 +27,8 @@ public class ProteccionCivil implements OyenteVista {
     private AlertasVista alertaVista;
     private List<Alerta> alertasActivas = new ArrayList<Alerta>(); 
     private Comms comunicaciones;
-    private MenuPlanesProteccion menu;
+    private MenuPlanesProteccion menuPlanes;
+    private MenuEmergenciasAlertas menuEmer;
     private List<PlanProteccion> planes;
     private List<Alerta> alertas;
     private List<Emergencia> emergencias;
@@ -36,6 +38,12 @@ public class ProteccionCivil implements OyenteVista {
         this.ventanaPrincipal = new VentanaPrincipal(this);
         comunicaciones = new Comms(5500);
         
+        //PRUEBA
+        planes = new ArrayList<PlanProteccion>();
+	planes.add(new PlanProteccion(this,"plan antiincendios - riesgo 1", 10,7, "Recoger y sacar a la población afectada en la zona"));
+	planes.add(new PlanProteccion(this,"plan antiincendios - riesgo 2", 30,15, "Recoger y sacar a la población afectada en la zona"));
+        emergencias = new ArrayList<Emergencia>();
+        emergencias.add(new Emergencia("antiincendios", 1, 4, planes.get(1)));
     }
     /*
     public ProteccionCivil(){
@@ -87,9 +95,14 @@ public class ProteccionCivil implements OyenteVista {
 	public void addPlan(PlanProteccion plan) {
 		System.out.println(plan.toString());
 		planes.add(plan);
-		menu.update(planes);
+		menuPlanes.update(planes);
 	}
 	
+        public void addEmer(Emergencia emer){
+            emergencias.add(emer);
+            menuEmer.update(emergencias);
+        }
+        
 	public void modPlan(PlanProteccion plan) {
 		int idPlan = plan.getId() - 1;
 		
@@ -98,8 +111,8 @@ public class ProteccionCivil implements OyenteVista {
 		planes.get(idPlan).setVoluntariosNecesarios(plan.getVoluntariosNecesarios());
 		planes.get(idPlan).setActuacionesNecesarias(plan.getActuacionesNecesarias());
 		
-		menu.addPlanes(planes);
-		menu.update();
+		menuPlanes.addPlanes(planes);
+		menuPlanes.update();
 	}
 	
 	public void eliminarPlan(PlanProteccion plan) {
@@ -108,7 +121,7 @@ public class ProteccionCivil implements OyenteVista {
 		planes.remove(index);
 		System.out.println("-----------planes DESPUES borrar:" + planes.toString());
 		System.out.println("-----------");
-		menu.update();
+		menuPlanes.update();
 	}
 	
 	public int getLastIdPlan(){
@@ -177,64 +190,77 @@ public class ProteccionCivil implements OyenteVista {
     @Override
     public void notificacion(Evento evento, Object obj) {
         switch(evento){
-                case SALIR :
-                    salir();
-                    break;
-                case HISTORIAL:
-                    //TBD
-                    buscarAlertasEnBD();
-                    alertaVista.mostrarVentanaHistorial(alertas);
-                    cargarPanel(alertaVista);
-                    break;
-                case MENU_ITEM_ALERTAS:
-                    //TBD
-                    alertaVista = AlertasVista.instancia(this);
-                    alertas = comunicaciones.solicitarHistorialDeAlertas();
-                    {
-                        try {
-                            alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
-                        } catch (ClassNotFoundException ex) {
-                            Logger.getLogger(ProteccionCivil.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    alertaVista.introducirAlertasActivasALista(alertasActivas);
-                    alertaVista.ponerPanelAlertas();
-                    cargarPanel(alertaVista);
-                    break;
-                case ACTIVAR_PLAN:
-                    // TBD
-                    Alerta alerta = (Alerta)obj;
-                    if(comunicaciones.
-                            solicitarActivarPlanDeProteccion(String.valueOf(alerta.getId()))){
-                        alertaVista.mensajeConfirmacionPlan(alerta);
-                    }
-                    break;
-                case ADD_PLAN:
-                    addPlan((PlanProteccion)obj);
-                    break;
-                case MOD_PLAN:
-                    modPlan((PlanProteccion)obj);
-                    break;
-                case ELIMINAR_PLAN:
-                    eliminarPlan((PlanProteccion)obj);
-                    break;
-                case GET_ID_PLAN:
-                    getLastIdPlan();
-                    break;
-                case GET_ID_ALERTA:
-                    getLastIdAlerta();
-                    break;
-                case GET_PLAN_ID:
-                    getPlan((int)obj);
-                    break;
-                case GET_PLAN_NOMBRE:
-                    getPlan((String)obj);
-                    break;
-                case GET_EMERGENCIA:
-                    getEmergencia((int)obj);
-                    break;
+            case SALIR :
+                salir();
+                break;
+            case HISTORIAL:
+                //TBD
+                buscarAlertasEnBD();
+                alertaVista.mostrarVentanaHistorial(alertas);
+                cargarPanel(alertaVista);
+                break;
+            case MENU_ITEM_ALERTAS:
+                //TBD
+                alertaVista = AlertasVista.instancia(this);
+                alertas = comunicaciones.solicitarHistorialDeAlertas();
+                //miguel - try-catch añadido para que compile
+                try {
+                    alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ProteccionCivil.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                alertaVista.introducirAlertasActivasALista(alertasActivas);
+                alertaVista.ponerPanelAlertas();
+                cargarPanel(alertaVista);
+                break;
+            case ACTIVAR_PLAN:
+                // TBD
+                Alerta alerta = (Alerta)obj;
+                if(comunicaciones.
+                    solicitarActivarPlanDeProteccion(String.valueOf(alerta.getId()))){
+                    alertaVista.mensajeConfirmacionPlan(alerta);
+                }
+                break;
+            case ADD_PLAN:
+                addPlan((PlanProteccion)obj);
+                break;
+            case MOD_PLAN:
+                modPlan((PlanProteccion)obj);
+                break;
+            case ELIMINAR_PLAN:
+                eliminarPlan((PlanProteccion)obj);
+                break;
+            case GET_ID_PLAN:
+                getLastIdPlan();
+                break;
+            case GET_ID_ALERTA:
+                getLastIdAlerta();
+            break;
+            case GET_PLAN_ID:
+                getPlan((int)obj);
+                break;
+            case GET_PLAN_NOMBRE:
+                getPlan((String)obj);
+                break;
+            case GET_EMERGENCIA:
+                getEmergencia((int)obj);
+                break;
+            case MENU_PLANES:
+                menuPlanes = new MenuPlanesProteccion(this);
+                //ventanaPrincipal.cambiarPanelCentral(menu);
+                menuPlanes.addPlanes(planes);
+                cargarPanel(menuPlanes);
+                //menu.setVisible(true);
+                break;
+            case MENU_EMERGENCIAS:
+                menuEmer = new MenuEmergenciasAlertas(this);
+                menuEmer.addEmergencias(emergencias);
+                cargarPanel(menuEmer);
+                break;
+            case ADD_EMER:
+                addEmer((Emergencia)obj);
+                break;
                     
         }
     }
-    
 }

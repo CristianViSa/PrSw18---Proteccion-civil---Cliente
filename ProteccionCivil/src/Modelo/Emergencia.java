@@ -40,7 +40,7 @@ public class Emergencia {
      * 
      * Getter
      */
-    public String verTipo(){
+    public String getTipo(){
         return tipo;
     }
     
@@ -54,7 +54,21 @@ public class Emergencia {
     /**
      * Getter
      */
-    public int verNivel(){
+    public int getNivel(){
         return nivel;
     }
+    
+    public String toString(){
+        String cadena = "Emergencia de tipo: " + tipo;
+        cadena += "\n\tCódigo emergencia: " + id;
+        cadena += "\n\tNivel: " + nivel;
+        if(plan != null){
+            cadena += "\n\tPlan protección: código " + plan.getId();
+            cadena += "\n\t\t" + plan.toString();
+        } else {
+            cadena += "\n\tPlan Proteccion: -";
+        }
+        return cadena;
+    }
+    
 }

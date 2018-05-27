@@ -15,7 +15,9 @@ import javax.swing.JPanel;
  * @author alumno
  */
 public class VentanaPrincipal extends javax.swing.JFrame implements ActionListener {
-
+    private static final String MENU_PLANES = "Menu Planes";
+    private static final String MENU_EMERGENCIAS = "Menu Emergencias";
+    
     private OyenteVista oyenteVista;
     /**
      * Creates new form VentanPrincipal
@@ -33,6 +35,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItemVehiculos.addActionListener(this);
         jMenuItemVoluntarios.addActionListener(this);
         
+        jMenuItemPlanes.addActionListener(this);
+        jMenuItemPlanes.setActionCommand(MENU_PLANES);
+        
+        jMenuItemEmergencias.addActionListener(this);
+        jMenuItemEmergencias.setActionCommand(MENU_EMERGENCIAS);
         
         jMenuItemIniciarSesion.addActionListener(this);
         jMenuItemRegistrarse.addActionListener(this);
@@ -59,7 +66,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        jMenuPlanes = new javax.swing.JMenu();
+        jMenuItemPlanes = new javax.swing.JMenuItem();
+        jMenuItemEmergencias = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItemVoluntarios = new javax.swing.JMenuItem();
         jMenuItemVehiculos = new javax.swing.JMenuItem();
@@ -102,9 +111,21 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Protección Civil");
 
-        jMenu1.setText("Planes de Protección");
-        jMenu1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jMenuBar1.add(jMenu1);
+        jMenuPlanes.setText("Planes de Protección");
+        jMenuPlanes.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+
+        jMenuItemPlanes.setText("Planes");
+        jMenuItemPlanes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPlanesActionPerformed(evt);
+            }
+        });
+        jMenuPlanes.add(jMenuItemPlanes);
+
+        jMenuItemEmergencias.setText("Emergencias");
+        jMenuPlanes.add(jMenuItemEmergencias);
+
+        jMenuBar1.add(jMenuPlanes);
 
         jMenu2.setText("Gestión de Recursos");
         jMenu2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -197,6 +218,10 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItemVoluntariosActionPerformed
 
+    private void jMenuItemPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlanesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemPlanesActionPerformed
+
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -218,16 +243,21 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
        
       switch(evento) {
         case "MENU_ITEM_ALERTAS":
-           
-           oyenteVista.notificacion(OyenteVista.Evento.MENU_ITEM_ALERTAS, null);
-           break;
+            oyenteVista.notificacion(OyenteVista.Evento.MENU_ITEM_ALERTAS, null);
+            break;
+        case MENU_PLANES:
+            System.out.println("menu planes");
+            oyenteVista.notificacion(OyenteVista.Evento.MENU_PLANES, null);
+            break;
+        case MENU_EMERGENCIAS:
+            oyenteVista.notificacion(OyenteVista.Evento.MENU_EMERGENCIAS, null);
+            break;
         }
   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    public javax.swing.JMenu jMenu1;
     public javax.swing.JMenu jMenu2;
     public javax.swing.JMenu jMenu3;
     public javax.swing.JMenu jMenu4;
@@ -235,11 +265,14 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JMenuItem jMenuItemAlbergues;
     private javax.swing.JMenuItem jMenuItemAlertas;
     private javax.swing.JMenuItem jMenuItemAlmacenes;
+    private javax.swing.JMenuItem jMenuItemEmergencias;
     private javax.swing.JMenuItem jMenuItemIniciarSesion;
     private javax.swing.JMenuItem jMenuItemMapaRecursos;
+    private javax.swing.JMenuItem jMenuItemPlanes;
     private javax.swing.JMenuItem jMenuItemRegistrarse;
     private javax.swing.JMenuItem jMenuItemVehiculos;
     private javax.swing.JMenuItem jMenuItemVoluntarios;
+    public javax.swing.JMenu jMenuPlanes;
     private javax.swing.JPanel panelCentral;
     // End of variables declaration//GEN-END:variables
 }

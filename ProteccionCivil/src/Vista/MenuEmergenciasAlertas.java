@@ -24,24 +24,23 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import Control.ProteccionCivil;
-import Modelo.PlanProteccion;
-import Vista.MenuPlanesProteccion.AddPlanProteccion;
-import Vista.MenuPlanesProteccion.EliminarPlanProteccion;
-import Vista.MenuPlanesProteccion.ModPlanProteccion;
+import Modelo.Emergencia;
 
-public class MenuEmergenciasAlertas extends JFrame implements ActionListener, ListSelectionListener{
+public class MenuEmergenciasAlertas extends JPanel implements ActionListener, ListSelectionListener{
 
-	private JPanel contentPane;
 	private JTextField txtProteccinCivil;
 	private OyenteVista oyenteVista;
-	private List<PlanProteccion> planes;
-	private DefaultListModel<String> listaPlanes;
-	private final OyenteVista pCivil;
-	private PlanProteccion selectedPlan;
+	private List<Emergencia> emergencias;
+	private DefaultListModel<String> listaEmergencias;
+	private Emergencia selectedEmergencia;
+	private JList lista;
+	private JTextPane textPane;
 	
-	public static final String BTN_MAIN_MENU = "Menu Principal";
-	public static final String BTN_ADD_ALERTA = "Añadir Alerta";
-	public static final String BTN_GESTION_EMER = "Gestionar Emergencias";
+//	public static final String BTN_MAIN_MENU = "Menu Principal";
+//	public static final String BTN_ADD_ALERTA = "Añadir Alerta";
+	public static final String BTN_ADD_EMER = "Añadir Emergencias";
+	public static final String BTN_MOD_EMER = "Modificar Emergencias";
+	public static final String BTN_DEL_EMER = "Eliminar Emergencias";
 	/**
 	 * Launch the application.
 	 */
@@ -61,82 +60,139 @@ public class MenuEmergenciasAlertas extends JFrame implements ActionListener, Li
 	/**
 	 * Create the frame.
 	 */
-	public MenuEmergenciasAlertas(OyenteVista pCivil) {
-		this.pCivil = pCivil;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public MenuEmergenciasAlertas(OyenteVista oyenteVista) {
+//		this.oyenteVista = oyenteVista;
+//		setBounds(100, 100, 732, 498);
+//		this.setBorder(new EmptyBorder(5, 5, 5, 5));
+//		this.setLayout(new BorderLayout(0, 0));
+//		
+//		JPanel panel_principal = new JPanel();
+//		this.add(panel_principal, BorderLayout.CENTER);
+//		panel_principal.setLayout(new BorderLayout(0, 0));
+//		
+//		listaEmergencias = new DefaultListModel();
+//		
+//		txtProteccinCivil = new JTextField();
+//		txtProteccinCivil.setEditable(false);
+//		txtProteccinCivil.setFont(new Font("Tahoma", Font.PLAIN, 26));
+//		txtProteccinCivil.setHorizontalAlignment(SwingConstants.CENTER);
+//		txtProteccinCivil.setText("Gesti\u00F3n de Emergencias");
+//		panel_principal.add(txtProteccinCivil, BorderLayout.NORTH);
+//		txtProteccinCivil.setColumns(10);
+//		
+//		JPanel panel = new JPanel();
+//		panel_principal.add(panel, BorderLayout.CENTER);
+//		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+////		
+////		JButton btnAnadirAlerta = new JButton("A\u00F1adir Alerta");
+////		btnAnadirAlerta.setFont(new Font("Tahoma", Font.BOLD, 11));
+////		btnAnadirAlerta.setActionCommand(BTN_ADD_ALERTA);
+////		btnAnadirAlerta.addActionListener(this);
+////		panel.add(btnAnadirAlerta);
+////		
+//		JButton btnGestionarEmergencias = new JButton("Gestionar Emergencias");
+//		btnGestionarEmergencias.setToolTipText("");
+//		btnGestionarEmergencias.setActionCommand(BTN_GESTION_EMER);
+//		btnGestionarEmergencias.addActionListener(this);
+//		panel.add(btnGestionarEmergencias);
+
+                this.oyenteVista = oyenteVista;
 		setBounds(100, 100, 732, 498);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		this.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setLayout(new BorderLayout(0, 0));
 		
-		JToolBar toolbar_subsistemas = new JToolBar();
-		toolbar_subsistemas.setFloatable(false);
-		contentPane.add(toolbar_subsistemas, BorderLayout.NORTH);
+		JPanel panel_gestion_emergencias = new JPanel();
+		this.add(panel_gestion_emergencias, BorderLayout.SOUTH);
+		panel_gestion_emergencias.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton button_menu_principal = new JButton(" Menu Principal ");
-		button_menu_principal.setActionCommand(BTN_MAIN_MENU);
-		button_menu_principal.addActionListener(this);
+		JButton button_anadir_emergencia = new JButton("A\u00F1adir Emergencia");
+		button_anadir_emergencia.addActionListener(this);
+                button_anadir_emergencia.setActionCommand(BTN_ADD_EMER);
+		panel_gestion_emergencias.add(button_anadir_emergencia);
 		
-		toolbar_subsistemas.add(button_menu_principal);
+		JButton button_modificar_emergencia = new JButton("Modificar Emergencia");
+		button_modificar_emergencia.addActionListener(this);
+                button_modificar_emergencia.setActionCommand(BTN_MOD_EMER);
+		panel_gestion_emergencias.add(button_modificar_emergencia);
 		
-		JButton button_planes_proteccion = new JButton(" Planes de Protecci\u00F3n ");
-		toolbar_subsistemas.add(button_planes_proteccion);
-		
-		JButton button_emergencias_alertas = new JButton(" Gesti\u00F3n de emergencias y alertas ");
-		button_emergencias_alertas.setEnabled(false);
-		toolbar_subsistemas.add(button_emergencias_alertas);
-		
-		JButton button_reursos_medios = new JButton(" Recursos y medios ");
-		button_reursos_medios.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		toolbar_subsistemas.add(button_reursos_medios);
+		JButton button_eliminar_emergencia = new JButton("Eliminar Emergencia");
+		button_eliminar_emergencia.addActionListener(this);
+                button_eliminar_emergencia.setActionCommand(BTN_DEL_EMER);
+		panel_gestion_emergencias.add(button_eliminar_emergencia);
 		
 		JPanel panel_principal = new JPanel();
-		contentPane.add(panel_principal, BorderLayout.CENTER);
+		this.add(panel_principal, BorderLayout.CENTER);
 		panel_principal.setLayout(new BorderLayout(0, 0));
 		
-		listaPlanes = new DefaultListModel();
+		JSplitPane splitPane = new JSplitPane();
+		panel_principal.add(splitPane, BorderLayout.CENTER);
+		
+		JPanel panel_lista_planes = new JPanel();
+		splitPane.setLeftComponent(panel_lista_planes);
+		panel_lista_planes.setLayout(new BoxLayout(panel_lista_planes, BoxLayout.Y_AXIS));
+		
+		listaEmergencias = new DefaultListModel();
+		//listaPlanes.addListSelectionListener(this);
+		lista = new JList(listaEmergencias);
+		lista.setValueIsAdjusting(true);
+		lista.addListSelectionListener(this);
+		panel_lista_planes.add(lista);
+		
+		JPanel panel = new JPanel();
+		splitPane.setRightComponent(panel);
+		
+		textPane = new JTextPane();
+		textPane.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		textPane.setEditable(false);
+		panel.add(textPane);
 		
 		txtProteccinCivil = new JTextField();
 		txtProteccinCivil.setEditable(false);
 		txtProteccinCivil.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		txtProteccinCivil.setHorizontalAlignment(SwingConstants.CENTER);
-		txtProteccinCivil.setText("Protecci\u00F3n Civil - Gesti\u00F3n de Emergencias y Alertas");
+		txtProteccinCivil.setText("Gestión de Emergencias");
 		panel_principal.add(txtProteccinCivil, BorderLayout.NORTH);
 		txtProteccinCivil.setColumns(10);
-		
-		JPanel panel = new JPanel();
-		panel_principal.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JButton btnAnadirAlerta = new JButton("A\u00F1adir Alerta");
-		btnAnadirAlerta.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnAnadirAlerta.setActionCommand(BTN_ADD_ALERTA);
-		btnAnadirAlerta.addActionListener(this);
-		panel.add(btnAnadirAlerta);
-		
-		JButton btnGestionarEmergencias = new JButton("Gestionar Emergencias");
-		btnGestionarEmergencias.setToolTipText("");
-		btnGestionarEmergencias.setActionCommand(BTN_GESTION_EMER);
-		btnGestionarEmergencias.addActionListener(this);
-		panel.add(btnGestionarEmergencias);
 	}
 
+        public void mostrarEmergencias(){
+            listaEmergencias.clear();
+            for(int i = 0; i<this.emergencias.size();i++){
+                Emergencia emergencia = emergencias.get(i);
+                String infoEmer = emergencia.getTipo() + " - Nivel " + emergencia.getNivel();
+                listaEmergencias.addElement(infoEmer);
+            }
+            textPane.setText(emergencias.get(0).toString());
+        }
+        
+        public void addEmergencias(List emergencias){
+            this.emergencias = emergencias;
+            mostrarEmergencias();
+        }
+        
+        public void addEmergencia(Emergencia emergencia){
+            this.emergencias.add(emergencia);
+            mostrarEmergencias();
+        }
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case BTN_ADD_ALERTA:
-			System.out.println("añadir alerta");
-			MenuAddAlerta menuAlerta = new MenuAddAlerta(pCivil);
-			menuAlerta.setVisible(true);
-			break;
-		case BTN_GESTION_EMER:
-			System.out.println("gestionar emergencias");
-			break;
-		}
+//		case BTN_ADD_ALERTA:
+//			System.out.println("añadir alerta");
+//			MenuAddAlerta menuAlerta = new MenuAddAlerta(oyenteVista);
+//			menuAlerta.setVisible(true);
+//			break;
+		case BTN_ADD_EMER:
+                    new MenuAddEmergencia(oyenteVista).setVisible(true);
+                    System.out.println("add emergencias");
+                    break;
+                case BTN_MOD_EMER:
+                    System.out.println("mod emergencias");
+                    break;
+                case BTN_DEL_EMER:
+                    System.out.println("del emergencias");
+                    break;
+                }
 	}
 
 	@Override
@@ -145,4 +201,8 @@ public class MenuEmergenciasAlertas extends JFrame implements ActionListener, Li
 		
 	}
 
+        public void update(List emergencias){
+            this.emergencias = emergencias;
+            mostrarEmergencias();
+        }
 }

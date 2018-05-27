@@ -73,8 +73,8 @@ public class Alerta {
     
     public String informacion(){
         return " Coordenadas:(" + coordenadas.verX() + ", " + coordenadas.verY() 
-                + ")\n" + " Emergencia: "+ emergencia.verTipo() +
-                " Nivel " + emergencia.verNivel() + " " + "\n" +
+                + ")\n" + " Emergencia: "+ emergencia.getTipo() +
+                " Nivel " + emergencia.getNivel() + " " + "\n" +
                 " Fecha: " + getFecha() + "\n" +
                 " Afectados: " + getAfectados()+ "\n" +
                 " Id: " + getId();
@@ -83,8 +83,8 @@ public class Alerta {
     @Override
     public String toString(){
         return "Coordenadas:(" + coordenadas.verX() + ", " + coordenadas.verY()+
-                ")\n" + " Emergencia: "+ emergencia.verTipo() + 
-                " Nivel " + emergencia.verNivel() + " " + "\n" +
+                ")\n" + " Emergencia: "+ emergencia.getTipo() + 
+                " Nivel " + emergencia.getNivel() + " " + "\n" +
                 " Gestionada: " + estaGestionada() + "\n" +
                 " Fecha: " + getFecha() + "\n" +
                 " Activa: " + estaActiva() + " \n" +
