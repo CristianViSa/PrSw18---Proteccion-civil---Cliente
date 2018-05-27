@@ -119,7 +119,7 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
         mapaVista = new MapaVista();
         panelMapa.add(mapaVista);
         
-        aplicacionAlertas.add(panelMapa, BorderLayout.EAST);
+        aplicacionAlertas.add(panelMapa, BorderLayout.WEST);
         aplicacionAlertas.add(panelAlertas, BorderLayout.CENTER);
         
         aplicacionHistorial.add(panelListaHistorial);
@@ -193,7 +193,7 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
         } );
         
         barraActivas = new JScrollPane(listaAlertasActivas);
-        barraActivas.setPreferredSize(new Dimension(500, 600));
+        barraActivas.setPreferredSize(new Dimension(690, 550));
         
         infoAlertas = new JLabel(TEXTO_ALERTAS);
        
