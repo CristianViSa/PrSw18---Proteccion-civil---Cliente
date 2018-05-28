@@ -77,31 +77,66 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 		setBounds(100, 100, 732, 498);
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel_gestion_planes = new JPanel();
-		this.add(panel_gestion_planes, BorderLayout.SOUTH);
-		panel_gestion_planes.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JButton button_anadir_plan = new JButton("A\u00F1adir Plan protecci\u00F3n");
-		button_anadir_plan.addActionListener(new AddPlanProteccion());
-		panel_gestion_planes.add(button_anadir_plan);
-		
-		JButton button_modificar_plan = new JButton("Modificar Plan protecci\u00F3n");
-		button_modificar_plan.addActionListener(new ModPlanProteccion());
-		panel_gestion_planes.add(button_modificar_plan);
-		
-		JButton button_eliminar_plan = new JButton("Eliminar Plan Protecci\u00F3n");
-		button_eliminar_plan.addActionListener(new EliminarPlanProteccion());
-		panel_gestion_planes.add(button_eliminar_plan);
-		
+//		
+//		JPanel panel_gestion_planes = new JPanel();
+//		this.add(panel_gestion_planes, BorderLayout.SOUTH);
+//		panel_gestion_planes.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+//		
+//		JButton button_anadir_plan = new JButton("A\u00F1adir Plan protecci\u00F3n");
+//		button_anadir_plan.addActionListener(new AddPlanProteccion());
+//		panel_gestion_planes.add(button_anadir_plan);
+//		
+//		JButton button_modificar_plan = new JButton("Modificar Plan protecci\u00F3n");
+//		button_modificar_plan.addActionListener(new ModPlanProteccion());
+//		panel_gestion_planes.add(button_modificar_plan);
+//		
+//		JButton button_eliminar_plan = new JButton("Eliminar Plan Protecci\u00F3n");
+//		button_eliminar_plan.addActionListener(new EliminarPlanProteccion());
+//		panel_gestion_planes.add(button_eliminar_plan);
+//		
+//		JPanel panel_principal = new JPanel();
+//		this.add(panel_principal, BorderLayout.CENTER);
+//		panel_principal.setLayout(new BorderLayout(0, 0));
+//		
+//		JSplitPane splitPane = new JSplitPane();
+//		panel_principal.add(splitPane, BorderLayout.CENTER);
+//                splitPane.setResizeWeight(0.1);
+//                splitPane.setEnabled(false);
+//		
+//		JPanel panel_lista_planes = new JPanel();
+//		splitPane.setLeftComponent(panel_lista_planes);
+//		panel_lista_planes.setLayout(new BoxLayout(panel_lista_planes, BoxLayout.Y_AXIS));
+//		
+//		listaPlanes = new DefaultListModel();
+//		//listaPlanes.addListSelectionListener(this);
+//		lista = new JList(listaPlanes);
+//		lista.setValueIsAdjusting(true);
+//		lista.addListSelectionListener(this);
+//		panel_lista_planes.add(lista);
+//		
+//		JPanel panel = new JPanel();
+//		splitPane.setRightComponent(panel);
+//		
+//		textPane = new JTextPane();
+//		textPane.setFont(new Font("Tahoma", Font.PLAIN, 16));
+//		textPane.setEditable(false);
+//		panel.add(textPane);
+//		
+//		txtProteccinCivil = new JTextField();
+//		txtProteccinCivil.setEditable(false);
+//		txtProteccinCivil.setFont(new Font("Tahoma", Font.PLAIN, 26));
+//		txtProteccinCivil.setHorizontalAlignment(SwingConstants.CENTER);
+//		txtProteccinCivil.setText("Planes de Protecci\u00F3n");
+//		panel_principal.add(txtProteccinCivil, BorderLayout.NORTH);
+//		txtProteccinCivil.setColumns(10);
+//		
+                
 		JPanel panel_principal = new JPanel();
 		this.add(panel_principal, BorderLayout.CENTER);
 		panel_principal.setLayout(new BorderLayout(0, 0));
 		
 		JSplitPane splitPane = new JSplitPane();
 		panel_principal.add(splitPane, BorderLayout.CENTER);
-                splitPane.setResizeWeight(0.1);
-                splitPane.setEnabled(false);
 		
 		JPanel panel_lista_planes = new JPanel();
 		splitPane.setLeftComponent(panel_lista_planes);
@@ -122,14 +157,45 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 		textPane.setEditable(false);
 		panel.add(textPane);
 		
-		txtProteccinCivil = new JTextField();
-		txtProteccinCivil.setEditable(false);
-		txtProteccinCivil.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		txtProteccinCivil.setHorizontalAlignment(SwingConstants.CENTER);
-		txtProteccinCivil.setText("Planes de Protecci\u00F3n");
-		panel_principal.add(txtProteccinCivil, BorderLayout.NORTH);
-		txtProteccinCivil.setColumns(10);
+		JPanel panel_1 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		this.add(panel_1, BorderLayout.NORTH);
 		
+		JPanel panel_gestion_planes = new JPanel();
+		panel_1.add(panel_gestion_planes);
+		
+		JButton button_anadir_plan = new JButton("A\u00F1adir Plan protecci\u00F3n");
+		button_anadir_plan.setHorizontalAlignment(SwingConstants.LEFT);
+		button_anadir_plan.addActionListener(new AddPlanProteccion());
+		panel_gestion_planes.setLayout(new FlowLayout(FlowLayout.LEFT, 7, 5));
+		panel_gestion_planes.add(button_anadir_plan);
+		
+		JButton button_modificar_plan = new JButton("Modificar Plan protecci\u00F3n");
+		button_modificar_plan.addActionListener(new ModPlanProteccion());
+		panel_gestion_planes.add(button_modificar_plan);
+		
+		JButton button_eliminar_plan = new JButton("Eliminar Plan Protecci\u00F3n");
+		button_eliminar_plan.addActionListener(new EliminarPlanProteccion());
+		panel_gestion_planes.add(button_eliminar_plan);
+		
+		JPanel panel_2 = new JPanel();
+		panel_1.add(panel_2);
+		panel_2.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+		
+                JPanel panel_3 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
+		flowLayout_1.setHgap(80);
+		panel_2.add(panel_3);
+                
+		txtProteccinCivil = new JTextField();
+		txtProteccinCivil.setFont(new Font("Tahoma", Font.BOLD, 25));
+		panel_2.add(txtProteccinCivil);
+		txtProteccinCivil.setHorizontalAlignment(SwingConstants.CENTER);
+		txtProteccinCivil.setEditable(false);
+		txtProteccinCivil.setText("Planes de Protecci\u00F3n");
+		txtProteccinCivil.setColumns(15);
+	
 	}
 	
 	public void addPlan() {

@@ -13,9 +13,14 @@ import Vista.MenuZonasSeguridad;
 import java.util.ArrayList;
 import java.util.List;
 import Vista.VentanaPrincipal;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.synth.SynthLookAndFeel;
 
 /**
  * Trabajo Proteccion Civil
@@ -66,6 +71,17 @@ public class ProteccionCivil implements OyenteVista {
      */
     public static void main(String[] args) {
         //new Comms(5500);
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                //L&F disponibles: Metal, Nimbus, CDE/Motif, Windows, Windows Classic
+                if ("Windows".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
         new ProteccionCivil();
     }
     
