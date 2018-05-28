@@ -27,16 +27,9 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
     private OyenteVista oyenteVista;
     private MapaVista mapaVista;
     
-    private List<Alerta> listaHistorial;
     private List<Alerta> listaAlertas;
     
     private DefaultListModel modeloAlertas;
-    private DefaultListModel modeloHistorial;
-    
-    private JButton volverAtras;
-    
-    private JPanel aplicacionHistorial;
-    private JPanel aplicacionAlertas;
     
     private static final String TITULO = "Proteccion Civil";
     
@@ -61,13 +54,10 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
         this.oyenteVista = oyenteVista;
         mapaVista = new MapaVista();
         modeloAlertas = new DefaultListModel();
-        modeloHistorial = new DefaultListModel();
+        //modeloHistorial = new DefaultListModel();
         
         initComponents();
-        
-        aplicacionAlertas = this;
-        aplicacionHistorial = new JPanel();
-        aplicacionHistorial.setBackground(Color.RED);
+
         mapa.setIcon(mapaVista.verIcono());
         panelMapa.revalidate();
         
@@ -76,11 +66,6 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
         seleccionarAlerta.setToolTipText(MENU_ITEM_SELECCIONAR_ALERTA);
         seleccionarAlerta.setActionCommand(MENU_ITEM_SELECCIONAR_ALERTA);
         
-        volverAtras = new JButton(VOLVER_ATRAS);
-        volverAtras.setToolTipText(VOLVER_ATRAS);
-        volverAtras.setActionCommand(VOLVER_ATRAS);
-        volverAtras.addActionListener(this);
-        volverAtras.setEnabled(true);
 
         /*
         ** Crea el boton para aniadir alertas
@@ -89,14 +74,7 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
         anadirAlerta.addActionListener(this);
         anadirAlerta.setActionCommand(ADD_ALERTA);
         anadirAlerta.setEnabled(true);
-        
-        /* 
-        ** Crea el boton para mostrar el historial de alertas
-        */
-        historialAlertas.setToolTipText(BOTON_HISTORIAL);
-        historialAlertas.setActionCommand(BOTON_HISTORIAL);
-        historialAlertas.addActionListener(this);
-        historialAlertas.setEnabled(true); 
+         
         
     }
 
@@ -115,7 +93,6 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
         panelAlerta = new javax.swing.JPanel();
         seleccionarAlerta = new javax.swing.JButton();
         anadirAlerta = new javax.swing.JButton();
-        historialAlertas = new javax.swing.JButton();
         textoAlertas = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaActivas = new javax.swing.JList<>();
@@ -149,13 +126,6 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
             }
         });
 
-        historialAlertas.setText("Historial de alertas");
-        historialAlertas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                historialAlertasActionPerformed(evt);
-            }
-        });
-
         textoAlertas.setText("Alertas activas no gestionadas");
 
         listaActivas.setModel(modeloAlertas);
@@ -168,17 +138,15 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
             .addGroup(panelAlertaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelAlertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                     .addGroup(panelAlertaLayout.createSequentialGroup()
                         .addComponent(textoAlertas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(8, 8, 8))
                     .addGroup(panelAlertaLayout.createSequentialGroup()
                         .addComponent(seleccionarAlerta)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(historialAlertas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(anadirAlerta)
-                        .addGap(0, 49, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         panelAlertaLayout.setVerticalGroup(
             panelAlertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,8 +157,7 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelAlertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(seleccionarAlerta)
-                    .addComponent(anadirAlerta)
-                    .addComponent(historialAlertas))
+                    .addComponent(anadirAlerta))
                 .addContainerGap())
         );
 
@@ -216,10 +183,6 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void historialAlertasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialAlertasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_historialAlertasActionPerformed
-
     private void anadirAlertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirAlertaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_anadirAlertaActionPerformed
@@ -231,7 +194,6 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anadirAlerta;
-    private javax.swing.JButton historialAlertas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> listaActivas;
@@ -241,16 +203,7 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JButton seleccionarAlerta;
     private javax.swing.JLabel textoAlertas;
     // End of variables declaration//GEN-END:variables
-
-    
-    /**
-     * Rellena la lista(Coleccion) con el historial y rellena la lista(JList)
-     */
-    public void mostrarVentanaHistorial(List listado){
-        listaHistorial = listado;
-        introducirAlertasALista();
-    }
-    
+ 
     /**
      * Introduce las alertas activas a la lista                                 
      */
@@ -269,31 +222,7 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
         mapa.setIcon(mapaVista.verIcono());
         revalidate();
     }
-    
-     /**
-     * Introduce un elemento a la lista de alertas
-     */
-    public void introducirAlertasALista() {
-        modeloHistorial.clear();
-        for(int indice = 0; indice<listaHistorial.size();indice++){
-            Alerta alerta = listaHistorial.get(indice);
-            String info = alerta.toString();
-            modeloHistorial.addElement(info);
-        }
-    }
-    
-    /**
-     * Busca una alerta en el historial de alertas
-     */
-    public Alerta buscarAlertaLista(String id){
-        for(int indice = 0; indice<listaHistorial.size();indice++){
-            Alerta alerta = listaHistorial.get(indice);
-            if (id.equals(alerta.getId())){
-                return alerta;
-            }
-        } 
-        return null;
-    }
+
     
     public Alerta buscarAlertaActivaLista(String id){
         for(int indice = 0; indice<listaAlertas.size();indice++){
@@ -304,15 +233,7 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
         } 
         return null;
     }
-      
-    /**
-     * Pone el panel con el mapa y la lista de alertas
-     */  
-    public void ponerPanelAlertas(){
-        removeAll();
-        add(aplicacionAlertas);
-    }
-        
+  
     
     /**
      * Muestra un mensaje de confirmacion, resultado de activar un plan
@@ -342,20 +263,20 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
             case MENU_ITEM_SALIR :
                 oyenteVista.notificacion(OyenteVista.Evento.SALIR, null);
                 break;
-            case BOTON_HISTORIAL :
+            /*case BOTON_HISTORIAL :
                 removeAll();
                 
                 add(new JLabel("ERASDASDASD"));
                 //add(aplicacionHistorial);
                 revalidate();
                 oyenteVista.notificacion(OyenteVista.Evento.HISTORIAL, null);
-                break;
-            case VOLVER_ATRAS :
+                break;*/
+            /*case VOLVER_ATRAS :
                 removeAll();
                 revalidate();
                 oyenteVista.notificacion(
                                 OyenteVista.Evento.MENU_ITEM_ALERTAS, null);
-                break;
+                break;*/
             case MENU_ITEM_SELECCIONAR_ALERTA :
                 String id = (String)listaActivas.getSelectedValue();
                 Alerta alerta = buscarAlertaActivaLista(id);

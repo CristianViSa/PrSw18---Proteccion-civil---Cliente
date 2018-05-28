@@ -12,12 +12,14 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author alumno
+ * @author Cristian
  */
 public class VentanaPrincipal extends javax.swing.JFrame implements ActionListener {
     private static final String MENU_PLANES = "Menu Planes";
     private static final String MENU_EMERGENCIAS = "Menu Emergencias";
     private static final String MENU_ZONAS_SEGURIDAD = "Menu Zonas de Seguridad";
+    private static final String MENU_ITEM_HISTORIAL = "HISTORIAL_ALERTAS";
+    private static final String MENU_ITEM_ALERTAS = "MENU_ITEM_ALERTAS";
     
     private OyenteVista oyenteVista;
     /**
@@ -45,11 +47,16 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItemIniciarSesion.addActionListener(this);
         jMenuItemRegistrarse.addActionListener(this);
         
-        jMenuItemAlertas.addActionListener(this);
-        jMenuItemAlertas.setActionCommand("MENU_ITEM_ALERTAS");
         
         jMenuItemZonasSeguridad.addActionListener(this);
         jMenuItemZonasSeguridad.setActionCommand(MENU_ZONAS_SEGURIDAD);
+        
+        // @author Cristian
+        historialAlertas.addActionListener(this);
+        historialAlertas.setActionCommand(MENU_ITEM_HISTORIAL);
+        // @author Cristian
+        jMenuItemAlertas.addActionListener(this);
+        jMenuItemAlertas.setActionCommand(MENU_ITEM_ALERTAS);
           
         
         this.setVisible(true);
@@ -79,6 +86,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItemMapaRecursos = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItemAlertas = new javax.swing.JMenuItem();
+        historialAlertas = new javax.swing.JMenuItem();
         jMenuItemZonasSeguridad = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItemIniciarSesion = new javax.swing.JMenuItem();
@@ -169,8 +177,22 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItemAlertas.setText("Alertas");
         jMenu3.add(jMenuItemAlertas);
 
+        historialAlertas.setFont(new java.awt.Font("Lucida Bright", 0, 18)); // NOI18N
+        historialAlertas.setText("Historial de Alertas");
+        historialAlertas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                historialAlertasActionPerformed(evt);
+            }
+        });
+        jMenu3.add(historialAlertas);
+
         jMenuItemZonasSeguridad.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jMenuItemZonasSeguridad.setText("Zonas de Seguridad");
+        jMenuItemZonasSeguridad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemZonasSeguridadActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItemZonasSeguridad);
 
         jMenuBar1.add(jMenu3);
@@ -231,6 +253,14 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItemPlanesActionPerformed
 
+    private void historialAlertasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialAlertasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_historialAlertasActionPerformed
+
+    private void jMenuItemZonasSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemZonasSeguridadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemZonasSeguridadActionPerformed
+
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -251,8 +281,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
     public void notificacionAControl(String evento){
        
       switch(evento) {
-        case "MENU_ITEM_ALERTAS":
+        // @author Cristian
+        case MENU_ITEM_ALERTAS:
             oyenteVista.notificacion(OyenteVista.Evento.MENU_ITEM_ALERTAS, null);
+            break;
+        // @author Cristian
+        case MENU_ITEM_HISTORIAL:
+            oyenteVista.notificacion(OyenteVista.Evento.HISTORIAL_ALERTAS, null);
             break;
         case MENU_PLANES:
             System.out.println("menu planes");
@@ -268,6 +303,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem historialAlertas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     public javax.swing.JMenu jMenu2;

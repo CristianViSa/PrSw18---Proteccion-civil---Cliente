@@ -78,7 +78,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="394" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="textoAlertas" max="32767" attributes="0"/>
                           <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
@@ -86,10 +86,8 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="seleccionarAlerta" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="historialAlertas" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="anadirAlerta" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="49" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -105,7 +103,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="seleccionarAlerta" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="anadirAlerta" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="historialAlertas" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -127,14 +124,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="anadirAlertaActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="historialAlertas">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Historial de alertas"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="historialAlertasActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="textoAlertas">

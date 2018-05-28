@@ -3,6 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+/**
+ *  @author Cristian
+ */
 package Vista;
 
 import Modelo.Alerta;
@@ -40,10 +44,9 @@ public class MapaVista extends JLabel{
         opcsInicial = opcs;
         setVisible(true);
         contadorAlertas = 0;
-        alertasActivas = new ArrayList<Alerta>();
-        //opcs += "markers=label:A|41.6564561125247,-0.8787989616394043&markers=label:B|41.65710440168154,-0.8816099166870117&markers=label:C|41.656880958087804,-0.8819210529327393"; 
+        alertasActivas = new ArrayList<Alerta>(); 
         visualizarMapa(opcs);
-        //setPreferredSize(new Dimension(1000, 1000));
+
     }
     
     /**

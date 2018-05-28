@@ -255,7 +255,7 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 			break;
 		case BTN_MENU_EMERGENCIAS:
 			System.out.println("menu emergencias");
-                        AlertasVista menuAlertas = new AlertasVista(oyenteVista);
+                        PanelAlerta menuAlertas = new PanelAlerta(oyenteVista);
 			//MenuEmergenciasAlertas menuEmer = new MenuEmergenciasAlertas(pCivil);
 			//menuEmer.setVisible(true);
 			//oyenteVista.notificacion(OyenteVista.Evento.BTN_MAIN_MENU, null);

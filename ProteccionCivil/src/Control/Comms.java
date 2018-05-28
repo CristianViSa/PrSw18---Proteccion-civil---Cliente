@@ -56,10 +56,10 @@ public class Comms {
 
     /**
      * Solicita las alertas no gestionadas a la BD del servidor
+     * @author Cristian
      */
-    public synchronized List<Alerta>  solicitarMapaAlertasNoGestionadas () throws ClassNotFoundException{
+    public synchronized List<Alerta>  solicitarMapaAlertasNoGestionadas () {
         try {
-            // TBD
             socket = new Socket(ip, puerto);
             salida = new ObjectOutputStream(socket.getOutputStream());
             entrada = new ObjectInputStream(socket.getInputStream());
@@ -102,13 +102,16 @@ public class Comms {
             }
         socket.close();
         } catch (IOException ex) {
-            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
         }
         return alertas;
     }
     
     /**
      * Solicita activar un plan de proteccion para una alerta al servidor
+     *  @author Cristian
      */
     public synchronized boolean solicitarActivarPlanDeProteccion(String id){
         try {
@@ -143,6 +146,7 @@ public class Comms {
     
     /**
      * Solicitar Historial de alertas a la BD del servidor
+     * @author Cristian
      */
     public synchronized List<Alerta> solicitarHistorialDeAlertas(){
         try {

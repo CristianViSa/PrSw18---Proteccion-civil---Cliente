@@ -6,11 +6,11 @@ import Modelo.Emergencia;
 import Modelo.Alerta;
 import Modelo.PlanProteccion;
 import Vista.OyenteVista;
-import Vista.AlertasVista;
 import Vista.MenuPlanesProteccion;
 import Vista.MenuEmergenciasAlertas;
 import Vista.MenuZonasSeguridad;
 import Vista.PanelAlerta;
+import Vista.PanelHistorial;
 import java.util.ArrayList;
 import java.util.List;
 import Vista.VentanaPrincipal;
@@ -27,12 +27,13 @@ import javax.swing.plaf.synth.SynthLookAndFeel;
  * Trabajo Proteccion Civil
  * Proyecto Software
  * Aplicacion cliente, Gestion de emergencias y alertas
- * @author Cristian, 702364
+ * @author Cristian
  */
 public class ProteccionCivil implements OyenteVista {
     private VentanaPrincipal ventanaPrincipal;
     private PanelAlerta alertaVista;
-    private List<Alerta> alertasActivas = new ArrayList<Alerta>(); 
+    private PanelHistorial historialVista;
+    
     private Comms comunicaciones;
     private MenuPlanesProteccion menuPlanes;
     private MenuEmergenciasAlertas menuEmer;
@@ -88,6 +89,7 @@ public class ProteccionCivil implements OyenteVista {
     
      /**
      * Cierra el programa
+     * @author Cristian
      */      
     public void salir(){
         System.exit(0);    
@@ -95,19 +97,20 @@ public class ProteccionCivil implements OyenteVista {
     
     /**
      * Busca las alertas en la BD del servidor
+     * @author Cristian
      */
-    public void buscarAlertasEnBD(){
+    public List<Alerta> buscarAlertasEnBD(){
         // TBD
-        alertas = comunicaciones.solicitarHistorialDeAlertas(); 
-        
+        return comunicaciones.solicitarHistorialDeAlertas();  
     }
     
       /**
      * Busca las alertas  activas y no gestionadas en la BD del servidor
+     * @author Cristian
      */
-    public void buscarAlertasActivasEnBD() throws ClassNotFoundException{
+    public List<Alerta> buscarAlertasActivasEnBD(){
         // TBD
-        alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
+        return comunicaciones.solicitarMapaAlertasNoGestionadas();
     }
     
     
@@ -209,31 +212,28 @@ public class ProteccionCivil implements OyenteVista {
     @Override
     public void notificacion(Evento evento, Object obj) {
         switch(evento){
+            //@author Cristian
             case SALIR :
                 salir();
                 break;
-            case HISTORIAL:
-                //TBD
-                buscarAlertasEnBD();
-                alertaVista.mostrarVentanaHistorial(alertas);
-                cargarPanel(alertaVista);
+            //@author Cristian
+            case HISTORIAL_ALERTAS:
+                List historialAlertas = buscarAlertasEnBD();
+                historialVista = new PanelHistorial(this);
+                historialVista.introducirAlertasALista(historialAlertas);
+                cargarPanel(historialVista);
                 break;
+            //@author Cristian
             case MENU_ITEM_ALERTAS:
-                //TBD
                 alertaVista = new PanelAlerta(this);//AlertasVista.instancia(this);
                 alertas = comunicaciones.solicitarHistorialDeAlertas();
-                //miguel - try-catch añadido para que compile
-                try {
-                    alertasActivas = comunicaciones.solicitarMapaAlertasNoGestionadas();
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ProteccionCivil.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                List alertasActivas = buscarAlertasActivasEnBD();
                 alertaVista.introducirAlertasActivasALista(alertasActivas);
-//                alertaVista.ponerPanelAlertas();
+
                 cargarPanel(alertaVista);
                 break;
+            //@author Cristian
             case ACTIVAR_PLAN:
-                // TBD
                 Alerta alerta = (Alerta)obj;
                 if(comunicaciones.
                     solicitarActivarPlanDeProteccion(String.valueOf(alerta.getId()))){
