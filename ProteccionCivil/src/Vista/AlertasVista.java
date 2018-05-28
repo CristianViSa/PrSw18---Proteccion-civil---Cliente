@@ -54,7 +54,6 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
     private JLabel infoHistorial;
     private JLabel etiquetaLista;
     private JLabel titulo;
-    private JLabel infoAlertas;
 
     private JScrollPane barra;
     private JScrollPane barraActivas;
@@ -207,11 +206,9 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
         barraActivas = new JScrollPane(listaAlertasActivas);
         int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
         int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-        barraActivas.setPreferredSize(new Dimension(ancho - 600, alto - 180));
+        barraActivas.setPreferredSize(new Dimension(ancho - 700, alto - 170));
         
-        infoAlertas = new JLabel(TEXTO_ALERTAS);
-       
-        panelLista.add(infoAlertas, BorderLayout.NORTH);
+  
         panelLista.add(barraActivas, BorderLayout.CENTER);
         panelLista.add(panelBotonesAlertas, BorderLayout.SOUTH);
         panelAlertas.add(panelLista);
