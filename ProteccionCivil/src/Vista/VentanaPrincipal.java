@@ -117,6 +117,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuPlanes.setText("Planes de Protección");
         jMenuPlanes.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
 
+        jMenuItemPlanes.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jMenuItemPlanes.setText("Planes");
         jMenuItemPlanes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,6 +126,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         jMenuPlanes.add(jMenuItemPlanes);
 
+        jMenuItemEmergencias.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jMenuItemEmergencias.setText("Emergencias");
         jMenuPlanes.add(jMenuItemEmergencias);
 
@@ -167,6 +169,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItemAlertas.setText("Alertas");
         jMenu3.add(jMenuItemAlertas);
 
+        jMenuItemZonasSeguridad.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jMenuItemZonasSeguridad.setText("Zonas de Seguridad");
         jMenu3.add(jMenuItemZonasSeguridad);
 
