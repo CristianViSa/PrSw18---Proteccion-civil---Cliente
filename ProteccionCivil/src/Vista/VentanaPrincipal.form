@@ -108,6 +108,11 @@
                 <Property name="text" type="java.lang.String" value="Alertas"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemZonasSeguridad">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Zonas de Seguridad"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu4">

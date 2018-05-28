@@ -9,6 +9,7 @@ import Vista.OyenteVista;
 import Vista.AlertasVista;
 import Vista.MenuPlanesProteccion;
 import Vista.MenuEmergenciasAlertas;
+import Vista.MenuZonasSeguridad;
 import java.util.ArrayList;
 import java.util.List;
 import Vista.VentanaPrincipal;
@@ -29,6 +30,7 @@ public class ProteccionCivil implements OyenteVista {
     private Comms comunicaciones;
     private MenuPlanesProteccion menuPlanes;
     private MenuEmergenciasAlertas menuEmer;
+    private MenuZonasSeguridad menuZonas;
     private List<PlanProteccion> planes;
     private List<Alerta> alertas;
     private List<Emergencia> emergencias;
@@ -260,6 +262,9 @@ public class ProteccionCivil implements OyenteVista {
             case ADD_EMER:
                 addEmer((Emergencia)obj);
                 break;
+            case MENU_ZONAS:
+                menuZonas = new MenuZonasSeguridad(this);
+                cargarPanel(menuZonas);
         }
     }
 }  

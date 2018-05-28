@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 public class VentanaPrincipal extends javax.swing.JFrame implements ActionListener {
     private static final String MENU_PLANES = "Menu Planes";
     private static final String MENU_EMERGENCIAS = "Menu Emergencias";
+    private static final String MENU_ZONAS_SEGURIDAD = "Menu Zonas de Seguridad";
     
     private OyenteVista oyenteVista;
     /**
@@ -47,7 +48,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItemAlertas.addActionListener(this);
         jMenuItemAlertas.setActionCommand("MENU_ITEM_ALERTAS");
         
-        
+        jMenuItemZonasSeguridad.addActionListener(this);
+        jMenuItemZonasSeguridad.setActionCommand(MENU_ZONAS_SEGURIDAD);
           
         
         this.setVisible(true);
@@ -77,6 +79,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItemMapaRecursos = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItemAlertas = new javax.swing.JMenuItem();
+        jMenuItemZonasSeguridad = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItemIniciarSesion = new javax.swing.JMenuItem();
         jMenuItemRegistrarse = new javax.swing.JMenuItem();
@@ -163,6 +166,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItemAlertas.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jMenuItemAlertas.setText("Alertas");
         jMenu3.add(jMenuItemAlertas);
+
+        jMenuItemZonasSeguridad.setText("Zonas de Seguridad");
+        jMenu3.add(jMenuItemZonasSeguridad);
 
         jMenuBar1.add(jMenu3);
 
@@ -252,6 +258,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         case MENU_EMERGENCIAS:
             oyenteVista.notificacion(OyenteVista.Evento.MENU_EMERGENCIAS, null);
             break;
+        case MENU_ZONAS_SEGURIDAD:
+            oyenteVista.notificacion(OyenteVista.Evento.MENU_ZONAS, null);
+            break;
         }
   }
 
@@ -272,6 +281,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JMenuItem jMenuItemRegistrarse;
     private javax.swing.JMenuItem jMenuItemVehiculos;
     private javax.swing.JMenuItem jMenuItemVoluntarios;
+    private javax.swing.JMenuItem jMenuItemZonasSeguridad;
     public javax.swing.JMenu jMenuPlanes;
     private javax.swing.JPanel panelCentral;
     // End of variables declaration//GEN-END:variables
