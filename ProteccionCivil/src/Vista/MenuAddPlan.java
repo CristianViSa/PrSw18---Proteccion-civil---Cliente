@@ -74,7 +74,7 @@ public class MenuAddPlan extends JFrame implements ActionListener, Observer{
 	 */
 	public MenuAddPlan(OyenteVista oyenteVista) {
 		this.oyenteVista = oyenteVista;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 732, 498);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

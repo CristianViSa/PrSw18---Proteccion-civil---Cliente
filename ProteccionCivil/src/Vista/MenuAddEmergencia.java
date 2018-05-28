@@ -112,7 +112,7 @@ public class MenuAddEmergencia extends javax.swing.JFrame implements ActionListe
 
     public MenuAddEmergencia(OyenteVista oyenteVista) {
 		this.oyenteVista = oyenteVista;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 732, 498);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

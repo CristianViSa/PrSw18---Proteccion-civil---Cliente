@@ -260,7 +260,6 @@ public class ProteccionCivil implements OyenteVista {
             case ADD_EMER:
                 addEmer((Emergencia)obj);
                 break;
-                    
         }
     }
-}
+}  

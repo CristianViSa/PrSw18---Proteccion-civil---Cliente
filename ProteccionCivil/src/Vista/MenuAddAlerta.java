@@ -67,34 +67,13 @@ public class MenuAddAlerta extends JFrame implements ActionListener{
 	 */
 	public MenuAddAlerta(OyenteVista pCivil) {
 		this.pCivil = pCivil;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 732, 498);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.setPreferredSize(getMaximumSize());
-		
-		JToolBar toolbar_subsistemas = new JToolBar();
-		toolbar_subsistemas.setFloatable(false);
-		contentPane.add(toolbar_subsistemas, BorderLayout.NORTH);
-		
-		JButton button_menu_principal = new JButton(" Menu Principal ");
-		
-		toolbar_subsistemas.add(button_menu_principal);
-		
-		JButton button_planes_proteccion = new JButton(" Planes de Protecci\u00F3n ");
-		toolbar_subsistemas.add(button_planes_proteccion);
-		
-		JButton button_emergencias_alertas = new JButton(" Gesti\u00F3n de emergencias y alertas ");
-		toolbar_subsistemas.add(button_emergencias_alertas);
-		
-		JButton button_reursos_medios = new JButton(" Recursos y medios ");
-		button_reursos_medios.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		toolbar_subsistemas.add(button_reursos_medios);
 		
 		JPanel panel_gestion_planes = new JPanel();
 		contentPane.add(panel_gestion_planes, BorderLayout.SOUTH);

@@ -79,12 +79,14 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
     private JButton alertas;
     private JButton volverAtras;
     private JButton seleccionarAlerta;
+    private JButton addAlerta;
 
     
     private static final String TITULO = "Proteccion Civil";
     
     private static final String MENU_PRINCIPAL = "Menu principal";
     private static final String VOLVER_ATRAS = "Volver atras";
+    private static final String ADD_ALERTA = "Anadir alerta";
 
     public static final String BOTON_LOGIN = "Iniciar sesion";
     public static final String BOTON_REGISTRO = "Registrarse";
@@ -148,6 +150,15 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
         volverAtras.addActionListener(this);
         volverAtras.setEnabled(true);
 
+        /*
+        ** Crea el boton para aniadir alertas
+        */
+        addAlerta = new JButton(ADD_ALERTA);
+        addAlerta.setToolTipText(ADD_ALERTA);
+        addAlerta.addActionListener(this);
+        addAlerta.setActionCommand(ADD_ALERTA);
+        addAlerta.setEnabled(true);
+        
         /* 
         ** Crea el boton para mostrar el historial de alertas
         */
@@ -167,7 +178,8 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
         seleccionarAlerta.setEnabled(true); 
         
         panelBotonesAlertas.add(seleccionarAlerta, BorderLayout.WEST);
-        panelBotonesAlertas.add(historial, BorderLayout.EAST);
+        panelBotonesAlertas.add(historial, BorderLayout.CENTER);
+        panelBotonesAlertas.add(addAlerta, BorderLayout.EAST);
         
         panelBotonHistorial.add(volverAtras);
         panelListaHistorial.add(panelBotonHistorial, BorderLayout.SOUTH);
@@ -395,6 +407,10 @@ sca una alerta en la lista de alertas activas
                 introducirAlertasActivasALista(alertasActivas);
                 mapaVista.actualizarMarcadores();
 
+                break;
+            case ADD_ALERTA:
+                new MenuAddAlerta(oyenteVista).setVisible(true);
+                
                 break;
         }        
     }
