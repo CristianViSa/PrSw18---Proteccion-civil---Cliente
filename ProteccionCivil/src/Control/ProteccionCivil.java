@@ -10,6 +10,7 @@ import Vista.AlertasVista;
 import Vista.MenuPlanesProteccion;
 import Vista.MenuEmergenciasAlertas;
 import Vista.MenuZonasSeguridad;
+import Vista.PanelAlerta;
 import java.util.ArrayList;
 import java.util.List;
 import Vista.VentanaPrincipal;
@@ -30,7 +31,7 @@ import javax.swing.plaf.synth.SynthLookAndFeel;
  */
 public class ProteccionCivil implements OyenteVista {
     private VentanaPrincipal ventanaPrincipal;
-    private AlertasVista alertaVista;
+    private PanelAlerta alertaVista;
     private List<Alerta> alertasActivas = new ArrayList<Alerta>(); 
     private Comms comunicaciones;
     private MenuPlanesProteccion menuPlanes;
@@ -219,7 +220,7 @@ public class ProteccionCivil implements OyenteVista {
                 break;
             case MENU_ITEM_ALERTAS:
                 //TBD
-                alertaVista = AlertasVista.instancia(this);
+                alertaVista = new PanelAlerta(this);//AlertasVista.instancia(this);
                 alertas = comunicaciones.solicitarHistorialDeAlertas();
                 //miguel - try-catch añadido para que compile
                 try {
@@ -228,7 +229,7 @@ public class ProteccionCivil implements OyenteVista {
                     Logger.getLogger(ProteccionCivil.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 alertaVista.introducirAlertasActivasALista(alertasActivas);
-                alertaVista.ponerPanelAlertas();
+//                alertaVista.ponerPanelAlertas();
                 cargarPanel(alertaVista);
                 break;
             case ACTIVAR_PLAN:

@@ -128,8 +128,7 @@ public class Comms {
             String parametros = mensajeRX.verParametros();
             String delims = ",";
             String[] tokens = parametros.split(delims);
-            
-            if(tokens[0] == "true"){
+            if("true".equals(tokens[0])){
                 socket.close();
                 return true;
             }  

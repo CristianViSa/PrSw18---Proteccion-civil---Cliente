@@ -99,6 +99,7 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
     public static final String MENU_ITEM_SALIR = "Salir";
     protected AlertasVista(OyenteVista oyenteVista){
         this.setLayout(new BorderLayout());
+        initComponents();
         this.oyenteVista = oyenteVista;
         
         aplicacionAlertas = new JPanel(new BorderLayout());
@@ -420,5 +421,8 @@ sca una alerta en la lista de alertas activas
     @Override
     public void update(Observable o, Object o1) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void initComponents() {
     }
 }
