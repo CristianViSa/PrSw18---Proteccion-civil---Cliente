@@ -100,6 +100,8 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 		
 		JSplitPane splitPane = new JSplitPane();
 		panel_principal.add(splitPane, BorderLayout.CENTER);
+                splitPane.setResizeWeight(0.1);
+                splitPane.setEnabled(false);
 		
 		JPanel panel_lista_planes = new JPanel();
 		splitPane.setLeftComponent(panel_lista_planes);

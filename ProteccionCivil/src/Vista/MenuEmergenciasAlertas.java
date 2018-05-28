@@ -126,17 +126,19 @@ public class MenuEmergenciasAlertas extends JPanel implements ActionListener, Li
 		
 		JSplitPane splitPane = new JSplitPane();
 		panel_principal.add(splitPane, BorderLayout.CENTER);
+                splitPane.setResizeWeight(0.1);
+                splitPane.setEnabled(false);
 		
-		JPanel panel_lista_planes = new JPanel();
-		splitPane.setLeftComponent(panel_lista_planes);
-		panel_lista_planes.setLayout(new BoxLayout(panel_lista_planes, BoxLayout.Y_AXIS));
+		JPanel panel_lista_emergencias = new JPanel();
+		splitPane.setLeftComponent(panel_lista_emergencias);
+		panel_lista_emergencias.setLayout(new BoxLayout(panel_lista_emergencias, BoxLayout.Y_AXIS));
 		
 		listaEmergencias = new DefaultListModel();
 		//listaPlanes.addListSelectionListener(this);
 		lista = new JList(listaEmergencias);
 		lista.setValueIsAdjusting(true);
 		lista.addListSelectionListener(this);
-		panel_lista_planes.add(lista);
+		panel_lista_emergencias.add(lista);
 		
 		JPanel panel = new JPanel();
 		splitPane.setRightComponent(panel);
