@@ -207,7 +207,7 @@ public class AlertasVista extends JPanel implements ActionListener, Observer{
         barraActivas = new JScrollPane(listaAlertasActivas);
         int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
         int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-        barraActivas.setPreferredSize(new Dimension(ancho - 700, alto - 180));
+        barraActivas.setPreferredSize(new Dimension(ancho - 600, alto - 180));
         
         infoAlertas = new JLabel(TEXTO_ALERTAS);
        

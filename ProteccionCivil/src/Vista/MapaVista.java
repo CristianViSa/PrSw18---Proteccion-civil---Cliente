@@ -134,7 +134,7 @@ public class MapaVista extends JLabel{
             ImageIcon icon = new ImageIcon(bytes);
             int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
             int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho - 1000, alto - 100, 0));
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho - 1100, alto - 100, 0));
             setIcon(icono);  
         }
     }
