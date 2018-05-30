@@ -10,22 +10,15 @@
 package Vista;
 
 import Modelo.Alerta;
-import Modelo.Coordenada;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Icon;
 
@@ -100,8 +93,8 @@ public class MapaVista extends JLabel{
     public void actualizarMarcadores(){
         opcs = opcsInicial;
         for (Alerta alerta : alertasActivas) {
-            introducirMarcadores(alerta.getCoordenadas().verX()
-                    , alerta.getCoordenadas().verY(),
+            introducirMarcadores(alerta.getCoordenadas().getX()
+                    , alerta.getCoordenadas().getY(),
                     alerta.getId());
         }
         visualizarMapa(opcs);

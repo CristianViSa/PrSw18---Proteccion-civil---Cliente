@@ -200,7 +200,7 @@ public class MenuAddAlerta extends JFrame implements ActionListener{
 			break;
 		case BTN_ADD_ALERTA:
 			//try {
-				Coordenada coordenada = new Coordenada(Double.parseDouble(textCoordXForm.getText()), Double.parseDouble(textCoordYForm.getText()));
+				Coordenada coordenada = new Coordenada(Float.parseFloat(textCoordXForm.getText()), Float.parseFloat(textCoordYForm.getText()));
 				Emergencia emergencia = null; //pCivil.notificacion(OyenteVista.Evento.GET_EMERGENCIA,Integer.parseInt(textIDEmerForm.getText()));
 				int id = 0; //pCivil.notificacion(OyenteVista.Evento.GET_ID_ALERTA,null);
 				boolean activa = chckbxAlertaActiva.isSelected();

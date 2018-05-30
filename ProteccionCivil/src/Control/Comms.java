@@ -1,21 +1,18 @@
 package Control;
 
+import Modelo.Albergue;
 import Modelo.Alerta;
+import Modelo.Almacen;
 import Modelo.Coordenada;
 import Modelo.Emergencia;
 import Modelo.Mensaje;
 import Modelo.Operacion;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import Modelo.Vehiculo;
+import Modelo.Voluntario;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.ConnectException;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -197,5 +194,800 @@ public class Comms {
             ex.printStackTrace();
         }
         return alertas;
+    }
+    
+       /**
+     * @author Alejandro Cencerrado
+     * 
+     * Conecta con el servidor y solicita la lista de voluntarios.
+     * 
+     * Recibe el mensaje y lo parsea creando una lista de voluntarios que devolverá.
+     */
+    public synchronized ArrayList<Voluntario> solicitarObtenerVoluntarios(){
+        
+        ArrayList<Voluntario> listaVoluntarios = new ArrayList<Voluntario>();
+        
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+            
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.OBTENER_LISTA_VOLUNTARIOS); 
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje) entrada.readObject();
+            
+            String parametros = mensajeRX.verParametros();
+
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            
+            int numVoluntarios = Integer.parseInt(tokens[0]);
+            int cantidadParametros = 8;
+            int posicion;
+            
+            for(int i = 0 ; i < numVoluntarios ; i++){
+                posicion = i * cantidadParametros;
+     
+                String id = tokens[1 + posicion];
+                String nombre = tokens[2 + posicion];
+                String telefono = tokens[3 + posicion];
+                String correo = tokens[4 + posicion];
+
+                float x = Float.parseFloat(tokens[5 + posicion]);
+                float y = Float.parseFloat(tokens[6 + posicion]);                
+                Coordenada coordenadas = new Coordenada(x, y);
+                
+                boolean esConductor = Boolean.parseBoolean(tokens[7 + posicion]);
+                boolean disponible = Boolean.parseBoolean(tokens[8 + posicion]);
+                
+                Voluntario voluntario = new Voluntario(id, nombre, telefono, 
+                                            correo, coordenadas, esConductor, disponible);
+                listaVoluntarios.add(voluntario);  
+            }
+        socket.close();  
+        return listaVoluntarios;
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        return null;
+    }
+    
+    /**
+     * @author Alejandro Cencerrado
+     * 
+     * Conecta con el servidor y solicita la lista de Vehículos.
+     * 
+     * Recibe el mensaje y lo parsea creando una lista de vehículos que devolverá.
+     * @return 
+     */
+    public synchronized ArrayList<Vehiculo> solicitarObtenerVehiculos(){
+        
+        ArrayList<Vehiculo> listaVehiculos = new ArrayList<Vehiculo>();
+        
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+            
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.OBTENER_LISTA_VEHICULOS); 
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String parametros = mensajeRX.verParametros();
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            
+            int cantidad = Integer.parseInt(tokens[0]);
+            int cantidadParametros = 6;
+            int posicion;
+            
+            for(int i = 0 ; i < cantidad ; i++){
+                
+                posicion = i * cantidadParametros;
+                
+                String id = tokens[1 + posicion];
+                String modelo = tokens[2 + posicion];
+                int plazas = Integer.parseInt(tokens[3 + posicion]);
+
+                float x = Float.parseFloat(tokens[4 + posicion]);
+                float y = Float.parseFloat(tokens[5 + posicion]);                
+                Coordenada coordenadas = new Coordenada(x, y);
+                
+                boolean disponible = Boolean.parseBoolean(tokens[6 + posicion]);
+                
+                Vehiculo vehiculo = new Vehiculo(id, modelo, plazas, coordenadas, disponible);
+                listaVehiculos.add(vehiculo);  
+                
+            }
+        socket.close();  
+        return listaVehiculos;
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        return null;
+    }
+
+    /**
+     * @author Alejandro Cencerrado
+     * 
+     * Conecta con el servidor y solicita la lista de Almacenes.
+     * 
+     * Recibe el mensaje y lo parsea creando una lista de Almacenes que devolverá.
+     * @return 
+     */
+    public synchronized ArrayList<Almacen> solicitarObtenerAlmacenes(){
+        
+        ArrayList<Almacen> listaAlmacenes = new ArrayList<Almacen>();
+        
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+            
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.OBTENER_LISTA_ALMACENES); 
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String parametros = mensajeRX.verParametros();
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            
+            int cantidad = Integer.parseInt(tokens[0]);
+            int cantidadParametros = 7;
+            int posicion;
+            
+            for(int i = 0 ; i < cantidad ; i++){
+                posicion = i * cantidadParametros;             
+
+                String id = tokens[1 + posicion];
+                int cantidadMantas = Integer.parseInt(tokens[2 + posicion]);
+                int cantidadComida = Integer.parseInt(tokens[3 + posicion]);
+                int cantidadAgua = Integer.parseInt(tokens[4 + posicion]);
+                
+                float x = Float.parseFloat(tokens[5 + posicion]);
+                float y = Float.parseFloat(tokens[6 + posicion]);                
+                Coordenada coordenadas = new Coordenada(x, y);
+                
+                int capacidad = Integer.parseInt(tokens[7 + posicion]);
+
+                Almacen almacen = new Almacen(id, cantidadMantas, cantidadComida, cantidadAgua, coordenadas, capacidad);
+                listaAlmacenes.add(almacen);  
+                
+            }
+        socket.close();  
+        return listaAlmacenes;
+            
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        return null;
+    }
+    
+    
+    /**
+     * @author Alejandro Cencerrado
+     * 
+     * Conecta con el servidor y solicita la lista de Albergues.
+     * 
+     * Recibe el mensaje y lo parsea creando una lista de Albergues que devolverá.
+     * @return 
+     */
+    public synchronized ArrayList<Albergue> solicitarObtenerAlbergues(){
+        
+        ArrayList<Albergue> listaAlbergues = new ArrayList<Albergue>();
+        
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+            
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.OBTENER_LISTA_ALBERGUES); 
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String parametros = mensajeRX.verParametros();
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            
+            int cantidad = Integer.parseInt(tokens[0]);
+            int cantidadParametros = 5;
+            int posicion;
+            
+            for(int i = 0 ; i < cantidad ; i++){
+                
+                posicion = i * cantidadParametros;
+                
+                String id = tokens[1 + posicion];
+                int capacidad = Integer.parseInt(tokens[2 + posicion]);
+                
+                float x = Float.parseFloat(tokens[3 + posicion]);
+                float y = Float.parseFloat(tokens[4 + posicion]);                
+                Coordenada coordenadas = new Coordenada(x, y);
+                
+                int ocupacion = Integer.parseInt(tokens[5 + posicion]);
+
+                Albergue albergue = new Albergue(id, capacidad, coordenadas,ocupacion);
+                listaAlbergues.add(albergue);  
+                
+            }
+        socket.close();  
+        return listaAlbergues;
+            
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        return null;
+    }
+
+    /**
+     * @author Alejandro Cencerrado
+     * Solicita la eliminación de un voluntario y recibe el resultado.
+     * @param id
+     * @return 
+     */
+    public synchronized boolean solicitarEliminarVoluntario(String id){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.ELIMINAR_VOLUNTARIO); 
+            mensajeTX.ponerParametros(id);
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();
+            socket.close();
+            
+            if(resultado.equals("true")){  
+                return true;
+            }
+        } catch (IOException | ClassNotFoundException ex) {
+            return false;
+        }
+        return false;
+    }
+    
+    /**
+     * @author Alejandro Cencerrado
+     * Solicita la eliminación de un albergue y recibe el resultado.
+     * @param id
+     * @return 
+     */
+    public synchronized boolean solicitarEliminarAlbergue(String id){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.ELIMINAR_ALBERGUE); 
+            mensajeTX.ponerParametros(id);
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();
+            socket.close();
+            
+            if(resultado.equals("true")){    
+                return true;
+            }  
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return false;
+    }
+    
+    /**
+     * @author Alejandro Cencerrado
+     * Solicita la eliminación de un vehiculo y recibe el resultado.
+     * @param id
+     * @return 
+     */
+    public synchronized boolean solicitarEliminarVehiculo(String id){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.ELIMINAR_VEHICULO); 
+            mensajeTX.ponerParametros(id);
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();
+            socket.close();
+            
+            if(resultado.equals("true")){
+                return true;
+            }  
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return false;
+    }
+    
+        /**
+     * @author Alejandro Cencerrado
+     * Solicita la eliminación de un almacen y recibe el resultado.
+     * @param id
+     * @return 
+     */
+    public synchronized boolean solicitarEliminarAlmacen(String id){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.ELIMINAR_ALMACEN); 
+            mensajeTX.ponerParametros(id);
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();
+            socket.close();
+            
+            if(resultado.equals("true")){
+                return true;
+            }  
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return false;
+    }
+    
+    /**
+     * @author Alejandro Cencerrado
+     * Solicita la inserción del vehículo pasado por parámetro.
+     * @param vehiculo
+     * @return 
+     */
+    public synchronized boolean solicitarInsertarVehiculo(Vehiculo vehiculo){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.INSERTAR_VEHICULO);     
+            mensajeTX.ponerParametros(vehiculo.toString());
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();
+            socket.close();
+            
+            if(resultado.equals("true")){
+                return true;
+            }  
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return false;
+    }
+    
+    /**
+     * @author Alejandro Cencerrado
+     * Solicita la inserción del Voluntario pasado por parámetro.
+     * @param voluntario
+     * @return 
+     */
+    public synchronized boolean solicitarInsertarVoluntario(Voluntario voluntario){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.INSERTAR_VOLUNTARIO);     
+            mensajeTX.ponerParametros(voluntario.toString());
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();  
+            socket.close();
+            
+            if(resultado.equals("true")){
+                return true;
+            }  
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return false;
+    }
+    
+        /**
+     * @author Alejandro Cencerrado
+     * Solicita la inserción del Almacen pasado por parámetro.
+     */
+    public synchronized boolean solicitarInsertarAlmacen(Almacen almacen){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.INSERTAR_ALMACEN);     
+            mensajeTX.ponerParametros(almacen.toString());
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();
+            socket.close();
+            
+            if(resultado.equals("true")){
+                return true;
+            }  
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return false;
+    }
+    
+        /**
+     * @author Alejandro Cencerrado
+     * Solicita la inserción del Albergue pasado por parámetro.
+     * @param albergue
+     * @return 
+     */
+    public synchronized boolean solicitarInsertarAlbergue(Albergue albergue){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.INSERTAR_ALBERGUE);     
+            mensajeTX.ponerParametros(albergue.toString());
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();
+            socket.close();
+            
+            if(resultado.equals("true")){   
+                return true;
+            }  
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return false;
+    }
+    
+     /**
+     * @author Alejandro Cencerrado
+     * Solicita la modificación del vehículo pasado por parámetro.
+     * @param vehiculo
+     * @return 
+     */
+    public synchronized boolean solicitarModificarVehiculo(Vehiculo vehiculo){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.MODIFICAR_VEHICULO);     
+            mensajeTX.ponerParametros(vehiculo.toString());
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();
+            socket.close();
+            if(resultado.equals("true")){
+                return true;
+            }  
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return false;
+    }
+    
+    /**
+     * @author Alejandro Cencerrado
+     * Solicita la modificación del Voluntario pasado por parámetro.
+     * @param voluntario
+     * @return 
+     */
+    public synchronized boolean solicitarModificarVoluntario(Voluntario voluntario){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.MODIFICAR_VOLUNTARIO);     
+            mensajeTX.ponerParametros(voluntario.toString());
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();
+            socket.close();
+            if(resultado.equals("true")){
+                
+                return true;
+            }  
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return false;
+    }
+    
+        /**
+     * @author Alejandro Cencerrado
+     * Solicita la modificación del Almacen pasado por parámetro.
+     */
+    public synchronized boolean solicitarModificarAlmacen(Almacen almacen){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.MODIFICAR_ALMACEN);     
+            mensajeTX.ponerParametros(almacen.toString());
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();
+            socket.close();
+            if(resultado.equals("true")){     
+                return true;
+            }  
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return false;
+    }
+    
+     /**
+     * @author Alejandro Cencerrado
+     * Solicita la modificación del Albergue pasado por parámetro.
+     * @param albergue
+     * @return 
+     */
+    public synchronized boolean solicitarModificarAlbergue(Albergue albergue){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.MODIFICAR_ALBERGUE);     
+            mensajeTX.ponerParametros(albergue.toString());
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String resultado = mensajeRX.verParametros();
+            socket.close();
+            if(resultado.equals("true")){
+                return true;
+            }  
+            
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return false;
+    }
+    
+    /**
+     * @author Alejandro Cencerrado
+     * Solicita la búsqueda de un Voluntario en la bd.
+     * @param id
+     * @return 
+     */
+    public synchronized Voluntario solicitarBuscarVoluntario(String id){
+        Voluntario voluntario = null;
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.BUSCAR_VOLUNTARIO);     
+            mensajeTX.ponerParametros(id);
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();            
+            
+            String parametros = mensajeRX.verParametros();
+
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            
+            if(!tokens[0].equals("null")){
+                String idVoluntario = tokens[0];
+                String nombre = tokens[1];
+                String telefono = tokens[2];
+                String correo = tokens[3];
+
+                float x = Float.parseFloat(tokens[4]);
+                float y = Float.parseFloat(tokens[5]);                
+                Coordenada coordenadas = new Coordenada(x, y);
+
+                boolean esConductor = Boolean.parseBoolean(tokens[6]);
+                boolean disponible = Boolean.parseBoolean(tokens[7]);
+
+                voluntario = new Voluntario(idVoluntario, nombre, telefono, 
+                                            correo, coordenadas, esConductor, disponible);   
+            }
+                    
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        
+        return voluntario;
+    }
+    
+    
+    /**
+     * @author Alejandro Cencerrado
+     * Solicita la búsqueda de un Vehiculo en la bd.
+     * @return 
+     */
+    public synchronized Vehiculo solicitarBuscarVehiculo(String id){
+        Vehiculo vehiculo = null;
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.BUSCAR_VOLUNTARIO);     
+            mensajeTX.ponerParametros(id);
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();            
+            
+            String parametros = mensajeRX.verParametros();
+
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            
+            if(!tokens[0].equals("null")){
+                String idVehiculo = tokens[0];
+                String modelo = tokens[1];
+                int plazas = Integer.parseInt(tokens[2]);
+
+                float x = Float.parseFloat(tokens[3]);
+                float y = Float.parseFloat(tokens[4]);                
+                Coordenada coordenadas = new Coordenada(x, y);
+                
+                boolean disponible = Boolean.parseBoolean(tokens[5]);
+                
+                vehiculo = new Vehiculo(idVehiculo, modelo, plazas, coordenadas, disponible);
+                 
+            }
+                    
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        
+        return vehiculo;
+    }
+    
+    /**
+     * @author Alejandro Cencerrado
+     * Solicita la búsqueda de un Almacen en la bd.
+     * @param id
+     * @return 
+     */
+    public synchronized Almacen solicitarBuscarAlmacen(String id){
+        Almacen almacen = null;
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.BUSCAR_VOLUNTARIO);     
+            mensajeTX.ponerParametros(id);
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();            
+            
+            String parametros = mensajeRX.verParametros();
+
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            
+            if(!tokens[0].equals("null")){
+                String idAlmacen = tokens[0];
+                int cantidadMantas = Integer.parseInt(tokens[1]);
+                int cantidadComida = Integer.parseInt(tokens[2]);
+                int cantidadAgua = Integer.parseInt(tokens[3]);
+                
+                float x = Float.parseFloat(tokens[4]);
+                float y = Float.parseFloat(tokens[5]);                
+                Coordenada coordenadas = new Coordenada(x, y);
+                
+                int capacidad = Integer.parseInt(tokens[6]);
+
+                almacen = new Almacen(idAlmacen, cantidadMantas, cantidadComida, cantidadAgua, coordenadas, capacidad);
+                 
+            }
+                    
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        
+        return almacen;
+    }
+    
+    /**
+     * @author Alejandro Cencerrado
+     * Solicita la búsqueda de un Voluntario en la bd.
+     * @param id
+     * @return 
+     */
+    public synchronized Albergue solicitarBuscarAlbergue(String id){
+        Albergue albergue = null;
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.BUSCAR_VOLUNTARIO);     
+            mensajeTX.ponerParametros(id);
+            
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();            
+            
+            String parametros = mensajeRX.verParametros();
+
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            
+            if(!tokens[0].equals("null")){
+                
+                String idAlbergue = tokens[0];
+                int capacidad = Integer.parseInt(tokens[1]);
+                
+                float x = Float.parseFloat(tokens[2]);
+                float y = Float.parseFloat(tokens[3]);                
+                Coordenada coordenadas = new Coordenada(x, y);
+                
+                int ocupacion = Integer.parseInt(tokens[4]);
+
+                albergue = new Albergue(idAlbergue, capacidad, coordenadas,ocupacion);
+                 
+            }
+                    
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        
+        return albergue;
     }
 }

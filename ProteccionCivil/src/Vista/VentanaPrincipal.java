@@ -21,6 +21,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
     private static final String MENU_ITEM_HISTORIAL = "HISTORIAL_ALERTAS";
     private static final String MENU_ITEM_ALERTAS = "MENU_ITEM_ALERTAS";
     
+    //ALEJANDRO
+    private static final String PANEL_ALBERGUES = "Panel Albergues";
+    private static final String PANEL_ALMACENES = "Panel Almacenes";
+    private static final String PANEL_VEHICULOS = "Panel Vehiculos";
+    private static final String PANEL_VOLUNTARIOS = "Panel Voluntarios";
+    private static final String PANEL_MAPA_RECURSOS = "Panel Mapa Recursos";
+    
     private OyenteVista oyenteVista;
     /**
      * Creates new form VentanPrincipal
@@ -30,13 +37,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         initComponents();
         
         //Hacer que el frame reciba notificaciones del menú
-        jMenuItemAlbergues.addActionListener(this);
-        jMenuItemAlbergues.setActionCommand("Panel Albergues");
         
-        jMenuItemAlmacenes.addActionListener(this);
-        jMenuItemMapaRecursos.addActionListener(this);
-        jMenuItemVehiculos.addActionListener(this);
-        jMenuItemVoluntarios.addActionListener(this);
         
         jMenuItemPlanes.addActionListener(this);
         jMenuItemPlanes.setActionCommand(MENU_PLANES);
@@ -57,6 +58,19 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         // @author Cristian
         jMenuItemAlertas.addActionListener(this);
         jMenuItemAlertas.setActionCommand(MENU_ITEM_ALERTAS);
+        
+        
+        //@author ALEJANDRO
+        jMenuItemAlbergues.addActionListener(this);
+        jMenuItemAlbergues.setActionCommand(PANEL_ALBERGUES);
+        jMenuItemAlmacenes.addActionListener(this);
+        jMenuItemAlmacenes.setActionCommand(PANEL_ALMACENES);    
+        jMenuItemMapaRecursos.addActionListener(this);
+        jMenuItemMapaRecursos.setActionCommand(PANEL_MAPA_RECURSOS);     
+        jMenuItemVehiculos.addActionListener(this);
+        jMenuItemVehiculos.setActionCommand(PANEL_VEHICULOS);      
+        jMenuItemVoluntarios.addActionListener(this);
+        jMenuItemVoluntarios.setActionCommand(PANEL_VOLUNTARIOS);
           
         
         this.setVisible(true);
@@ -78,7 +92,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuPlanes = new javax.swing.JMenu();
         jMenuItemPlanes = new javax.swing.JMenuItem();
         jMenuItemEmergencias = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuItemMapa = new javax.swing.JMenu();
         jMenuItemVoluntarios = new javax.swing.JMenuItem();
         jMenuItemVehiculos = new javax.swing.JMenuItem();
         jMenuItemAlmacenes = new javax.swing.JMenuItem();
@@ -140,8 +154,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
 
         jMenuBar1.add(jMenuPlanes);
 
-        jMenu2.setText("Gestión de Recursos");
-        jMenu2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jMenuItemMapa.setText("Gestión de Recursos");
+        jMenuItemMapa.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
 
         jMenuItemVoluntarios.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jMenuItemVoluntarios.setText("Voluntarios");
@@ -150,25 +164,25 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
                 jMenuItemVoluntariosActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItemVoluntarios);
+        jMenuItemMapa.add(jMenuItemVoluntarios);
 
         jMenuItemVehiculos.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jMenuItemVehiculos.setText("Vehículos");
-        jMenu2.add(jMenuItemVehiculos);
+        jMenuItemMapa.add(jMenuItemVehiculos);
 
         jMenuItemAlmacenes.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jMenuItemAlmacenes.setText("Almacenes");
-        jMenu2.add(jMenuItemAlmacenes);
+        jMenuItemMapa.add(jMenuItemAlmacenes);
 
         jMenuItemAlbergues.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jMenuItemAlbergues.setText("Albergues");
-        jMenu2.add(jMenuItemAlbergues);
+        jMenuItemMapa.add(jMenuItemAlbergues);
 
         jMenuItemMapaRecursos.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jMenuItemMapaRecursos.setText("Mapa");
-        jMenu2.add(jMenuItemMapaRecursos);
+        jMenuItemMapa.add(jMenuItemMapaRecursos);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenuItemMapa);
 
         jMenu3.setText("Gestión de Alertas");
         jMenu3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -299,14 +313,36 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         case MENU_ZONAS_SEGURIDAD:
             oyenteVista.notificacion(OyenteVista.Evento.MENU_ZONAS, null);
             break;
-        }
+        
+        // @author Alejandro     
+        case PANEL_ALBERGUES:
+               oyenteVista.notificacion(OyenteVista.Evento.VER_PANEL_ALBERGUES, null);
+               break;
+        // @author Alejandro       
+        case PANEL_ALMACENES:
+           oyenteVista.notificacion(OyenteVista.Evento.VER_PANEL_ALMACENES, null);
+           break;
+        // @author Alejandro 
+        case PANEL_MAPA_RECURSOS:
+           oyenteVista.notificacion(OyenteVista.Evento.VER_PANEL_MAPA_RECURSOS, null);
+           break;
+        // @author Alejandro 
+        case PANEL_VEHICULOS:
+           oyenteVista.notificacion(OyenteVista.Evento.VER_PANEL_VEHICULOS, null);
+           break;
+
+        // @author Alejandro 
+        case PANEL_VOLUNTARIOS:
+           oyenteVista.notificacion(OyenteVista.Evento.VER_PANEL_VOLUNTARIOS, null);
+           break;
+            
+     }
   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem historialAlertas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    public javax.swing.JMenu jMenu2;
     public javax.swing.JMenu jMenu3;
     public javax.swing.JMenu jMenu4;
     public javax.swing.JMenuBar jMenuBar1;
@@ -315,6 +351,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JMenuItem jMenuItemAlmacenes;
     private javax.swing.JMenuItem jMenuItemEmergencias;
     private javax.swing.JMenuItem jMenuItemIniciarSesion;
+    public javax.swing.JMenu jMenuItemMapa;
     private javax.swing.JMenuItem jMenuItemMapaRecursos;
     private javax.swing.JMenuItem jMenuItemPlanes;
     private javax.swing.JMenuItem jMenuItemRegistrarse;

@@ -1,37 +1,30 @@
 package Modelo;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
- * @author Cristian
+ * @author Alejandro Cencerrado
  */
 public class Coordenada {
-    private double x;
-    private double y;
+    private float x;
+    private float y;
     
-    public Coordenada(double x, double y){
+    public Coordenada(float x, float y){
         this.x = x;
         this.y = y;
     }
     
-    public double verX(){
+    public float getX(){
         return x;
     }
     
     
-    public double verY(){
+    public float getY(){
         return y;
     }
     
-    public boolean equals(Coordenada coordenada){
-        if(coordenada.verX() == x & coordenada.verY() == y){
-            return true;
-        }
-        return false;
+    @Override
+    public String toString() {
+        return "Coordeenada[ X=" + getX() + ", Y= "+ getY() + " ]";
     }
 }

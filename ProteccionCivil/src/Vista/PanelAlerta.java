@@ -214,8 +214,8 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
             Alerta alerta = listaAlertas.get(indice);
             String info = alerta.informacion();
             modeloAlertas.addElement(info);
-            mapaVista.introducirMarcadores(alerta.getCoordenadas().verX(),
-                alerta.getCoordenadas().verY(), alerta.getId());
+            mapaVista.introducirMarcadores(alerta.getCoordenadas().getX(),
+                alerta.getCoordenadas().getY(), alerta.getId());
             mapaVista.introducirAlerta(alerta);
         }
         mapaVista.refrescar();
