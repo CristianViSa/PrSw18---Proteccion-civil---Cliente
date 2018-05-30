@@ -891,7 +891,7 @@ public class ProteccionCivil implements OyenteVista {
             case MENU_ZONAS:
                 menuZonas = new MenuZonasSeguridad(this);
                 cargarPanel(menuZonas);
-                
+                break;
                 
                 
             //ALEJANDRO
@@ -967,7 +967,6 @@ public class ProteccionCivil implements OyenteVista {
             case MODIFICAR_VOLUNTARIO:
                 modificarVoluntario();
                 break;
-
 
             // ---- MAPA RECURSOS ---- //
             //@author Alejandro 

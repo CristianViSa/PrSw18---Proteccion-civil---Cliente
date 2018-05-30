@@ -191,7 +191,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItemAlertas.setText("Alertas");
         jMenu3.add(jMenuItemAlertas);
 
-        historialAlertas.setFont(new java.awt.Font("Lucida Bright", 0, 18)); // NOI18N
+        historialAlertas.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         historialAlertas.setText("Historial de Alertas");
         historialAlertas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
