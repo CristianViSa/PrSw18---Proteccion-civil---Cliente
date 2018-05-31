@@ -83,8 +83,8 @@ public class Comms {
                 String tipoEmergencia = tokens[2+posicion];
                 int nivelEmergencia = 
                         Integer.parseInt(tokens[3+posicion]);
-                int x = Integer.parseInt(tokens[4+posicion]);
-                int y = Integer.parseInt(tokens[5+posicion]);
+                float x = Float.parseFloat(tokens[4+posicion]);
+                float y = Float.parseFloat(tokens[5+posicion]);
                 Coordenada coordenadas = new Coordenada(x, y);
                 int afectados = Integer.parseInt(tokens[6+posicion]);
                 boolean activada = Boolean.parseBoolean(tokens[7+posicion]);
@@ -121,6 +121,7 @@ public class Comms {
 
             Mensaje mensajeTX = new Mensaje();
             mensajeTX.ponerOperacion(Operacion.ACTIVAR_PLAN); 
+            mensajeTX.ponerParametros(id); 
             salida.writeObject(mensajeTX);
             
             Mensaje mensajeRX = (Mensaje)entrada.readObject();
@@ -173,8 +174,8 @@ public class Comms {
                 String tipoEmergencia = tokens[2+posicion];
                 int nivelEmergencia = 
                         Integer.parseInt(tokens[3+posicion]);
-                int x = Integer.parseInt(tokens[4+posicion]);
-                int y = Integer.parseInt(tokens[5+posicion]);
+                float x = Float.parseFloat(tokens[4+posicion]);
+                float y = Float.parseFloat(tokens[5+posicion]);
                 Coordenada coordenadas = new Coordenada(x, y);
                 int afectados = Integer.parseInt(tokens[6+posicion]);
                 boolean activada = Boolean.parseBoolean(tokens[7+posicion]);
