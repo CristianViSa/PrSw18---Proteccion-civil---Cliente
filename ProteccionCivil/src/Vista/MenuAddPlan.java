@@ -204,7 +204,7 @@ public class MenuAddPlan extends JFrame implements ActionListener, Observer{
 				int vehiculos = Integer.parseInt(txtVehiculosForm.getText());
 				int voluntarios = Integer.parseInt(txtVoluntariosForm.getText());
 				String actuaciones = txtActuacionesNecesariasForm.getText();
-				PlanProteccion plan = new PlanProteccion(oyenteVista, nombre, vehiculos, voluntarios, actuaciones);
+				PlanProteccion plan = new PlanProteccion(/*oyenteVista,*/ nombre, vehiculos, voluntarios, actuaciones);
 				oyenteVista.notificacion(OyenteVista.Evento.ADD_PLAN,plan);
 				this.dispose();
 			}catch(Exception e1) {

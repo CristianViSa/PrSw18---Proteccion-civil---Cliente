@@ -48,8 +48,8 @@ public class MenuModPlan extends JFrame implements ActionListener, Observer{
 	private JTextField txtVoluntariosRequeridos;
 	private JTextField txtActuacionesNecesarias_1;
 	
-	private final OyenteVista pCivil;
-	private int idPlan;
+	private final OyenteVista oyenteVista;
+	private String idPlan;
 	
 	private static final String BTN_VOLVER = "Volver";
 	private static final String BTN_MOD_PLAN = "Add Plan";
@@ -74,36 +74,14 @@ public class MenuModPlan extends JFrame implements ActionListener, Observer{
 	 * Create the frame.
 	 */
 	public MenuModPlan(OyenteVista pCivil, PlanProteccion plan) {
-		this.pCivil = pCivil;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.oyenteVista = pCivil;
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 732, 498);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.setPreferredSize(getMaximumSize());
-		
-		JToolBar toolbar_subsistemas = new JToolBar();
-		toolbar_subsistemas.setFloatable(false);
-		contentPane.add(toolbar_subsistemas, BorderLayout.NORTH);
-		
-		JButton button_menu_principal = new JButton(" Menu Principal ");
-		
-		toolbar_subsistemas.add(button_menu_principal);
-		
-		JButton button_planes_proteccion = new JButton(" Planes de Protecci\u00F3n ");
-		button_planes_proteccion.setEnabled(false);
-		toolbar_subsistemas.add(button_planes_proteccion);
-		
-		JButton button_emergencias_alertas = new JButton(" Gesti\u00F3n de emergencias y alertas ");
-		toolbar_subsistemas.add(button_emergencias_alertas);
-		
-		JButton button_reursos_medios = new JButton(" Recursos y medios ");
-		button_reursos_medios.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		toolbar_subsistemas.add(button_reursos_medios);
 		
 		JPanel panel_gestion_planes = new JPanel();
 		contentPane.add(panel_gestion_planes, BorderLayout.SOUTH);
@@ -231,19 +209,19 @@ public class MenuModPlan extends JFrame implements ActionListener, Observer{
 			this.dispose();
 			break;
 		case BTN_MOD_PLAN:
-			try {
+			//try {
 				String nombre = txtNombreForm.getText();
 				int vehiculos = Integer.parseInt(txtVehiculosForm.getText());
 				int voluntarios = Integer.parseInt(txtVoluntariosForm.getText());
 				String actuaciones = txtActuacionesNecesariasForm.getText();
-				PlanProteccion plan = new PlanProteccion(idPlan, pCivil, nombre, vehiculos, voluntarios, actuaciones);
+				PlanProteccion plan = new PlanProteccion(idPlan, /*oyenteVista,*/ nombre, vehiculos, voluntarios, actuaciones);
 				System.out.println("PLAN MODIFICADO: id" + plan.getId() + "\n" + plan.toString() );
-				pCivil.notificacion(OyenteVista.Evento.MOD_PLAN,plan);
+				oyenteVista.notificacion(OyenteVista.Evento.MOD_PLAN,plan);
 				this.dispose();
-			}catch(Exception e1) {
+			/*}catch(Exception e1) {
 				VentanaAlertaGenerica vAlerta = new VentanaAlertaGenerica("--Datos no v�lidos--\n\nLos veh�culos y voluntarios\ndeben ser un n�mero");
 				vAlerta.setVisible(true);
-			}
+			}*/
 			break;
 		}
 		

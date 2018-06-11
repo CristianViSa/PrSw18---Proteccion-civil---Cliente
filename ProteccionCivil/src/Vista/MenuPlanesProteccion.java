@@ -48,10 +48,11 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 	private JList lista;
 	private JTextPane textPane;
 	//private final OyenteVista pCivil;
-	private PlanProteccion selectedPlan;
+	public PlanProteccion selectedPlan;
 	
 	public static final String BTN_MENU_PLANES= "Menu Planes";
 	public static final String BTN_MENU_EMERGENCIAS = "Menu Emergencias";
+        public static final String ELIMINAR_PLAN = "Eliminar Plan";
 	
 	/**
 	 * Inicia la aplicación
@@ -77,59 +78,6 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 		setBounds(100, 100, 732, 498);
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setLayout(new BorderLayout(0, 0));
-//		
-//		JPanel panel_gestion_planes = new JPanel();
-//		this.add(panel_gestion_planes, BorderLayout.SOUTH);
-//		panel_gestion_planes.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-//		
-//		JButton button_anadir_plan = new JButton("A\u00F1adir Plan protecci\u00F3n");
-//		button_anadir_plan.addActionListener(new AddPlanProteccion());
-//		panel_gestion_planes.add(button_anadir_plan);
-//		
-//		JButton button_modificar_plan = new JButton("Modificar Plan protecci\u00F3n");
-//		button_modificar_plan.addActionListener(new ModPlanProteccion());
-//		panel_gestion_planes.add(button_modificar_plan);
-//		
-//		JButton button_eliminar_plan = new JButton("Eliminar Plan Protecci\u00F3n");
-//		button_eliminar_plan.addActionListener(new EliminarPlanProteccion());
-//		panel_gestion_planes.add(button_eliminar_plan);
-//		
-//		JPanel panel_principal = new JPanel();
-//		this.add(panel_principal, BorderLayout.CENTER);
-//		panel_principal.setLayout(new BorderLayout(0, 0));
-//		
-//		JSplitPane splitPane = new JSplitPane();
-//		panel_principal.add(splitPane, BorderLayout.CENTER);
-//                splitPane.setResizeWeight(0.1);
-//                splitPane.setEnabled(false);
-//		
-//		JPanel panel_lista_planes = new JPanel();
-//		splitPane.setLeftComponent(panel_lista_planes);
-//		panel_lista_planes.setLayout(new BoxLayout(panel_lista_planes, BoxLayout.Y_AXIS));
-//		
-//		listaPlanes = new DefaultListModel();
-//		//listaPlanes.addListSelectionListener(this);
-//		lista = new JList(listaPlanes);
-//		lista.setValueIsAdjusting(true);
-//		lista.addListSelectionListener(this);
-//		panel_lista_planes.add(lista);
-//		
-//		JPanel panel = new JPanel();
-//		splitPane.setRightComponent(panel);
-//		
-//		textPane = new JTextPane();
-//		textPane.setFont(new Font("Tahoma", Font.PLAIN, 16));
-//		textPane.setEditable(false);
-//		panel.add(textPane);
-//		
-//		txtProteccinCivil = new JTextField();
-//		txtProteccinCivil.setEditable(false);
-//		txtProteccinCivil.setFont(new Font("Tahoma", Font.PLAIN, 26));
-//		txtProteccinCivil.setHorizontalAlignment(SwingConstants.CENTER);
-//		txtProteccinCivil.setText("Planes de Protecci\u00F3n");
-//		panel_principal.add(txtProteccinCivil, BorderLayout.NORTH);
-//		txtProteccinCivil.setColumns(10);
-//		
                 
 		JPanel panel_principal = new JPanel();
 		this.add(panel_principal, BorderLayout.CENTER);
@@ -177,6 +125,7 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 		
 		JButton button_eliminar_plan = new JButton("Eliminar Plan Protecci\u00F3n");
 		button_eliminar_plan.addActionListener(new EliminarPlanProteccion());
+                button_eliminar_plan.setActionCommand(ELIMINAR_PLAN);
 		panel_gestion_planes.add(button_eliminar_plan);
 		
 		JPanel panel_2 = new JPanel();
@@ -221,12 +170,14 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 	public void addPlanes(List planes) {
 		listaPlanes.clear();
 		this.planes = planes;
-		for(int i = 0; i<this.planes.size();i++) {
-			PlanProteccion plan = this.planes.get(i);
-			listaPlanes.addElement(plan.getNombre());
-		}
-		selectedPlan = this.planes.get(0);
-		textPane.setText(this.planes.get(0).toString());
+                if(!planes.isEmpty()){
+                    for(int i = 0; i<this.planes.size();i++) {
+                            PlanProteccion plan = this.planes.get(i);
+                            listaPlanes.addElement(plan.getNombre());
+                    }
+                    selectedPlan = this.planes.get(0);
+                    textPane.setText(this.planes.get(0).toString());
+                }
 	}
 	
 	class AddPlanProteccion implements ActionListener{
@@ -261,7 +212,14 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 			//oyenteVista.notificacion(OyenteVista.Evento.BTN_MAIN_MENU, null);
 			//this.dispose();
 			break;
-		}
+                case ELIMINAR_PLAN:
+                        if(selectedPlan==null)
+                            selectedPlan = planes.get(0);                     
+                        System.out.println("Plan menu planes: "+selectedPlan.toString());
+                        //oyenteVista.notificacion(OyenteVista.Evento.ELIMINAR_PLAN,selectedPlan);
+			//this.dispose();
+                    break;
+                }
 	}
 
 	//@Override
@@ -282,16 +240,26 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 		this.update(planes.get(0).getNombre());
 		
 	}
+        
+        public PlanProteccion getPlan(String nombre){
+            if(!planes.isEmpty()){
+                    for(int i = 0; i<this.planes.size();i++) {
+                        if(planes.get(i).getNombre()==nombre){
+                            return planes.get(i);
+                        }
+                    }
+                }
+            System.out.println("no existe");
+            return null;
+        }
 
 	@Override
     public void valueChanged(ListSelectionEvent evt) {
 		if(!evt.getValueIsAdjusting()) { //only execute once
 			List values = lista.getSelectedValuesList();
 			if(!values.isEmpty()) {
-				System.out.println("Valores lista: " + values.toString());
-				selectedPlan = null;//pCivil.notificacion(OyenteVista.Evento.GET_PLAN_NOMBRE, values.get(0).toString());
-				System.out.println("Plan: " + selectedPlan.toString());
-		        this.update(selectedPlan.toString());
+                            selectedPlan = getPlan(values.get(0).toString());
+                            this.update(selectedPlan.toString());
 			}
 		}
     }

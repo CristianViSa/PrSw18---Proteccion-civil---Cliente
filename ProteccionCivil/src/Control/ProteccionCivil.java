@@ -63,11 +63,11 @@ public class ProteccionCivil implements OyenteVista {
         comunicaciones = new Comms(5500);
         
         //PRUEBA
-        planes = new ArrayList<PlanProteccion>();
-	planes.add(new PlanProteccion(this,"plan antiincendios - riesgo 1", 10,7, "Recoger y sacar a la población afectada en la zona"));
-	planes.add(new PlanProteccion(this,"plan antiincendios - riesgo 2", 30,15, "Recoger y sacar a la población afectada en la zona"));
-        emergencias = new ArrayList<Emergencia>();
-        emergencias.add(new Emergencia("antiincendios", 1, 4, planes.get(1)));
+//        planes = new ArrayList<PlanProteccion>();
+//	planes.add(new PlanProteccion(/*this,*/"plan antiincendios - riesgo 1", 10,7, "Recoger y sacar a la población afectada en la zona"));
+//	planes.add(new PlanProteccion(/*this,*/"plan antiincendios - riesgo 2", 30,15, "Recoger y sacar a la población afectada en la zona"));
+//        emergencias = new ArrayList<Emergencia>();
+//        emergencias.add(new Emergencia("antiincendios", 1, 4, planes.get(1)));
     }
 
     /**
@@ -128,13 +128,18 @@ public class ProteccionCivil implements OyenteVista {
         }
         
 	public void modPlan(PlanProteccion plan) {
-		int idPlan = plan.getId() - 1;
-		
+		String idPlan = plan.getId();
+                PlanProteccion viejoPlan = getPlan(plan.getId());
+                viejoPlan.setNombre(plan.getNombre());
+                viejoPlan.setVehiculosNecesarios(plan.getVehiculosNecesarios());
+                viejoPlan.setVoluntariosNecesarios(plan.getVoluntariosNecesarios());
+                viejoPlan.setActuacionesNecesarias(plan.getActuacionesNecesarias());
+		/*
 		planes.get(idPlan).setNombre(plan.getNombre());
 		planes.get(idPlan).setVehiculosNecesarios(plan.getVehiculosNecesarios());
 		planes.get(idPlan).setVoluntariosNecesarios(plan.getVoluntariosNecesarios());
 		planes.get(idPlan).setActuacionesNecesarias(plan.getActuacionesNecesarias());
-		
+		*/
 		menuPlanes.addPlanes(planes);
 		menuPlanes.update();
 	}
@@ -149,14 +154,14 @@ public class ProteccionCivil implements OyenteVista {
 	}
 	
 	public int getLastIdPlan(){
-		int id=0;
+		/*int id=0;
 		if(!planes.isEmpty()) {
 			for(int i = 0; i<planes.size();i++) {
 				if(planes.get(i).getId() > id)
 					id = planes.get(i).getId();
 			}
-		}
-		return id;
+		}*/
+		return 1;
 	}
 	
 	public int getLastIdAlerta(){
@@ -173,7 +178,7 @@ public class ProteccionCivil implements OyenteVista {
 	public PlanProteccion getPlan(int id) {
 		if(!planes.isEmpty()) {
 			for(int i = 0; i<planes.size();i++) {
-				if(planes.get(i).getId() == id)
+				if(planes.get(i).getId().equals(id))
 					return planes.get(i);
 			}
 		}
@@ -181,12 +186,12 @@ public class ProteccionCivil implements OyenteVista {
 	}
 	
 	public PlanProteccion getPlan(String nombre) {
-		if(!planes.isEmpty()) {
+		//if(!planes.isEmpty()) {
 			for(int i = 0; i<planes.size();i++) {
 				if(planes.get(i).getNombre() == nombre)
 					return planes.get(i);
 			}
-		}
+		//}
 		return null;
 	}
 	
@@ -849,13 +854,21 @@ public class ProteccionCivil implements OyenteVista {
                     alertaVista.mensajeConfirmacionPlan(alerta);
                 }
                 break;
+                
+            //Miguel
+            case LISTAR_PLANES:
+                
+                break;
             case ADD_PLAN:
                 addPlan((PlanProteccion)obj);
                 break;
             case MOD_PLAN:
+                comunicaciones.modPlan((PlanProteccion) obj);
                 modPlan((PlanProteccion)obj);
                 break;
             case ELIMINAR_PLAN:
+                System.out.println("PLAN - protec civil: "+menuPlanes.selectedPlan.toString());
+                comunicaciones.eliminarPlan((PlanProteccion) obj);
                 eliminarPlan((PlanProteccion)obj);
                 break;
             case GET_ID_PLAN:
@@ -876,7 +889,7 @@ public class ProteccionCivil implements OyenteVista {
             case MENU_PLANES:
                 menuPlanes = new MenuPlanesProteccion(this);
                 //ventanaPrincipal.cambiarPanelCentral(menu);
-                menuPlanes.addPlanes(planes);
+                menuPlanes.addPlanes(comunicaciones.solicitarPlanesProteccion());
                 cargarPanel(menuPlanes);
                 //menu.setVisible(true);
                 break;

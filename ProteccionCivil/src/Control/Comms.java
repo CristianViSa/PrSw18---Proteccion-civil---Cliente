@@ -9,6 +9,8 @@ import Modelo.Mensaje;
 import Modelo.Operacion;
 import Modelo.Vehiculo;
 import Modelo.Voluntario;
+import Modelo.PlanProteccion;
+import Modelo.ZonaSeguridad;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -43,6 +45,8 @@ public class Comms {
     ObjectInputStream entrada;
     
     List<Alerta> alertas;
+    List<PlanProteccion> planes;
+    
     
     public Comms(int puerto){
         socket = null;
@@ -990,5 +994,94 @@ public class Comms {
         }
         
         return albergue;
+    }
+    
+    public synchronized List<PlanProteccion>  solicitarPlanesProteccion () {
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+ 
+            planes = new ArrayList<PlanProteccion>();
+            planes.clear();
+            
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.LISTAR_PLANES); 
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String parametros = mensajeRX.verParametros();
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            int numPlanes = Integer.parseInt(tokens[0]);
+            int longitudParametros = 5;
+            int posicion;
+            for(int i = 0; i < numPlanes; i++){
+                posicion = i*longitudParametros;
+                System.out.println("--PLAN RECIBIDO:\n\t"+tokens[1+posicion]);
+                String idPlan = tokens[1+posicion];
+                System.out.println("\t"+tokens[2+posicion]);
+                String nombrePlan = tokens[2+posicion];
+                int vehiculos = Integer.parseInt(tokens[3+posicion]);
+                int voluntarios = Integer.parseInt(tokens[4+posicion]);
+                String actuaciones = tokens[5+posicion];
+                
+                PlanProteccion plan = new PlanProteccion(idPlan, nombrePlan, 
+                        vehiculos, voluntarios, actuaciones);
+                planes.add(plan);  
+            }
+        socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        return planes;
+    }
+    
+    public synchronized boolean modPlan(PlanProteccion plan){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+             
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.MOD_PLAN); 
+            mensajeTX.ponerParametros(plan.toString());
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    public synchronized boolean eliminarPlan(PlanProteccion plan){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            System.out.println("PLAN COMMS CLIENTE: " + plan.getId());
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.ELIMINAR_PLAN); 
+            mensajeTX.ponerParametros(plan.toString());
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        return false;
     }
 }

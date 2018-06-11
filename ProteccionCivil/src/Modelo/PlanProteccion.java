@@ -6,19 +6,18 @@ import Vista.OyenteVista;
 /**
  * 
  * @author MiguelYanes
- * @version P01 - 15/4/18
  */
 
 public class PlanProteccion {
-	private int id_plan;
+	private String id_plan;
 	private String nombre;
 	private int vehiculosNecesarios;
 	private int voluntariosNecesarios;
 	private String actuacionesNecesarias;
 	
 	//para nuevos planes
-	public PlanProteccion(OyenteVista pCivil, String nombre, int vehiculosNecesarios, int voluntariosNecesarios, String actuacionesNecesarias){
-		this.id_plan = 0;//pCivil.notificacion(OyenteVista.Evento.GET_ID_PLAN,null);
+	public PlanProteccion(String nombre, int vehiculosNecesarios, int voluntariosNecesarios, String actuacionesNecesarias){
+		this.id_plan = "0";//pCivil.notificacion(OyenteVista.Evento.GET_ID_PLAN,null);
 		this.nombre = nombre;
 		this.vehiculosNecesarios = vehiculosNecesarios;
 		this.voluntariosNecesarios = voluntariosNecesarios;
@@ -26,7 +25,7 @@ public class PlanProteccion {
 	}
 	
 	//para copias de planes existentes
-	public PlanProteccion(int id, OyenteVista pCivil, String nombre, int vehiculosNecesarios, int voluntariosNecesarios, String actuacionesNecesarias){
+	public PlanProteccion(String id, String nombre, int vehiculosNecesarios, int voluntariosNecesarios, String actuacionesNecesarias){
 		this.id_plan = id;
 		this.nombre = nombre;
 		this.vehiculosNecesarios = vehiculosNecesarios;
@@ -62,7 +61,7 @@ public class PlanProteccion {
 		this.actuacionesNecesarias = actuacionesNecesarias;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id_plan;
 	}
 
@@ -74,7 +73,7 @@ public class PlanProteccion {
 		this.nombre = nombre;
 	}
 	
-	public String toString(){
+	/*public String toString(){
 		String cadena = "\n" + getNombre();
 		cadena += "\n\nCódigo del plan: " + getId();
 		cadena += "\nVehículos necesarios: " + getVehiculosNecesarios();
@@ -82,6 +81,10 @@ public class PlanProteccion {
 		cadena += "\n\n\t" + getActuacionesNecesarias();
 		cadena += "\n";
 		return cadena;
-	}
+	}*/
 	
+        public String toString(){
+            return getId() + "," + getNombre()+ "," +getVehiculosNecesarios() +
+                "," + getVoluntariosNecesarios() + "," + getActuacionesNecesarias();
+    }
 }
