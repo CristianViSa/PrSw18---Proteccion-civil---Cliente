@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Cristian
+ * @author Cristian, Alejandro y Miguel
  */
 public class Comms {
     private Socket socket;

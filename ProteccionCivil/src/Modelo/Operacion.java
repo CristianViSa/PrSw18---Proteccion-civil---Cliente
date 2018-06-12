@@ -7,7 +7,7 @@ package Modelo;
 
 /**
  *
- * @author Cristian
+ * @author Cristian, Alejandro, Miguel
  */
 public enum Operacion {
     LOGIN, REGISTRO,

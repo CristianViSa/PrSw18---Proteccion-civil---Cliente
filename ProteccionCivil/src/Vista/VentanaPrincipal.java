@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Cristian
+ * @author Cristian, Alejandro
  */
 public class VentanaPrincipal extends javax.swing.JFrame implements ActionListener {
     private static final String MENU_PLANES = "Menu Planes";

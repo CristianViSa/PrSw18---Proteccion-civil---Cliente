@@ -35,7 +35,7 @@ import Vista.PanelVoluntarios;
  * Trabajo Proteccion Civil
  * Proyecto Software
  * Aplicacion cliente, Gestion de emergencias y alertas
- * @author Cristian
+ * @author Cristian, Alejandro y Miguel
  */
 public class ProteccionCivil implements OyenteVista {
     private VentanaPrincipal ventanaPrincipal;
