@@ -71,6 +71,13 @@ public class Alerta {
         return afectados;
     }
     
+    public void desactivar(){
+        activa = false;
+    }
+    
+    public void activarPlan(){
+        gestionada = true;
+    }
     public String informacion(){
         return " Coordenadas:(" + coordenadas.getX()+ ", " + coordenadas.getY()
                 + ")\n" + " Emergencia: "+ emergencia.getTipo() +

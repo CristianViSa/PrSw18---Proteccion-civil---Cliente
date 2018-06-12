@@ -96,6 +96,8 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
         textoAlertas = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaActivas = new javax.swing.JList<>();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -126,10 +128,16 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
             }
         });
 
-        textoAlertas.setText("Alertas activas no gestionadas");
+        textoAlertas.setText("Alertas activas");
 
         listaActivas.setModel(modeloAlertas);
         jScrollPane1.setViewportView(listaActivas);
+
+        jLabel2.setForeground(new java.awt.Color(102, 255, 0));
+        jLabel2.setText("GESTIONADAS");
+
+        jLabel3.setForeground(new java.awt.Color(204, 204, 0));
+        jLabel3.setText("NO GESTIONADAS");
 
         javax.swing.GroupLayout panelAlertaLayout = new javax.swing.GroupLayout(panelAlerta);
         panelAlerta.setLayout(panelAlertaLayout);
@@ -143,9 +151,15 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
                         .addComponent(textoAlertas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(8, 8, 8))
                     .addGroup(panelAlertaLayout.createSequentialGroup()
-                        .addComponent(seleccionarAlerta)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(anadirAlerta)
+                        .addGroup(panelAlertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAlertaLayout.createSequentialGroup()
+                                .addComponent(seleccionarAlerta)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(anadirAlerta))
+                            .addGroup(panelAlertaLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel3)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         panelAlertaLayout.setVerticalGroup(
@@ -153,7 +167,11 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlertaLayout.createSequentialGroup()
                 .addComponent(textoAlertas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                .addGroup(panelAlertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelAlertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(seleccionarAlerta)
@@ -195,6 +213,8 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anadirAlerta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> listaActivas;
     private javax.swing.JLabel mapa;
@@ -215,7 +235,8 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
             String info = alerta.informacion();
             modeloAlertas.addElement(info);
             mapaVista.introducirMarcadores(alerta.getCoordenadas().getX(),
-                alerta.getCoordenadas().getY(), alerta.getId());
+                alerta.getCoordenadas().getY(), alerta.getId(),
+                alerta.estaGestionada());
             mapaVista.introducirAlerta(alerta);
         }
         mapaVista.refrescar();
@@ -244,6 +265,30 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
         JOptionPane.showMessageDialog(null, texto);   
     }
     /**
+     * Muestra un mensaje de confirmacion, resultado de desactivar una alerta
+     */
+    public void mensajeConfirmacionDesactivarAlerta(Alerta alerta){
+        String texto = "Alerta desactivada correctamente para la alerta :\n"
+                +alerta.informacion();
+        JOptionPane.showMessageDialog(null, texto);   
+    }
+    /**
+     * Cambia el icono tras activar el plan
+     */
+    public void planActivado(Alerta alerta){
+        mapaVista.eliminarAlerta(alerta);
+        alerta.activarPlan();
+        introducirAlertasActivasALista(listaAlertas);
+        mapaVista.actualizarMarcadores();    
+    }
+    
+    public void alertaEliminada(Alerta alerta){
+        mapaVista.eliminarAlerta(alerta);
+        listaAlertas.remove(alerta);
+        introducirAlertasActivasALista(listaAlertas);
+        mapaVista.actualizarMarcadores();
+    }
+    /**
      * Sobreescribe actionPerformed 
      */
     @Override
@@ -252,7 +297,6 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
             case MENU_ITEM_PLANES :
                 MenuPlanesProteccion menuPlanes = new MenuPlanesProteccion(oyenteVista);
                 menuPlanes.setVisible(true);
-//                this.dispose();
                 break;
             case MENU_ITEM_RECURSOS :
                 break;    
@@ -263,39 +307,43 @@ public class PanelAlerta extends javax.swing.JPanel implements ActionListener {
             case MENU_ITEM_SALIR :
                 oyenteVista.notificacion(OyenteVista.Evento.SALIR, null);
                 break;
-            /*case BOTON_HISTORIAL :
-                removeAll();
-                
-                add(new JLabel("ERASDASDASD"));
-                //add(aplicacionHistorial);
-                revalidate();
-                oyenteVista.notificacion(OyenteVista.Evento.HISTORIAL, null);
-                break;*/
-            /*case VOLVER_ATRAS :
-                removeAll();
-                revalidate();
-                oyenteVista.notificacion(
-                                OyenteVista.Evento.MENU_ITEM_ALERTAS, null);
-                break;*/
             case MENU_ITEM_SELECCIONAR_ALERTA :
                 String id = (String)listaActivas.getSelectedValue();
                 Alerta alerta = buscarAlertaActivaLista(id);
-                int seleccion = JOptionPane.showConfirmDialog
-                        (null, 
-                        "¿Activar el plan de proteccion para esta alerta?",
-                        "Activar plan",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-                if (seleccion == JOptionPane.YES_OPTION){
-                     mapaVista.eliminarAlerta(alerta);
-                    listaAlertas.remove(alerta);
-                    introducirAlertasActivasALista(listaAlertas);
-                    mapaVista.actualizarMarcadores();
-                    oyenteVista.notificacion(
-                                OyenteVista.Evento.ACTIVAR_PLAN, alerta);
+                if(alerta.estaGestionada()){
+                     int seleccion = JOptionPane.showConfirmDialog
+                            (null, 
+                            "¿Desactivar esta alerta?",
+                            "Desactivar alerta",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
+                    if (seleccion == JOptionPane.YES_OPTION){
+                        /*mapaVista.eliminarAlerta(alerta);
+                        listaAlertas.remove(alerta);
+                        introducirAlertasActivasALista(listaAlertas);
+                        mapaVista.actualizarMarcadores();*/
+                        oyenteVista.notificacion(
+                                    OyenteVista.Evento.DESACTIVAR_ALERTA, alerta);
+                    }
                 }
+                else{
+                    int seleccion = JOptionPane.showConfirmDialog
+                            (null, 
+                            "¿Activar el plan de proteccion para esta alerta?",
+                            "Activar plan",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
+                    if (seleccion == JOptionPane.YES_OPTION){
+                        /*mapaVista.eliminarAlerta(alerta);
+                        //listaAlertas.remove(alerta);
+                        alerta.activarPlan();
+                        introducirAlertasActivasALista(listaAlertas);
+                        mapaVista.actualizarMarcadores();*/
+                        oyenteVista.notificacion(
+                                    OyenteVista.Evento.ACTIVAR_PLAN, alerta);
+                    }
                
-
+                }
                 break;
             case ADD_ALERTA:
                 new MenuAddAlerta(oyenteVista).setVisible(true);

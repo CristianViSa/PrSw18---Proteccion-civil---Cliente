@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -59,7 +60,7 @@ public class Comms {
      * Solicita las alertas no gestionadas a la BD del servidor
      * @author Cristian
      */
-    public synchronized List<Alerta>  solicitarMapaAlertasNoGestionadas () {
+    public synchronized List<Alerta>  solicitarMapaAlertasActivas () {
         try {
             socket = new Socket(ip, puerto);
             salida = new ObjectOutputStream(socket.getOutputStream());
@@ -78,7 +79,7 @@ public class Comms {
             String delims = ",";
             String[] tokens = parametros.split(delims);
             int numAlertas = Integer.parseInt(tokens[0]);
-            int longitudParametros = 10;
+            int longitudParametros = 11;
             int posicion;
             for(int i = 0; i < numAlertas; i++){
                 posicion = i*longitudParametros;
@@ -95,17 +96,18 @@ public class Comms {
                 int dia = Integer.parseInt(tokens[8+posicion]);
                 int mes = Integer.parseInt(tokens[9+posicion]);
                 int anio = Integer.parseInt(tokens[10+posicion]);
+                boolean gestionada = Boolean.parseBoolean(tokens[11+posicion]);
                 Date fecha = new Date(anio, mes, dia);
                 Emergencia emergencia = new Emergencia(tipoEmergencia, nivelEmergencia);
-                Alerta alerta = new Alerta(coordenadas, emergencia, id, false, fecha,
+                Alerta alerta = new Alerta(coordenadas, emergencia, id, gestionada, fecha,
                     activada, afectados);
                 alertas.add(alerta);    
             }
         socket.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
-        }catch (ClassNotFoundException ex){
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error de conexion", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return alertas;
     }
@@ -137,11 +139,53 @@ public class Comms {
                 socket.close();
                 return true;
             }  
+            else{
+                JOptionPane.showMessageDialog(null, tokens[0], "Error", JOptionPane.ERROR_MESSAGE);    
+            }
             socket.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error de conexion", "Error", JOptionPane.ERROR_MESSAGE); 
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+    
+    /**
+     * Solicita activar un plan de proteccion para una alerta al servidor
+     *  @author Cristian
+     */
+    public synchronized boolean solicitarDesactivarAlerta(String id){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            alertas = new ArrayList<Alerta>();
+            alertas.clear();
+
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.DESACTIVAR_ALERTA); 
+            mensajeTX.ponerParametros(id); 
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String parametros = mensajeRX.verParametros();
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            if("true".equals(tokens[0])){
+                socket.close();
+                return true;
+            }  
+            else{
+                JOptionPane.showMessageDialog(null, tokens[0], "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            socket.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexion", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -169,7 +213,7 @@ public class Comms {
             String delims = ",";
             String[] tokens = parametros.split(delims);
             int numAlertas = Integer.parseInt(tokens[0]);
-            int longitudParametros = 10;
+            int longitudParametros = 11;
             int posicion;
             for(int i = 0; i < numAlertas; i++){
                 posicion = i*longitudParametros;
@@ -186,17 +230,18 @@ public class Comms {
                 int dia = Integer.parseInt(tokens[8+posicion]);
                 int mes = Integer.parseInt(tokens[9+posicion]);
                 int anio = Integer.parseInt(tokens[10+posicion]);
+                boolean gestionada = Boolean.parseBoolean(tokens[11+posicion]);
                 Date fecha = new Date(anio, mes, dia);
                 Emergencia emergencia = new Emergencia(tipoEmergencia, nivelEmergencia);
-                Alerta alerta = new Alerta(coordenadas, emergencia, id, false, fecha,
+                Alerta alerta = new Alerta(coordenadas, emergencia, id, gestionada, fecha,
                     activada, afectados);
                 alertas.add(alerta);    
             }
             socket.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error de conexion", "Error", JOptionPane.ERROR_MESSAGE); 
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return alertas;
     }

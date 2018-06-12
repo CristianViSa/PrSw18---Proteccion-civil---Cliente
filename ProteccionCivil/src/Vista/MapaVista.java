@@ -28,6 +28,8 @@ public class MapaVista extends JLabel{
     private static final String SENSOR = "sensor=false";
     private static final String FORMATO = "format=PNG"; //posibles formatos: PNG, GIF, JPEG
     private static final String SIZE = "size=350x450"; //tamaño de la imagen
+    private final String ICONOGESTIONADAS = "size:mid%7Ccolor:0x4fd926";
+    private final String ICONOSINGESTIONAR = "size:mid%7Ccolor:0xffff00";
     private int contadorAlertas;
     private List<Alerta> alertasActivas;
     String opcs = "center=41.425520,-0.608294&scale=2&";
@@ -74,9 +76,16 @@ public class MapaVista extends JLabel{
     /**
      * Pone un marcador en el mapa
      */
-    public void introducirMarcadores(double x, double y, int marcador){
+    public void introducirMarcadores(double x, double y, int marcador,
+            boolean gestionada){
         contadorAlertas++;
-        opcs += "markers=label:"+marcador + "|" + x + "," +y +"&";
+        if (gestionada){
+            opcs += "markers="+ ICONOGESTIONADAS+ "|label:"+marcador + "|" + x + "," +y +"&";
+        }
+        else{
+            opcs += "markers="+ ICONOSINGESTIONAR+ "|label:"+marcador + "|" + x + "," +y +"&";
+          
+        }
     }
     
     /**
@@ -95,7 +104,7 @@ public class MapaVista extends JLabel{
         for (Alerta alerta : alertasActivas) {
             introducirMarcadores(alerta.getCoordenadas().getX()
                     , alerta.getCoordenadas().getY(),
-                    alerta.getId());
+                    alerta.getId(), alerta.estaGestionada());
         }
         visualizarMapa(opcs);
     }

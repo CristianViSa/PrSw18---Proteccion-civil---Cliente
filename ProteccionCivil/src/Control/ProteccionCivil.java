@@ -97,24 +97,6 @@ public class ProteccionCivil implements OyenteVista {
         System.exit(0);    
     }
     
-    /**
-     * Busca las alertas en la BD del servidor
-     * @author Cristian
-     */
-    public List<Alerta> buscarAlertasEnBD(){
-        // TBD
-        return comunicaciones.solicitarHistorialDeAlertas();  
-    }
-    
-      /**
-     * Busca las alertas  activas y no gestionadas en la BD del servidor
-     * @author Cristian
-     */
-    public List<Alerta> buscarAlertasActivasEnBD(){
-        // TBD
-        return comunicaciones.solicitarMapaAlertasNoGestionadas();
-    }
-    
     
 	public void addPlan(PlanProteccion plan) {
 		System.out.println(plan.toString());
@@ -832,16 +814,15 @@ public class ProteccionCivil implements OyenteVista {
                 break;
             //@author Cristian
             case HISTORIAL_ALERTAS:
-                List historialAlertas = buscarAlertasEnBD();
+                List historialAlertas = comunicaciones.solicitarHistorialDeAlertas();  
                 historialVista = new PanelHistorial(this);
                 historialVista.introducirAlertasALista(historialAlertas);
                 cargarPanel(historialVista);
                 break;
             //@author Cristian
             case MENU_ITEM_ALERTAS:
-                alertaVista = new PanelAlerta(this);//AlertasVista.instancia(this);
-                alertas = comunicaciones.solicitarHistorialDeAlertas();
-                List alertasActivas = buscarAlertasActivasEnBD();
+                alertaVista = new PanelAlerta(this);
+                List alertasActivas = comunicaciones.solicitarMapaAlertasActivas();
                 alertaVista.introducirAlertasActivasALista(alertasActivas);
 
                 cargarPanel(alertaVista);
@@ -851,7 +832,19 @@ public class ProteccionCivil implements OyenteVista {
                 Alerta alerta = (Alerta)obj;
                 if(comunicaciones.
                     solicitarActivarPlanDeProteccion(String.valueOf(alerta.getId()))){
+                    alertaVista.planActivado(alerta);
                     alertaVista.mensajeConfirmacionPlan(alerta);
+                    
+                }
+                break;
+                //@author Cristian
+            case DESACTIVAR_ALERTA:
+                Alerta alertaDesactivar = (Alerta)obj;
+                if(comunicaciones.
+                    solicitarDesactivarAlerta(
+                            String.valueOf(alertaDesactivar.getId()))){
+                    alertaVista.alertaEliminada(alertaDesactivar);
+                    alertaVista.mensajeConfirmacionDesactivarAlerta(alertaDesactivar);
                 }
                 break;
                 
