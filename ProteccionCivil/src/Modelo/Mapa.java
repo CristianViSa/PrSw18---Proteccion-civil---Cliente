@@ -19,8 +19,8 @@ public class Mapa {
     private static final String ZOOM = "zoom=7";//numero de 0 a 21. zoom=0, se ve bola de mundo
     private static final String SENSOR = "sensor=false";
     private static final String FORMATO = "format=PNG"; //posibles formatos: PNG, GIF, JPEG
-    private static final String SIZE = "size=640x640"; //tamaño de la imagen
-    private static final String OPCIONES = "center=41.425520,-0.608294";
+    private static final String SIZE = "size=600x420"; //tamaño de la imagen
+    private static final String OPCIONES = "center=41.425520,-0.608294&scale=2&";
     private static String marcadores;
     
     private Icon icono;

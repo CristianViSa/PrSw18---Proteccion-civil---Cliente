@@ -29,6 +29,8 @@ import Vista.PanelAlmacenes;
 import Vista.PanelMapa;
 import Vista.PanelVehiculos;
 import Vista.PanelVoluntarios;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 
 /**
@@ -427,7 +429,15 @@ public class ProteccionCivil implements OyenteVista {
         //crear nuevo mapa con lista de recursos seleccionados
         Mapa mapa= new Mapa(listaVoluntarios,listaVehiculos,listaAlmacenes,listaAlbergues); 
         //actualizar icono
-        panelMapa.jLabelMapa.setIcon(mapa.verMapa());
+
+        ImageIcon myImage = (ImageIcon) mapa.verMapa();
+        int ancho = 65 * ventanaPrincipal.getWidth() / 100 ;
+        int alto = 80 * ventanaPrincipal.getHeight()/ 100 ;
+        
+        Image imagenMapa = (myImage.getImage()).getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+        ImageIcon image = new ImageIcon(imagenMapa);
+        panelMapa.jLabelMapa.setIcon(image);
+        
         panelMapa.repaint();
         
         cargarPanel(panelMapa);        
