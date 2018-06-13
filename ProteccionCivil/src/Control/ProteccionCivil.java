@@ -670,7 +670,7 @@ public class ProteccionCivil implements OyenteVista {
             );
 
             int plazas = Integer.parseInt(panelVehiculos.jTextFieldPlazas.getText());           
-            boolean disponible = Boolean.parseBoolean(panelVehiculos.jTextFieldDisponible.getText());
+            boolean disponible = panelVehiculos.jCheckBoxDisponible.isSelected();
             
             return new Vehiculo(idVehiculo, modelo, plazas, coordenada, disponible);           
              
@@ -754,8 +754,8 @@ public class ProteccionCivil implements OyenteVista {
                 Float.parseFloat(panelVoluntarios.jTextFieldCoordenadaY.getText())
             );
 
-            boolean esConductor = Boolean.parseBoolean(panelVoluntarios.jTextFieldEsConductor.getText());
-            boolean disponible = Boolean.parseBoolean(panelVoluntarios.jTextFieldEstaDisponible.getText());
+            boolean esConductor = panelVoluntarios.jCheckBoxEsConductor.isSelected();         
+            boolean disponible = panelVoluntarios.jCheckBoxDisponible.isSelected();
             
             return new Voluntario(id, nombre, telefono, correo, coordenada, esConductor, disponible);
              
