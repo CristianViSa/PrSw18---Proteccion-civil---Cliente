@@ -31,7 +31,7 @@ public class MenuAddAlerta extends JFrame implements ActionListener{
 	private JTextField txtProteccionCivil;
 	private JTextField textField;
 	
-	private final OyenteVista pCivil;
+	private final OyenteVista oyenteVista;
 	
 	private static final String BTN_VOLVER = "Volver";
 	private static final String BTN_ADD_ALERTA = "Add Alerta";
@@ -65,8 +65,8 @@ public class MenuAddAlerta extends JFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	public MenuAddAlerta(OyenteVista pCivil) {
-		this.pCivil = pCivil;
+	public MenuAddAlerta(OyenteVista oyenteVista) {
+		this.oyenteVista = oyenteVista;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 732, 498);
 		contentPane = new JPanel();
@@ -201,12 +201,15 @@ public class MenuAddAlerta extends JFrame implements ActionListener{
 		case BTN_ADD_ALERTA:
 			//try {
 				Coordenada coordenada = new Coordenada(Float.parseFloat(textCoordXForm.getText()), Float.parseFloat(textCoordYForm.getText()));
-				Emergencia emergencia = null; //pCivil.notificacion(OyenteVista.Evento.GET_EMERGENCIA,Integer.parseInt(textIDEmerForm.getText()));
-				int id = 0; //pCivil.notificacion(OyenteVista.Evento.GET_ID_ALERTA,null);
+				String idEmergencia = txtEmergencia.getText();
+                                Emergencia emergencia = null;
+                                oyenteVista.notificacion(OyenteVista.Evento.GET_EMERGENCIA, idEmergencia);
+                                int id = 0; //pCivil.notificacion(OyenteVista.Evento.GET_ID_ALERTA,null);
 				boolean activa = chckbxAlertaActiva.isSelected();
 				int afectados = Integer.parseInt(textAfectadosForm.getText());
 				Alerta alerta = new Alerta(coordenada, emergencia, id, activa, afectados);
 				System.out.println("add alerta: "+alerta.toString());
+                                oyenteVista.notificacion(OyenteVista.Evento.ADD_ALERTA, alerta);
 			/*}catch(Exception e1) {
 				VentanaAlertaGenerica vAlerta = new VentanaAlertaGenerica("--Datos no válidos--\n\nLos vehículos y voluntarios\ndeben ser un número");
 				vAlerta.setVisible(true);

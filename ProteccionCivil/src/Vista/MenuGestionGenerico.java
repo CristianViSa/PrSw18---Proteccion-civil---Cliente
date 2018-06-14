@@ -12,7 +12,6 @@ import javax.swing.event.ListSelectionListener;
 
 import Control.ProteccionCivil;
 import Modelo.PlanProteccion;
-import Modelo.ZonaSeguridad;
 
 import javax.swing.JButton;
 import javax.swing.JToolBar;
@@ -39,40 +38,40 @@ import javax.swing.SwingConstants;
  * @version P01 - 15/4/18
  */
 
-public class MenuZonasSeguridad extends JPanel implements ActionListener, Observer, ListSelectionListener {
+public class MenuGestionGenerico extends JPanel implements ActionListener, Observer, ListSelectionListener {
 	
 	//private JPanel contentPane;
 	private JTextField txtTitulo;
 	private OyenteVista oyenteVista;
-	private List<ZonaSeguridad> zonas;
-	private DefaultListModel<String> listaZonas;
+	private List<Object> objects;
+	private DefaultListModel<String> listaObjects;
 	private JList lista;
 	private JTextPane textPane;
 	//private final OyenteVista pCivil;
-	public ZonaSeguridad selectedZona;
+	public Object selectedObj;
 	
-        public static final String ELIMINAR_ZONA = "Eliminar Zona";
+        public static final String ELIMINAR = "Eliminar";
 	
 	/**
 	 * Inicia la aplicación
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenuPlanesProteccion frame = new MenuPlanesProteccion(new ProteccionCivil());
+					MenuGestionGenerico frame = new MenuGestionGenerico(new ProteccionCivil());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Crea el frame
 	 */
-	public MenuZonasSeguridad(OyenteVista oyenteVista) {
+	public MenuGestionGenerico(OyenteVista oyenteVista, String tipoDato) {
 		this.oyenteVista = oyenteVista;
 		setBounds(100, 100, 732, 498);
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -89,9 +88,9 @@ public class MenuZonasSeguridad extends JPanel implements ActionListener, Observ
 		splitPane.setLeftComponent(panel_lista_planes);
 		panel_lista_planes.setLayout(new BoxLayout(panel_lista_planes, BoxLayout.Y_AXIS));
 		
-		listaZonas = new DefaultListModel();
+		listaObjects = new DefaultListModel();
 		//listaPlanes.addListSelectionListener(this);
-		lista = new JList(listaZonas);
+		lista = new JList(listaObjects);
 		lista.setValueIsAdjusting(true);
 		lista.addListSelectionListener(this);
 		panel_lista_planes.add(lista);
@@ -112,19 +111,19 @@ public class MenuZonasSeguridad extends JPanel implements ActionListener, Observ
 		JPanel panel_gestion_planes = new JPanel();
 		panel_1.add(panel_gestion_planes);
 		
-		JButton button_anadir_plan = new JButton("A\u00F1adir Zona de Seguridad");
+		JButton button_anadir_plan = new JButton("A\u00F1adir "+tipoDato);
 		button_anadir_plan.setHorizontalAlignment(SwingConstants.LEFT);
 		button_anadir_plan.addActionListener(new AddPlanProteccion());
 		panel_gestion_planes.setLayout(new FlowLayout(FlowLayout.LEFT, 7, 5));
 		panel_gestion_planes.add(button_anadir_plan);
 		
-		JButton button_modificar_plan = new JButton("Modificar Zona de Seguridad");
+		JButton button_modificar_plan = new JButton("Modificar "+tipoDato);
 		button_modificar_plan.addActionListener(new ModPlanProteccion());
 		panel_gestion_planes.add(button_modificar_plan);
 		
-		JButton button_eliminar_plan = new JButton("Eliminar Zona de Seguridad");
+		JButton button_eliminar_plan = new JButton("Eliminar "+tipoDato);
 		button_eliminar_plan.addActionListener(new EliminarPlanProteccion());
-                button_eliminar_plan.setActionCommand(ELIMINAR_ZONA);
+                button_eliminar_plan.setActionCommand(ELIMINAR);
 		panel_gestion_planes.add(button_eliminar_plan);
 		
 		JPanel panel_2 = new JPanel();
@@ -141,69 +140,80 @@ public class MenuZonasSeguridad extends JPanel implements ActionListener, Observ
 		panel_2.add(txtTitulo);
 		txtTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTitulo.setEditable(false);
-		txtTitulo.setText("Zonas de Seguridad");
+		txtTitulo.setText(tipoDato);
 		txtTitulo.setColumns(15);
 	
 	}
 	
-	public void addZona() {
-		MenuAddZona frame = new MenuAddZona(oyenteVista);
+	public void addObj() {
+		MenuAddPlan frame = new MenuAddPlan(oyenteVista);
 		frame.setVisible(true);
 	}
 	
-	public void modZona() {
-		MenuModZona frame = new MenuModZona(oyenteVista/*, selectedZona*/);
+	public void modObj() {
+		MenuModPlan frame = new MenuModPlan(oyenteVista, selectedPlan);
 		frame.setVisible(true);
 		//MenuAddPlan frame = new MenuAddPlan(pCivil);
 		//frame.setVisible(true);
 	}
 	
-	public void eliminarZona() {
-		System.out.println("eliminarZona: " + selectedZona.toString());
-		VentanaConfirmarEliminar jDialog = new VentanaConfirmarEliminar(oyenteVista, selectedZona);
+	public void eliminarObj() {
+		System.out.println("eliminar: " + selectedObj.toString());
+		VentanaConfirmarEliminar jDialog = new VentanaConfirmarEliminar(oyenteVista, selectedPlan);
 		jDialog.setVisible(true);
 		//MenuAddPlan frame = new MenuAddPlan(pCivil);
 		//frame.setVisible(true);
 	}
 	
-	public void addZonas(List zonas) {
-		listaZonas.clear();
-		this.zonas = zonas;
-                if(!zonas.isEmpty()){
-                    for(int i = 0; i<this.zonas.size();i++) {
-                            ZonaSeguridad zona = this.zonas.get(i);
-                            listaZonas.addElement(zona.getCoordenada().toString());
+	public void addObjs(List planes) {
+		listaObjects.clear();
+		this.objects = planes;
+                if(!planes.isEmpty()){
+                    for(int i = 0; i<this.objects.size();i++) {
+                            Object obj = this.objects.get(i);
+                            listaObjects.addElement(obj.toString());
                     }
-                    selectedZona = this.zonas.get(0);
-                    textPane.setText(this.zonas.get(0).toString());
+                    selectedObj = this.objects.get(0);
+                    textPane.setText(this.objects.get(0).toString());
                 }
 	}
 	
 	class AddPlanProteccion implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			addZona();
+			addPlan();
 		}
 	}
 	
 	class ModPlanProteccion implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			modZona();
+			modPlan();
 		}
 	}
 	
 	class EliminarPlanProteccion implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			eliminarZona();
+			eliminarPlan();
 		}
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-                case ELIMINAR_ZONA:
-                        if(selectedZona==null)
-                            selectedZona = zonas.get(0);                     
-                        System.out.println("Zona menu zonas: "+selectedZona.toString());
+		case BTN_MENU_PLANES:
+			System.out.println("menu planes");
+			break;
+		case BTN_MENU_EMERGENCIAS:
+			System.out.println("menu emergencias");
+                        PanelAlerta menuAlertas = new PanelAlerta(oyenteVista);
+			//MenuEmergenciasAlertas menuEmer = new MenuEmergenciasAlertas(pCivil);
+			//menuEmer.setVisible(true);
+			//oyenteVista.notificacion(OyenteVista.Evento.BTN_MAIN_MENU, null);
+			//this.dispose();
+			break;
+                case ELIMINAR_PLAN:
+                        if(selectedPlan==null)
+                            selectedPlan = planes.get(0);                     
+                        System.out.println("Plan menu planes: "+selectedPlan.mostrar());
                         //oyenteVista.notificacion(OyenteVista.Evento.ELIMINAR_PLAN,selectedPlan);
 			//this.dispose();
                     break;
@@ -211,28 +221,28 @@ public class MenuZonasSeguridad extends JPanel implements ActionListener, Observ
 	}
 
 	//@Override
-	public void update(List zonas) {
+	public void update(List planes) {
 		// TODO Auto-generated method stub
-		listaZonas.clear();
-		addZonas(zonas);
+		listaPlanes.clear();
+		addPlanes(planes);
 	}
 	
-	public void update(String txtZona) {
+	public void update(String txtPlan) {
 		// TODO Auto-generated method stub
 		//textPane.
-		textPane.setText(txtZona);
+		textPane.setText(txtPlan);
 	}
 
 	public void update() {
-		this.update(zonas);
-		this.update(zonas.get(0).toString());
+		this.update(planes);
+		this.update(planes.get(0).getNombre());
 	}
         
-        public ZonaSeguridad getZona(int id){
-            if(!zonas.isEmpty()){
-                    for(int i = 0; i<this.zonas.size();i++) {
-                        if(zonas.get(i).getId()==id){
-                            return zonas.get(i);
+        public PlanProteccion getPlan(String nombre){
+            if(!planes.isEmpty()){
+                    for(int i = 0; i<this.planes.size();i++) {
+                        if(planes.get(i).getNombre()==nombre){
+                            return planes.get(i);
                         }
                     }
                 }
@@ -245,8 +255,8 @@ public class MenuZonasSeguridad extends JPanel implements ActionListener, Observ
 		if(!evt.getValueIsAdjusting()) { //only execute once
 			List values = lista.getSelectedValuesList();
 			if(!values.isEmpty()) {
-                            //selectedZona = getZona(values.get(0).toString());
-                            this.update(selectedZona.toString());
+                            selectedPlan = getPlan(values.get(0).toString());
+                            this.update(selectedPlan.mostrar());
 			}
 		}
     }

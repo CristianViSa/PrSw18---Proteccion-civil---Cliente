@@ -260,8 +260,9 @@ public class MenuAddEmergencia extends javax.swing.JFrame implements ActionListe
                 String tipo = txtTipoForm.getText();
                 int codigoPlan = Integer.parseInt(txtCodigoPlanForm.getText());
                 int nivel = Integer.parseInt(txtNivelForm.getText());
+                oyenteVista.notificacion(OyenteVista.Evento.LISTAR_PLANES, null);
                 oyenteVista.notificacion(OyenteVista.Evento.GET_PLAN_ID, codigoPlan);
-                Emergencia emergencia = new Emergencia("1", plan, tipo, nivel);
+                Emergencia emergencia = new Emergencia("3", plan, tipo, nivel);
                 oyenteVista.notificacion(OyenteVista.Evento.ADD_EMER, emergencia);
                 System.out.println("Emergencia: " + emergencia.toString());
                 this.dispose();

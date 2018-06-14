@@ -1,4 +1,4 @@
-//package Vista;
+/*//package Vista;
 //
 //import java.awt.BorderLayout;
 //import java.awt.EventQueue;
@@ -41,9 +41,9 @@
 //	public static final String BTN_ADD_EMER = "Añadir Emergencias";
 //	public static final String BTN_MOD_EMER = "Modificar Emergencias";
 //	public static final String BTN_DEL_EMER = "Eliminar Emergencias";
-//	/**
+//	**
 //	 * Launch the application.
-//	 */
+//	 *
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
 //			public void run() {
@@ -57,9 +57,9 @@
 //		});
 //	}
 //
-//	/**
+//	**
 //	 * Create the frame.
-//	 */
+//	 *
 //	public MenuEmergenciasAlertas(OyenteVista oyenteVista) {
 ////		this.oyenteVista = oyenteVista;
 ////		setBounds(100, 100, 732, 498);
@@ -208,7 +208,7 @@
 //            this.emergencias = emergencias;
 //            mostrarEmergencias();
 //        }
-//}
+//}*/
 
 package Vista;
 import java.awt.BorderLayout;
@@ -263,9 +263,7 @@ public class MenuEmergencias extends JPanel implements ActionListener, Observer,
 	//private final OyenteVista pCivil;
 	public Emergencia selectedEmergencia;
 	
-	public static final String BTN_MENU_PLANES= "Menu Planes";
-	public static final String BTN_MENU_EMERGENCIAS = "Menu Emergencias";
-        public static final String ELIMINAR_PLAN = "Eliminar Plan";
+        public static final String ELIMINAR_EMERGENCIA = "Eliminar Emergencia";
 	
 	/**
 	 * Inicia la aplicación
@@ -274,7 +272,7 @@ public class MenuEmergencias extends JPanel implements ActionListener, Observer,
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenuPlanesProteccion frame = new MenuPlanesProteccion(new ProteccionCivil());
+					MenuEmergencias frame = new MenuEmergencias(new ProteccionCivil());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -326,19 +324,19 @@ public class MenuEmergencias extends JPanel implements ActionListener, Observer,
 		JPanel panel_gestion_planes = new JPanel();
 		panel_1.add(panel_gestion_planes);
 		
-		JButton button_anadir_plan = new JButton("A\u00F1adir Plan protecci\u00F3n");
+		JButton button_anadir_plan = new JButton("A\u00F1adir Emergencia");
 		button_anadir_plan.setHorizontalAlignment(SwingConstants.LEFT);
 		button_anadir_plan.addActionListener(new AddPlanProteccion());
 		panel_gestion_planes.setLayout(new FlowLayout(FlowLayout.LEFT, 7, 5));
 		panel_gestion_planes.add(button_anadir_plan);
 		
-		JButton button_modificar_plan = new JButton("Modificar Plan protecci\u00F3n");
+		JButton button_modificar_plan = new JButton("Modificar Emergencia");
 		button_modificar_plan.addActionListener(new ModPlanProteccion());
 		panel_gestion_planes.add(button_modificar_plan);
 		
-		JButton button_eliminar_plan = new JButton("Eliminar Plan Protecci\u00F3n");
+		JButton button_eliminar_plan = new JButton("Eliminar Emergencia");
 		button_eliminar_plan.addActionListener(new EliminarPlanProteccion());
-                button_eliminar_plan.setActionCommand(ELIMINAR_PLAN);
+                button_eliminar_plan.setActionCommand(ELIMINAR_EMERGENCIA);
 		panel_gestion_planes.add(button_eliminar_plan);
 		
 		JPanel panel_2 = new JPanel();
@@ -355,7 +353,7 @@ public class MenuEmergencias extends JPanel implements ActionListener, Observer,
 		panel_2.add(txtProteccinCivil);
 		txtProteccinCivil.setHorizontalAlignment(SwingConstants.CENTER);
 		txtProteccinCivil.setEditable(false);
-		txtProteccinCivil.setText("Planes de Protecci\u00F3n");
+		txtProteccinCivil.setText("Emergencias");
 		txtProteccinCivil.setColumns(15);
 	
 	}
@@ -373,7 +371,7 @@ public class MenuEmergencias extends JPanel implements ActionListener, Observer,
 	}
 	
 	public void eliminarEmergencia() {
-		System.out.println("eliminarPlan: " + selectedEmergencia.toString());
+		System.out.println("eliminarEmer: " + selectedEmergencia.toString());
 		VentanaConfirmarEliminar jDialog = new VentanaConfirmarEliminar(oyenteVista, selectedEmergencia);
 		jDialog.setVisible(true);
 		//MenuAddPlan frame = new MenuAddPlan(pCivil);
@@ -419,18 +417,7 @@ public class MenuEmergencias extends JPanel implements ActionListener, Observer,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case BTN_MENU_PLANES:
-			System.out.println("menu planes");
-			break;
-		case BTN_MENU_EMERGENCIAS:
-			System.out.println("menu emergencias");
-                        PanelAlerta menuAlertas = new PanelAlerta(oyenteVista);
-			//MenuEmergenciasAlertas menuEmer = new MenuEmergenciasAlertas(pCivil);
-			//menuEmer.setVisible(true);
-			//oyenteVista.notificacion(OyenteVista.Evento.BTN_MAIN_MENU, null);
-			//this.dispose();
-			break;
-                case ELIMINAR_PLAN:
+                case ELIMINAR_EMERGENCIA:
                         if(selectedEmergencia==null)
                             selectedEmergencia = emergencias.get(0);                     
                         System.out.println("Plan menu planes: "+selectedEmergencia.mostrar());

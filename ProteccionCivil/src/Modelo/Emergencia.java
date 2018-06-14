@@ -35,6 +35,7 @@ public class Emergencia {
         this.tipo = tipo;
         this.id = "0";
         this.nivel = nivel;
+        this.plan = null;
     }
     
     /**
@@ -55,6 +56,13 @@ public class Emergencia {
     /**
      * Getter
      */
+    public PlanProteccion getPlan(){
+        return plan;
+    }
+    
+    /**
+     * Getter
+     */
     public int getNivel(){
         return nivel;
     }
@@ -69,6 +77,11 @@ public class Emergencia {
             cadena += "\n\tPlan Proteccion: -";
         }
         return cadena;
+    }
+    
+    public String toString(){
+        return getId() + "," + /*getPlan().toString()+ "," +*/getTipo() +
+                "," + getNivel();
     }
     
 }

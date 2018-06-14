@@ -9,6 +9,7 @@ import Modelo.Mapa;
 import Modelo.PlanProteccion;
 import Modelo.Vehiculo;
 import Modelo.Voluntario;
+import Modelo.ZonaSeguridad;
 import Vista.OyenteVista;
 import Vista.MenuPlanesProteccion;
 import Vista.MenuEmergencias;
@@ -47,12 +48,13 @@ public class ProteccionCivil implements OyenteVista {
     private Comms comunicaciones;
     //private MenuGestionGenerico menuGenerico;
     private MenuPlanesProteccion menuPlanes;
-    private MenuEmergencias menuEmer;
+    private MenuEmergencias menuEmergencias;
     private MenuZonasSeguridad menuZonas;
     private List<PlanProteccion> planes;
     private List<Alerta> alertas;
     private List<Emergencia> emergencias;
     private List<Coordenada> coordenadas;
+    private List<ZonaSeguridad> zonas;
     
     
     PanelAlbergues panelAlbergues;
@@ -111,10 +113,12 @@ public class ProteccionCivil implements OyenteVista {
                 //planes.set(planes.size()+1, plan);
 		menuPlanes.update(planes);
 	}
-	
-        public void addEmer(Emergencia emer){
-            emergencias.add(emer);
-            menuEmer.update(emergencias);
+        
+        public void addEmergencia(Emergencia emergencia){
+            int index = emergencias.indexOf(emergencia) + 1;
+            emergencias.set(index, emergencia);
+            menuEmergencias.addEmergencias(emergencias);
+            menuEmergencias.update();
         }
         
 	public void modPlan(PlanProteccion plan) {
@@ -129,6 +133,13 @@ public class ProteccionCivil implements OyenteVista {
 		menuPlanes.update();
 	}
 	
+        public void modEmergencia(Emergencia emergencia){
+            int index = emergencias.indexOf(emergencia) + 1;
+            emergencias.set(index, emergencia);
+            menuEmergencias.addEmergencias(emergencias);
+            menuEmergencias.update();
+        }
+        
 	public void eliminarPlan(PlanProteccion plan) {
 		int index = planes.indexOf(plan)+1;
 		System.out.println("-----------index plan: " + index + ", planes ANTES borrar:" + planes.toString());
@@ -138,6 +149,12 @@ public class ProteccionCivil implements OyenteVista {
 		menuPlanes.update();
 	}
 	
+        public void eliminarEmergencia(Emergencia emergencia){
+            int index = emergencias.indexOf(emergencia) + 1;
+            emergencias.remove(index);
+            menuEmergencias.update();
+        }
+        
 	public int getLastIdPlan(){
 		/*int id=0;
 		if(!planes.isEmpty()) {
@@ -161,7 +178,7 @@ public class ProteccionCivil implements OyenteVista {
 	}
 	
 	public PlanProteccion getPlan(int id) {
-		if(!planes.isEmpty()) {
+		if(planes!=null && !planes.isEmpty()) {
 			for(int i = 0; i<planes.size();i++) {
 				if(planes.get(i).getId().equals(id))
 					return planes.get(i);
@@ -892,6 +909,7 @@ public class ProteccionCivil implements OyenteVista {
             break;
             case GET_PLAN_ID:
                 getPlan((int)obj);
+                //menuEmergencias.
                 break;
             case GET_PLAN_NOMBRE:
                 getPlan((String)obj);
@@ -908,19 +926,33 @@ public class ProteccionCivil implements OyenteVista {
                 //menu.setVisible(true);
                 break;
             case MENU_EMERGENCIAS:
-                menuEmer = new MenuEmergencias(this);
+                menuEmergencias = new MenuEmergencias(this);
                 emergencias = comunicaciones.solicitarEmergencias();
-                menuEmer.addEmergencias(emergencias);
-                cargarPanel(menuEmer);
-                break;
-            case ADD_EMER:
-                addEmer((Emergencia)obj);
+                menuEmergencias.addEmergencias(emergencias);
+                cargarPanel(menuEmergencias);
                 break;
             case MENU_ZONAS:
                 menuZonas = new MenuZonasSeguridad(this);
+                zonas = comunicaciones.solicitarZonas();
+                menuZonas.addZonas(zonas);
                 cargarPanel(menuZonas);
+            case ADD_EMER:
+                comunicaciones.addEmergencia((Emergencia) obj);
+                addEmergencia((Emergencia)obj);
                 break;
-                
+            case MOD_EMERGENCIA:
+                comunicaciones.modEmergencia((Emergencia) obj);
+                modEmergencia((Emergencia)obj);
+                break;
+            case ELIMINAR_EMERGENCIA:
+                //System.out.println("PLAN - protec civil: "+menuPlanes.selectedPlan.toString());
+                comunicaciones.eliminarEmergencia((Emergencia) obj);
+                eliminarEmergencia((Emergencia)obj);
+                break;
+            case ADD_ALERTA:
+                comunicaciones.addAlerta((Alerta)obj);
+                alertas.add((Alerta)obj);
+                alertaVista.introducirAlertasActivasALista(alertas);
                 
             //ALEJANDRO
             // ----  ALBERGUES ----    //

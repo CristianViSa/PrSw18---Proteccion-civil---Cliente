@@ -48,6 +48,7 @@ public class Comms {
     List<Alerta> alertas;
     List<PlanProteccion> planes;
     List<Emergencia> emergencias;
+    List<ZonaSeguridad> zonas;
     
     
     public Comms(int puerto){
@@ -1281,5 +1282,72 @@ public class Comms {
             ex.printStackTrace();
         }
         return false;
+    }
+    
+    public synchronized boolean addAlerta(Alerta alerta){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+            //System.out.println("comm add emer: " + emergencia.toString());
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.ADD_ALERTA); 
+            mensajeTX.ponerParametros(alerta.toString());
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            socket.close();
+            return true;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    //------------------------
+    //----Zonas Seguridad-----
+    //------------------------
+    public synchronized List<ZonaSeguridad>  solicitarZonas () {
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+ 
+            zonas = new ArrayList<ZonaSeguridad>();
+            zonas.clear();
+            
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.LISTAR_ZONAS); 
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String parametros = mensajeRX.verParametros();
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            int numPlanes = Integer.parseInt(tokens[0]);
+            int longitudParametros = 8;
+            int posicion;
+            for(int i = 0; i < numPlanes; i++){
+                posicion = i*longitudParametros;
+                float coordX = Float.parseFloat(tokens[1+posicion]);
+                float coordY = Float.parseFloat(tokens[2+posicion]);
+                Coordenada coordenada = new Coordenada(coordX, coordY);
+                int id = Integer.parseInt(tokens[3+posicion]);
+                
+                ZonaSeguridad zona = new ZonaSeguridad(coordenada, id, null, null);
+                
+                zonas.add(zona);
+            }
+        socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        return zonas;
     }
 }

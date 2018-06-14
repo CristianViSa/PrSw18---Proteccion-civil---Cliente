@@ -88,14 +88,24 @@ public class Alerta {
     }
     
     @Override
+    /**
+     * @author Miguel
+     */
     public String toString(){
-        return "Coordenadas:(" + coordenadas.getX()+ ", " + coordenadas.getY()+
+        if(emergencia==null)
+            System.out.println("no hay emergencia");
+        return getCoordenadas().getX() + "," + getCoordenadas().getY() + "," +
+                getEmergencia().toString() + "," + 
+                getId() + "," + 
+                estaGestionada() 
+                + "," + getFecha() + "," + estaActiva() + "," + getAfectados();
+        /*return "Coordenadas:(" + coordenadas.getX()+ ", " + coordenadas.getY()+
                 ")\n" + " Emergencia: "+ emergencia.getTipo() + 
                 " Nivel " + emergencia.getNivel() + " " + "\n" +
                 " Gestionada: " + estaGestionada() + "\n" +
                 " Fecha: " + getFecha() + "\n" +
                 " Activa: " + estaActiva() + " \n" +
-                " Afectados: " + getAfectados();
+                " Afectados: " + getAfectados();*/
     }
     
 }
