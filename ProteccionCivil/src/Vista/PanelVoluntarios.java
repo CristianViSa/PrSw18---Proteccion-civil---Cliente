@@ -60,8 +60,8 @@ public class PanelVoluntarios extends javax.swing.JPanel implements ActionListen
         jTextFieldCorreo.setText(jTableDatos.getValueAt(filaSeleccionada, 3).toString());
         jTextFieldCoordenadaX.setText(jTableDatos.getValueAt(filaSeleccionada, 4).toString());
         jTextFieldCoordenadaY.setText(jTableDatos.getValueAt(filaSeleccionada, 5).toString());
-        jTextFieldEsConductor.setText(jTableDatos.getValueAt(filaSeleccionada, 6).toString());
-        jTextFieldEstaDisponible.setText(jTableDatos.getValueAt(filaSeleccionada, 7).toString());
+        jCheckBoxEsConductor.setSelected(Boolean.parseBoolean(jTableDatos.getValueAt(filaSeleccionada, 6).toString()));
+        jCheckBoxDisponible.setSelected(Boolean.parseBoolean(jTableDatos.getValueAt(filaSeleccionada, 7).toString()));
         
         jButtonInsertar.setEnabled(id.equals(""));
         jButtonModificar.setEnabled(!id.equals(""));
@@ -123,7 +123,6 @@ public class PanelVoluntarios extends javax.swing.JPanel implements ActionListen
         jTextFieldCorreo = new javax.swing.JTextField();
         jTextFieldCoordenadaX = new javax.swing.JTextField();
         jTextFieldCoordenadaY = new javax.swing.JTextField();
-        jTextFieldEstaDisponible = new javax.swing.JTextField();
         jButtonRecargar = new javax.swing.JButton();
         jButtonModificar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
@@ -133,7 +132,8 @@ public class PanelVoluntarios extends javax.swing.JPanel implements ActionListen
         jLabel8 = new javax.swing.JLabel();
         jTextFieldTelefono = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextFieldEsConductor = new javax.swing.JTextField();
+        jCheckBoxDisponible = new javax.swing.JCheckBox();
+        jCheckBoxEsConductor = new javax.swing.JCheckBox();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -210,27 +210,6 @@ public class PanelVoluntarios extends javax.swing.JPanel implements ActionListen
                         .addComponent(jLabel2)
                         .addGap(97, 97, 97)
                         .addComponent(jTextFieldId))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonInsertar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonModificar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonEliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonRecargar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldCoordenadaX, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextFieldCoordenadaY, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextFieldEsConductor, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextFieldEstaDisponible, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
@@ -244,7 +223,31 @@ public class PanelVoluntarios extends javax.swing.JPanel implements ActionListen
                                 .addGap(56, 56, 56)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextFieldNombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextFieldTelefono))))))
+                                    .addComponent(jTextFieldTelefono)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonInsertar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonModificar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonEliminar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonRecargar))
+                            .addComponent(jTextFieldCoordenadaX, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldCoordenadaY, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCheckBoxDisponible)
+                                    .addComponent(jCheckBoxEsConductor))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -253,7 +256,7 @@ public class PanelVoluntarios extends javax.swing.JPanel implements ActionListen
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -281,11 +284,11 @@ public class PanelVoluntarios extends javax.swing.JPanel implements ActionListen
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextFieldEsConductor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCheckBoxEsConductor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextFieldEstaDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jCheckBoxDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonRecargar)
@@ -318,6 +321,8 @@ public class PanelVoluntarios extends javax.swing.JPanel implements ActionListen
     public javax.swing.JButton jButtonInsertar;
     public javax.swing.JButton jButtonModificar;
     public javax.swing.JButton jButtonRecargar;
+    public javax.swing.JCheckBox jCheckBoxDisponible;
+    public javax.swing.JCheckBox jCheckBoxEsConductor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -332,8 +337,6 @@ public class PanelVoluntarios extends javax.swing.JPanel implements ActionListen
     public javax.swing.JTextField jTextFieldCoordenadaX;
     public javax.swing.JTextField jTextFieldCoordenadaY;
     public javax.swing.JTextField jTextFieldCorreo;
-    public javax.swing.JTextField jTextFieldEsConductor;
-    public javax.swing.JTextField jTextFieldEstaDisponible;
     public javax.swing.JTextField jTextFieldId;
     public javax.swing.JTextField jTextFieldNombre;
     public javax.swing.JTextField jTextFieldTelefono;
