@@ -10,7 +10,6 @@ package Modelo;
  * @author Cristian, Alejandro, Miguel
  */
 public enum Operacion {
-    LOGIN, REGISTRO,
     //CRISTIAN
     HISTORIAL_ALERTAS, SELECCIONAR_ALERTA, MENU_ITEM_ALERTAS,
     DESACTIVAR_ALERTA, ACTIVAR_PLAN, ALERTAS_MAPA, ERROR,

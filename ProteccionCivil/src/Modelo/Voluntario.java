@@ -22,10 +22,6 @@ public class Voluntario {
         this.esConductor = esConductor;
         this.disponible = disponible;
     }
-    
-    public void enviarCorreo(String texto){
-
-    }
 
     public String getId() {
         return id;

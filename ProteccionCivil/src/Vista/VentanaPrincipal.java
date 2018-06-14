@@ -5,7 +5,6 @@
  */
 package Vista;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
@@ -44,9 +43,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         
         jMenuItemEmergencias.addActionListener(this);
         jMenuItemEmergencias.setActionCommand(MENU_EMERGENCIAS);
-        
-        jMenuItemIniciarSesion.addActionListener(this);
-        jMenuItemRegistrarse.addActionListener(this);
         
         
         jMenuItemZonasSeguridad.addActionListener(this);
@@ -102,9 +98,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItemAlertas = new javax.swing.JMenuItem();
         historialAlertas = new javax.swing.JMenuItem();
         jMenuItemZonasSeguridad = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItemIniciarSesion = new javax.swing.JMenuItem();
-        jMenuItemRegistrarse = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -211,24 +204,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Usuario");
-        jMenu4.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-
-        jMenuItemIniciarSesion.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jMenuItemIniciarSesion.setText("Iniciar Sesión");
-        jMenu4.add(jMenuItemIniciarSesion);
-
-        jMenuItemRegistrarse.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jMenuItemRegistrarse.setText("Registrarse");
-        jMenuItemRegistrarse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemRegistrarseActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItemRegistrarse);
-
-        jMenuBar1.add(jMenu4);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -254,10 +229,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItemRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrarseActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemRegistrarseActionPerformed
 
     private void jMenuItemVoluntariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVoluntariosActionPerformed
         // TODO add your handling code here:
@@ -344,17 +315,14 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     public javax.swing.JMenu jMenu3;
-    public javax.swing.JMenu jMenu4;
     public javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemAlbergues;
     private javax.swing.JMenuItem jMenuItemAlertas;
     private javax.swing.JMenuItem jMenuItemAlmacenes;
     private javax.swing.JMenuItem jMenuItemEmergencias;
-    private javax.swing.JMenuItem jMenuItemIniciarSesion;
     public javax.swing.JMenu jMenuItemMapa;
     private javax.swing.JMenuItem jMenuItemMapaRecursos;
     private javax.swing.JMenuItem jMenuItemPlanes;
-    private javax.swing.JMenuItem jMenuItemRegistrarse;
     private javax.swing.JMenuItem jMenuItemVehiculos;
     private javax.swing.JMenuItem jMenuItemVoluntarios;
     private javax.swing.JMenuItem jMenuItemZonasSeguridad;
