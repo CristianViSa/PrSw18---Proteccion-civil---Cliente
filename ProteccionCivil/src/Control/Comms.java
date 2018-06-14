@@ -36,7 +36,7 @@ public class Comms {
     private Socket socket;
     private int puerto;
     private String ip;
-    private static final String ipServidor = "localhost";
+    private static final String ipServidor = "155.210.68.154";
     
     private static final String ACTIVAR_PLAN = "ACTIVARPLAN";
     private static final String ALERTAS_MAPA = "ALERTASMAPA";
@@ -54,7 +54,7 @@ public class Comms {
     public Comms(int puerto){
         socket = null;
         this.puerto = puerto;
-        ip = "localhost";
+        ip = ipServidor;
     }
 
 
@@ -302,9 +302,9 @@ public class Comms {
         return listaVoluntarios;
             
         } catch (IOException ex) {
-            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
     
         return null;
@@ -363,9 +363,9 @@ public class Comms {
         return listaVehiculos;
             
         } catch (IOException ex) {
-            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
     
         return null;
@@ -423,8 +423,10 @@ public class Comms {
         socket.close();  
         return listaAlmacenes;
             
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
     
         return null;
@@ -482,8 +484,10 @@ public class Comms {
         socket.close();  
         return listaAlbergues;
             
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Comms.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
     
         return null;
@@ -514,8 +518,10 @@ public class Comms {
             if(resultado.equals("true")){  
                 return true;
             }
-        } catch (IOException | ClassNotFoundException ex) {
-            return false;
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -545,7 +551,10 @@ public class Comms {
             if(resultado.equals("true")){    
                 return true;
             }  
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -575,7 +584,10 @@ public class Comms {
             if(resultado.equals("true")){
                 return true;
             }  
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -605,7 +617,10 @@ public class Comms {
             if(resultado.equals("true")){
                 return true;
             }  
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -636,7 +651,10 @@ public class Comms {
             if(resultado.equals("true")){
                 return true;
             }  
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -667,7 +685,10 @@ public class Comms {
             if(resultado.equals("true")){
                 return true;
             }  
-        } catch (IOException | ClassNotFoundException ex) {
+        }catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -696,7 +717,10 @@ public class Comms {
             if(resultado.equals("true")){
                 return true;
             }  
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -727,7 +751,10 @@ public class Comms {
             if(resultado.equals("true")){   
                 return true;
             }  
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -757,7 +784,10 @@ public class Comms {
             if(resultado.equals("true")){
                 return true;
             }  
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -788,7 +818,10 @@ public class Comms {
                 
                 return true;
             }  
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -816,7 +849,10 @@ public class Comms {
             if(resultado.equals("true")){     
                 return true;
             }  
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -847,7 +883,10 @@ public class Comms {
                 return true;
             }  
             
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -895,7 +934,10 @@ public class Comms {
                                             correo, coordenadas, esConductor, disponible);   
             }
                     
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         return voluntario;
@@ -942,7 +984,10 @@ public class Comms {
                  
             }
                     
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         return vehiculo;
@@ -990,7 +1035,10 @@ public class Comms {
                  
             }
                     
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         return almacen;
@@ -1037,7 +1085,10 @@ public class Comms {
                  
             }
                     
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE); 
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         return albergue;
