@@ -73,15 +73,15 @@ public class PlanProteccion {
 		this.nombre = nombre;
 	}
 	
-	/*public String toString(){
+	public String mostrar(){
 		String cadena = "\n" + getNombre();
-		cadena += "\n\nCódigo del plan: " + getId();
-		cadena += "\nVehículos necesarios: " + getVehiculosNecesarios();
-		cadena += "\nVoluntarios necesarios: " + getVoluntariosNecesarios();
-		cadena += "\n\n\t" + getActuacionesNecesarias();
+		cadena += "\n\n\tCódigo del plan: \t\t" + getId();
+		cadena += "\t\n\tVehículos necesarios: \t" + getVehiculosNecesarios();
+		cadena += "\t\n\tVoluntarios necesarios: \t" + getVoluntariosNecesarios();
+		cadena += "\t\n\n\t" + getActuacionesNecesarias();
 		cadena += "\n";
 		return cadena;
-	}*/
+	}
 	
         public String toString(){
             return getId() + "," + getNombre()+ "," +getVehiculosNecesarios() +

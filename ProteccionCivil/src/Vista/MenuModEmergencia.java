@@ -29,12 +29,13 @@ import java.awt.Dimension;
 
 
 import Control.ProteccionCivil;
+import Modelo.Emergencia;
 import Modelo.PlanProteccion;
 
 import javax.swing.SpringLayout;
 
 
-public class MenuModPlan extends JFrame implements ActionListener, Observer{
+public class MenuModEmergencia extends JFrame implements ActionListener, Observer{
 
 	private JPanel contentPane;
 	private JTextField txtProteccionCivil;
@@ -73,7 +74,7 @@ public class MenuModPlan extends JFrame implements ActionListener, Observer{
 	/**
 	 * Create the frame.
 	 */
-	public MenuModPlan(OyenteVista pCivil, PlanProteccion plan) {
+	public MenuModEmergencia(OyenteVista pCivil, Emergencia emergencia) {
 		this.oyenteVista = pCivil;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 732, 498);
@@ -185,15 +186,15 @@ public class MenuModPlan extends JFrame implements ActionListener, Observer{
 		JPanel panel_5 = new JPanel();
 		panel.add(panel_5, BorderLayout.EAST);
 		
-		setValues(plan);
+		setValues(emergencia);
 	}
 
-	public void setValues(PlanProteccion plan) {
-		txtNombreForm.setText(plan.getNombre());
+	public void setValues(Emergencia emergencia) {
+		/*txtNombreForm.setText(plan.getNombre());
 		txtVehiculosForm.setText(String.valueOf(plan.getVehiculosNecesarios()));
 		txtVoluntariosForm.setText(String.valueOf(plan.getVoluntariosNecesarios()));
 		txtActuacionesNecesariasForm.setText(plan.getActuacionesNecesarias());
-		idPlan=plan.getId();
+		idPlan=plan.getId();*/
 	}
 	
 	@Override

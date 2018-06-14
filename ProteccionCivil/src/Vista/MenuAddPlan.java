@@ -186,7 +186,6 @@ public class MenuAddPlan extends JFrame implements ActionListener, Observer{
 	
 	}
 
-	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
 		
@@ -199,18 +198,19 @@ public class MenuAddPlan extends JFrame implements ActionListener, Observer{
 			this.dispose();
 			break;
 		case BTN_ADD_PLAN:
-			try {
+			//try {
 				String nombre = txtNombreForm.getText();
 				int vehiculos = Integer.parseInt(txtVehiculosForm.getText());
 				int voluntarios = Integer.parseInt(txtVoluntariosForm.getText());
 				String actuaciones = txtActuacionesNecesariasForm.getText();
 				PlanProteccion plan = new PlanProteccion(/*oyenteVista,*/ nombre, vehiculos, voluntarios, actuaciones);
+                                System.out.println("Menuaddplan action btnaddplan: " + plan.toString());
 				oyenteVista.notificacion(OyenteVista.Evento.ADD_PLAN,plan);
 				this.dispose();
-			}catch(Exception e1) {
+			/*}catch(Exception e1) {
 				VentanaAlertaGenerica vAlerta = new VentanaAlertaGenerica("--Datos no v�lidos--\n\nLos veh�culos y voluntarios\ndeben ser un n�mero");
 				vAlerta.setVisible(true);
-			}
+			}*/
 			break;
 		}
 		

@@ -83,7 +83,7 @@ public class MenuZonasSeguridad extends javax.swing.JPanel implements ActionList
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenuEmergenciasAlertas frame = new MenuEmergenciasAlertas(new ProteccionCivil());
+					MenuEmergencias frame = new MenuEmergencias(new ProteccionCivil());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

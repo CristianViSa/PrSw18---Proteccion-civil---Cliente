@@ -160,7 +160,7 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 	}
 	
 	public void eliminarPlan() {
-		System.out.println("eliminarPlan");
+		System.out.println("eliminarPlan: " + selectedPlan.toString());
 		VentanaConfirmarEliminar jDialog = new VentanaConfirmarEliminar(oyenteVista, selectedPlan);
 		jDialog.setVisible(true);
 		//MenuAddPlan frame = new MenuAddPlan(pCivil);
@@ -176,7 +176,7 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
                             listaPlanes.addElement(plan.getNombre());
                     }
                     selectedPlan = this.planes.get(0);
-                    textPane.setText(this.planes.get(0).toString());
+                    textPane.setText(this.planes.get(0).mostrar());
                 }
 	}
 	
@@ -215,7 +215,7 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
                 case ELIMINAR_PLAN:
                         if(selectedPlan==null)
                             selectedPlan = planes.get(0);                     
-                        System.out.println("Plan menu planes: "+selectedPlan.toString());
+                        System.out.println("Plan menu planes: "+selectedPlan.mostrar());
                         //oyenteVista.notificacion(OyenteVista.Evento.ELIMINAR_PLAN,selectedPlan);
 			//this.dispose();
                     break;
@@ -238,7 +238,6 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 	public void update() {
 		this.update(planes);
 		this.update(planes.get(0).getNombre());
-		
 	}
         
         public PlanProteccion getPlan(String nombre){
@@ -259,7 +258,7 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
 			List values = lista.getSelectedValuesList();
 			if(!values.isEmpty()) {
                             selectedPlan = getPlan(values.get(0).toString());
-                            this.update(selectedPlan.toString());
+                            this.update(selectedPlan.mostrar());
 			}
 		}
     }

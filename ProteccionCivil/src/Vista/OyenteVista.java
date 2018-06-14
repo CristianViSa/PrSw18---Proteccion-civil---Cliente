@@ -16,6 +16,7 @@ public interface OyenteVista {
                         ADD_PLAN, MOD_PLAN, ELIMINAR_PLAN, GET_ID_PLAN,
                         GET_ID_ALERTA, GET_PLAN_ID, GET_PLAN_NOMBRE, GET_EMERGENCIA,
                         MENU_PLANES, MENU_EMERGENCIAS, ADD_EMER, MENU_ZONAS, LISTAR_PLANES,
+                        ELIMINAR_EMERGENCIA,
                         
        //CRISTIAN
        HISTORIAL_ALERTAS, SELECCIONAR_ALERTA, MENU_ITEM_ALERTAS,

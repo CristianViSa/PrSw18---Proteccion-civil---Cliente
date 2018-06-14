@@ -47,6 +47,7 @@ public class Comms {
     
     List<Alerta> alertas;
     List<PlanProteccion> planes;
+    List<Emergencia> emergencias;
     
     
     public Comms(int puerto){
@@ -1041,6 +1042,9 @@ public class Comms {
         return albergue;
     }
     
+    //------------------------
+    //--Planes de Proteccion--
+    //------------------------
     public synchronized List<PlanProteccion>  solicitarPlanesProteccion () {
         try {
             socket = new Socket(ip, puerto);
@@ -1085,12 +1089,34 @@ public class Comms {
         return planes;
     }
     
+    public synchronized boolean addPlan(PlanProteccion plan){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+             System.out.println("comm add plan: " + plan.toString());
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.ADD_PLAN); 
+            mensajeTX.ponerParametros(plan.toString());
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
     public synchronized boolean modPlan(PlanProteccion plan){
         try {
             socket = new Socket(ip, puerto);
             salida = new ObjectOutputStream(socket.getOutputStream());
             entrada = new ObjectInputStream(socket.getInputStream());
-             
+            System.out.println("comms modPlan: "+plan.toString());
             Mensaje mensajeTX = new Mensaje();
             mensajeTX.ponerOperacion(Operacion.MOD_PLAN); 
             mensajeTX.ponerParametros(plan.toString());
@@ -1113,10 +1139,137 @@ public class Comms {
             salida = new ObjectOutputStream(socket.getOutputStream());
             entrada = new ObjectInputStream(socket.getInputStream());
 
-            System.out.println("PLAN COMMS CLIENTE: " + plan.getId());
+            System.out.println("PLAN COMMS Eliminar: " + plan.getId());
             Mensaje mensajeTX = new Mensaje();
             mensajeTX.ponerOperacion(Operacion.ELIMINAR_PLAN); 
-            mensajeTX.ponerParametros(plan.toString());
+            mensajeTX.ponerParametros(plan.getId());
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    //------------------------
+    //------Emergencias-------
+    //------------------------
+    public synchronized List<Emergencia>  solicitarEmergencias () {
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+ 
+            emergencias = new ArrayList<Emergencia>();
+            emergencias.clear();
+            
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.LISTAR_EMERGENCIAS); 
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            String parametros = mensajeRX.verParametros();
+            String delims = ",";
+            String[] tokens = parametros.split(delims);
+            int numPlanes = Integer.parseInt(tokens[0]);
+            int longitudParametros = 8;
+            int posicion;
+            for(int i = 0; i < numPlanes; i++){
+                posicion = i*longitudParametros;
+                System.out.println("--EMERGENCIA RECIBIDA:\n\tid: "+tokens[1+posicion] 
+                        + "\n\tidPlan: " + tokens[2+posicion]
+                        + "\n\tnombrePlan: " + tokens[3+posicion]
+                        + "\n\tvehiculosPlan: " + tokens[4+posicion]
+                        + "\n\tvoluntariosPlan: " + tokens[5+posicion]
+                        + "\n\tactuacionesPlan: " + tokens[6+posicion]
+                        + "\n\ttipo: " + tokens[7+posicion]
+                        + "\n\tnivel: " + tokens[8+posicion]);
+                        
+                String idEmergencia = tokens[1+posicion];
+                        
+                String idPlan = tokens[2+posicion];
+                String nombrePlan = tokens[3+posicion];
+                int vehiculos = Integer.parseInt(tokens[4+posicion]);
+                int voluntarios = Integer.parseInt(tokens[5+posicion]);
+                String actuaciones = tokens[6+posicion];
+
+                PlanProteccion plan = new PlanProteccion(idPlan, nombrePlan, 
+                                    vehiculos, voluntarios, actuaciones);
+                            
+                String tipo = tokens[7];
+                int nivel = Integer.parseInt(tokens[8]);
+                Emergencia emergencia = new Emergencia(idEmergencia, plan, tipo, nivel);
+                emergencias.add(emergencia);
+            }
+        socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        return emergencias;
+    }
+    
+    public synchronized boolean addEmergencia(Emergencia emergencia){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+             System.out.println("comm add emer: " + emergencia.toString());
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.ADD_EMERGENCIA); 
+            mensajeTX.ponerParametros(emergencia.toString());
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    public synchronized boolean modEmergencia(Emergencia emergencia){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+            System.out.println("comms modEmergencia: "+emergencia.toString());
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.MOD_EMERGENCIA); 
+            mensajeTX.ponerParametros(emergencia.toString());
+            salida.writeObject(mensajeTX);
+            
+            Mensaje mensajeRX = (Mensaje)entrada.readObject();
+            
+            socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    public synchronized boolean eliminarEmergencia(Emergencia emergencia){
+        try {
+            socket = new Socket(ip, puerto);
+            salida = new ObjectOutputStream(socket.getOutputStream());
+            entrada = new ObjectInputStream(socket.getInputStream());
+
+            System.out.println("PLAN COMMS Eliminar emer: " + emergencia.getId());
+            Mensaje mensajeTX = new Mensaje();
+            mensajeTX.ponerOperacion(Operacion.ELIMINAR_EMERGENCIA); 
+            mensajeTX.ponerParametros(emergencia.getId());
             salida.writeObject(mensajeTX);
             
             Mensaje mensajeRX = (Mensaje)entrada.readObject();
