@@ -129,7 +129,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Protección Civil");
 
-        jMenuPlanes.setText("Planes de Protección");
+        jMenuPlanes.setText(" Planes de Protección ");
         jMenuPlanes.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
 
         jMenuItemPlanes.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
@@ -147,7 +147,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
 
         jMenuBar1.add(jMenuPlanes);
 
-        jMenuItemMapa.setText("Gestión de Recursos");
+        jMenuItemMapa.setText(" Gestión de Recursos ");
         jMenuItemMapa.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
 
         jMenuItemVoluntarios.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
@@ -177,7 +177,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements ActionListen
 
         jMenuBar1.add(jMenuItemMapa);
 
-        jMenu3.setText("Gestión de Alertas");
+        jMenu3.setText(" Gestión de Alertas ");
         jMenu3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
 
         jMenuItemAlertas.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N

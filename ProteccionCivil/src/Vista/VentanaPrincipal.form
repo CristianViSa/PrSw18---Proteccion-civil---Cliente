@@ -9,7 +9,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenuPlanes">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Planes de Protecci&#xf3;n"/>
+            <Property name="text" type="java.lang.String" value=" Planes de Protecci&#xf3;n "/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="18" style="1"/>
             </Property>
@@ -41,7 +41,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuItemMapa">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Recursos"/>
+            <Property name="text" type="java.lang.String" value=" Gesti&#xf3;n de Recursos "/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="18" style="1"/>
             </Property>
@@ -97,7 +97,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Alertas"/>
+            <Property name="text" type="java.lang.String" value=" Gesti&#xf3;n de Alertas "/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="18" style="1"/>
             </Property>
