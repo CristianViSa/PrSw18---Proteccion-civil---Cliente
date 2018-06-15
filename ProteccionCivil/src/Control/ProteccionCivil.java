@@ -66,16 +66,10 @@ public class ProteccionCivil implements OyenteVista {
     public ProteccionCivil() {
         this.ventanaPrincipal = new VentanaPrincipal(this);
         comunicaciones = new Comms(5500);
-        
-        //PRUEBA
-//        planes = new ArrayList<PlanProteccion>();
-//	planes.add(new Object(/*this,*/"plan antiincendios - riesgo 1", 10,7, "Recoger y sacar a la población afectada en la zona"));
-//	planes.add(new Object(/*this,*/"plan antiincendios - riesgo 2", 30,15, "Recoger y sacar a la población afectada en la zona"));
-//        emergencias = new ArrayList<Emergencia>();
-//        emergencias.add(new Emergencia("antiincendios", 1, 4, planes.get(1)));
     }
 
     /**
+     * @author Miguel Yanes
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -102,7 +96,10 @@ public class ProteccionCivil implements OyenteVista {
         System.exit(0);    
     }
     
-    
+        
+    /**
+     * @author Miguel Yanes
+     */
 	public void addPlan(PlanProteccion plan) {
 		System.out.println(plan.toString());
                 if(planes == null){
@@ -114,6 +111,9 @@ public class ProteccionCivil implements OyenteVista {
 		menuPlanes.update(planes);
 	}
         
+    /**
+     * @author Miguel Yanes
+     */
         public void addEmergencia(Emergencia emergencia){
             int index = emergencias.indexOf(emergencia) + 1;
             emergencias.set(index, emergencia);
@@ -121,18 +121,20 @@ public class ProteccionCivil implements OyenteVista {
             menuEmergencias.update();
         }
         
+    /**
+     * @author Miguel Yanes
+     */
 	public void modPlan(PlanProteccion plan) {
                 int index = planes.indexOf(plan) + 1;
                 System.out.println("planes: "+planes+"\n\t index: "+index);
                 planes.set(index, plan);
-//                planes.get(index).setNombre(plan.getNombre());
-//                planes.get(index).setVehiculosNecesarios(plan.getVehiculosNecesarios());
-//                planes.get(index).setVoluntariosNecesarios(plan.getVoluntariosNecesarios());
-//                planes.get(index).setActuacionesNecesarias(plan.getActuacionesNecesarias());
-		menuPlanes.addPlanes(planes);
+                menuPlanes.addPlanes(planes);
 		menuPlanes.update();
 	}
 	
+    /**
+     * @author Miguel Yanes
+     */
         public void modEmergencia(Emergencia emergencia){
             int index = emergencias.indexOf(emergencia) + 1;
             emergencias.set(index, emergencia);
@@ -140,32 +142,27 @@ public class ProteccionCivil implements OyenteVista {
             menuEmergencias.update();
         }
         
+    /**
+     * @author Miguel Yanes
+     */
 	public void eliminarPlan(PlanProteccion plan) {
 		int index = planes.indexOf(plan)+1;
-		System.out.println("-----------index plan: " + index + ", planes ANTES borrar:" + planes.toString());
 		planes.remove(index);
-		System.out.println("-----------planes DESPUES borrar:" + planes.toString());
-		System.out.println("-----------");
 		menuPlanes.update();
 	}
 	
+    /**
+     * @author Miguel Yanes
+     */
         public void eliminarEmergencia(Emergencia emergencia){
             int index = emergencias.indexOf(emergencia) + 1;
             emergencias.remove(index);
             menuEmergencias.update();
         }
-        
-	public int getLastIdPlan(){
-		/*int id=0;
-		if(!planes.isEmpty()) {
-			for(int i = 0; i<planes.size();i++) {
-				if(planes.get(i).getId() > id)
-					id = planes.get(i).getId();
-			}
-		}*/
-		return 1;
-	}
 	
+    /**
+     * @author Miguel Yanes
+     */
 	public int getLastIdAlerta(){
 		int id=0;
 		if(!alertas.isEmpty()) {
@@ -177,6 +174,9 @@ public class ProteccionCivil implements OyenteVista {
 		return id;
 	}
 	
+    /**
+     * @author Miguel Yanes
+     */
 	public PlanProteccion getPlan(int id) {
 		if(planes!=null && !planes.isEmpty()) {
 			for(int i = 0; i<planes.size();i++) {
@@ -187,16 +187,22 @@ public class ProteccionCivil implements OyenteVista {
 		return null;
 	}
 	
+    /**
+     * @author Miguel Yanes
+     */
 	public PlanProteccion getPlan(String nombre) {
-		//if(!planes.isEmpty()) {
+		if(!planes.isEmpty()) {
 			for(int i = 0; i<planes.size();i++) {
 				if(planes.get(i).getNombre() == nombre)
 					return planes.get(i);
 			}
-		//}
+                }
 		return null;
 	}
 	
+    /**
+     * @author Miguel Yanes
+     */
     public Emergencia getEmergencia(String id) {
 	if(!emergencias.isEmpty()) {
             for(int i = 0; i<emergencias.size();i++) {
@@ -884,39 +890,48 @@ public class ProteccionCivil implements OyenteVista {
                 }
                 break;
                 
-            //Miguel
+            //@author Miguel
             case LISTAR_PLANES:
                 
                 break;
+            //@author Miguel
             case ADD_PLAN:
                 comunicaciones.addPlan((PlanProteccion) obj);
                 addPlan((PlanProteccion)obj);
                 break;
+            //@author Miguel
             case MOD_PLAN:
                 comunicaciones.modPlan((PlanProteccion) obj);
                 modPlan((PlanProteccion)obj);
                 break;
+            //@author Miguel
             case ELIMINAR_PLAN:
                 System.out.println("PLAN - protec civil: "+menuPlanes.selectedPlan.toString());
                 comunicaciones.eliminarPlan((PlanProteccion) obj);
                 eliminarPlan((PlanProteccion)obj);
                 break;
+            //@author Miguel
             case GET_ID_PLAN:
-                getLastIdPlan();
+                //getLastIdPlan();
                 break;
+            //@author Miguel
             case GET_ID_ALERTA:
                 getLastIdAlerta();
             break;
+            //@author Miguel
             case GET_PLAN_ID:
                 getPlan((int)obj);
                 //menuEmergencias.
                 break;
+            //@author Miguel
             case GET_PLAN_NOMBRE:
                 getPlan((String)obj);
                 break;
+            //@author Miguel
             case GET_EMERGENCIA:
                 getEmergencia((String)obj);
                 break;
+            //@author Miguel
             case MENU_PLANES:
                 menuPlanes = new MenuPlanesProteccion(this);
                 //ventanaPrincipal.cambiarPanelCentral(menu);
@@ -925,30 +940,36 @@ public class ProteccionCivil implements OyenteVista {
                 cargarPanel(menuPlanes);
                 //menu.setVisible(true);
                 break;
+            //@author Miguel
             case MENU_EMERGENCIAS:
                 menuEmergencias = new MenuEmergencias(this);
                 emergencias = comunicaciones.solicitarEmergencias();
                 menuEmergencias.addEmergencias(emergencias);
                 cargarPanel(menuEmergencias);
                 break;
+            //@author Miguel
             case MENU_ZONAS:
                 menuZonas = new MenuZonasSeguridad(this);
                 zonas = comunicaciones.solicitarZonas();
                 menuZonas.addZonas(zonas);
                 cargarPanel(menuZonas);
+            //@author Miguel
             case ADD_EMER:
                 comunicaciones.addEmergencia((Emergencia) obj);
                 addEmergencia((Emergencia)obj);
                 break;
+            //@author Miguel
             case MOD_EMERGENCIA:
                 comunicaciones.modEmergencia((Emergencia) obj);
                 modEmergencia((Emergencia)obj);
                 break;
+            //@author Miguel
             case ELIMINAR_EMERGENCIA:
                 //System.out.println("PLAN - protec civil: "+menuPlanes.selectedPlan.toString());
                 comunicaciones.eliminarEmergencia((Emergencia) obj);
                 eliminarEmergencia((Emergencia)obj);
                 break;
+            //@author Miguel
             case ADD_ALERTA:
                 comunicaciones.addAlerta((Alerta)obj);
                 alertas.add((Alerta)obj);

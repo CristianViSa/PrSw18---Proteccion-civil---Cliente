@@ -248,19 +248,16 @@ import javax.swing.SwingConstants;
 /**
  * 
  * @author MiguelYanes
- * @version P01 - 15/4/18
  */
 
 public class MenuEmergencias extends JPanel implements ActionListener, Observer, ListSelectionListener {
 	
-	//private JPanel contentPane;
 	private JTextField txtProteccinCivil;
 	private OyenteVista oyenteVista;
 	private List<Emergencia> emergencias;
 	private DefaultListModel<String> listaEmergencias;
 	private JList lista;
 	private JTextPane textPane;
-	//private final OyenteVista pCivil;
 	public Emergencia selectedEmergencia;
 	
         public static final String ELIMINAR_EMERGENCIA = "Eliminar Emergencia";
@@ -371,7 +368,6 @@ public class MenuEmergencias extends JPanel implements ActionListener, Observer,
 	}
 	
 	public void eliminarEmergencia() {
-		System.out.println("eliminarEmer: " + selectedEmergencia.toString());
 		VentanaConfirmarEliminar jDialog = new VentanaConfirmarEliminar(oyenteVista, selectedEmergencia);
 		jDialog.setVisible(true);
 		//MenuAddPlan frame = new MenuAddPlan(pCivil);
@@ -420,8 +416,7 @@ public class MenuEmergencias extends JPanel implements ActionListener, Observer,
                 case ELIMINAR_EMERGENCIA:
                         if(selectedEmergencia==null)
                             selectedEmergencia = emergencias.get(0);                     
-                        System.out.println("Plan menu planes: "+selectedEmergencia.mostrar());
-                        //oyenteVista.notificacion(OyenteVista.Evento.ELIMINAR_PLAN,selectedPlan);
+                        oyenteVista.notificacion(OyenteVista.Evento.ELIMINAR_PLAN,selectedEmergencia);
 			//this.dispose();
                     break;
                 }
@@ -453,7 +448,6 @@ public class MenuEmergencias extends JPanel implements ActionListener, Observer,
                         }
                     }
                 }
-            System.out.println("no existe");
             return null;
         }
 

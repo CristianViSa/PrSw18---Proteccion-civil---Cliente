@@ -1097,6 +1097,10 @@ public class Comms {
     //------------------------
     //--Planes de Proteccion--
     //------------------------
+    /**
+     * @author Miguel Yanes
+     * @return Lista de PlanProteccion disponibles en el servidor
+     */
     public synchronized List<PlanProteccion>  solicitarPlanesProteccion () {
         try {
             socket = new Socket(ip, puerto);
@@ -1120,9 +1124,7 @@ public class Comms {
             int posicion;
             for(int i = 0; i < numPlanes; i++){
                 posicion = i*longitudParametros;
-                System.out.println("--PLAN RECIBIDO:\n\t"+tokens[1+posicion]);
                 String idPlan = tokens[1+posicion];
-                System.out.println("\t"+tokens[2+posicion]);
                 String nombrePlan = tokens[2+posicion];
                 int vehiculos = Integer.parseInt(tokens[3+posicion]);
                 int voluntarios = Integer.parseInt(tokens[4+posicion]);
@@ -1141,12 +1143,16 @@ public class Comms {
         return planes;
     }
     
+    /**
+     * @author Miguel Yanes
+     * @param plan
+     * @return true si se añade correctamente
+     */
     public synchronized boolean addPlan(PlanProteccion plan){
         try {
             socket = new Socket(ip, puerto);
             salida = new ObjectOutputStream(socket.getOutputStream());
             entrada = new ObjectInputStream(socket.getInputStream());
-             System.out.println("comm add plan: " + plan.toString());
             Mensaje mensajeTX = new Mensaje();
             mensajeTX.ponerOperacion(Operacion.ADD_PLAN); 
             mensajeTX.ponerParametros(plan.toString());
@@ -1155,6 +1161,8 @@ public class Comms {
             Mensaje mensajeRX = (Mensaje)entrada.readObject();
             
             socket.close();
+            
+            return true;
         } catch (IOException ex) {
             ex.printStackTrace();
         }catch (ClassNotFoundException ex){
@@ -1163,6 +1171,11 @@ public class Comms {
         return false;
     }
     
+    /**
+     * @author Miguel Yanes
+     * @param plan
+     * @return true si se modifica correctamente
+     */
     public synchronized boolean modPlan(PlanProteccion plan){
         try {
             socket = new Socket(ip, puerto);
@@ -1177,6 +1190,7 @@ public class Comms {
             Mensaje mensajeRX = (Mensaje)entrada.readObject();
             
             socket.close();
+            return true;
         } catch (IOException ex) {
             ex.printStackTrace();
         }catch (ClassNotFoundException ex){
@@ -1185,6 +1199,11 @@ public class Comms {
         return false;
     }
     
+    /**
+     * @author Miguel Yanes
+     * @param plan
+     * @return 
+     */
     public synchronized boolean eliminarPlan(PlanProteccion plan){
         try {
             socket = new Socket(ip, puerto);
@@ -1211,6 +1230,9 @@ public class Comms {
     //------------------------
     //------Emergencias-------
     //------------------------
+    /**
+     * @author Miguel Yanes
+     */
     public synchronized List<Emergencia>  solicitarEmergencias () {
         try {
             socket = new Socket(ip, puerto);
@@ -1268,6 +1290,9 @@ public class Comms {
         return emergencias;
     }
     
+    /**
+     * @author Miguel Yanes
+     */
     public synchronized boolean addEmergencia(Emergencia emergencia){
         try {
             socket = new Socket(ip, puerto);
@@ -1290,6 +1315,9 @@ public class Comms {
         return false;
     }
     
+    /**
+     * @author Miguel Yanes
+     */
     public synchronized boolean modEmergencia(Emergencia emergencia){
         try {
             socket = new Socket(ip, puerto);
@@ -1312,6 +1340,9 @@ public class Comms {
         return false;
     }
     
+    /**
+     * @author Miguel Yanes
+     */
     public synchronized boolean eliminarEmergencia(Emergencia emergencia){
         try {
             socket = new Socket(ip, puerto);
@@ -1335,6 +1366,9 @@ public class Comms {
         return false;
     }
     
+    /**
+     * @author Miguel Yanes
+     */
     public synchronized boolean addAlerta(Alerta alerta){
         try {
             socket = new Socket(ip, puerto);
@@ -1361,6 +1395,9 @@ public class Comms {
     //------------------------
     //----Zonas Seguridad-----
     //------------------------
+    /**
+     * @author Miguel Yanes
+     */
     public synchronized List<ZonaSeguridad>  solicitarZonas () {
         try {
             socket = new Socket(ip, puerto);

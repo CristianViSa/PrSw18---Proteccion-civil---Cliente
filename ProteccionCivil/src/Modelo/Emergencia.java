@@ -8,7 +8,7 @@ package Modelo;
 
 /**
  *
- * @author Cristian
+ * @author Miguel Yanes
  */
 public class Emergencia {
     private String id;

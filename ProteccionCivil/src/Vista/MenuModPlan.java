@@ -33,7 +33,10 @@ import Modelo.PlanProteccion;
 
 import javax.swing.SpringLayout;
 
-
+/**
+ * 
+ * @author MiguelYanes
+ */
 public class MenuModPlan extends JFrame implements ActionListener, Observer{
 
 	private JPanel contentPane;
@@ -53,22 +56,6 @@ public class MenuModPlan extends JFrame implements ActionListener, Observer{
 	
 	private static final String BTN_VOLVER = "Volver";
 	private static final String BTN_MOD_PLAN = "Add Plan";
-
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenuModPlan frame = new MenuModPlan(new Object(""));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
 	/**
 	 * Create the frame.
@@ -209,19 +196,18 @@ public class MenuModPlan extends JFrame implements ActionListener, Observer{
 			this.dispose();
 			break;
 		case BTN_MOD_PLAN:
-			//try {
+			try {
 				String nombre = txtNombreForm.getText();
 				int vehiculos = Integer.parseInt(txtVehiculosForm.getText());
 				int voluntarios = Integer.parseInt(txtVoluntariosForm.getText());
 				String actuaciones = txtActuacionesNecesariasForm.getText();
 				PlanProteccion plan = new PlanProteccion(idPlan, /*oyenteVista,*/ nombre, vehiculos, voluntarios, actuaciones);
-				System.out.println("PLAN MODIFICADO: id" + plan.getId() + "\n" + plan.toString() );
 				oyenteVista.notificacion(OyenteVista.Evento.MOD_PLAN,plan);
 				this.dispose();
-			/*}catch(Exception e1) {
+			}catch(Exception e1) {
 				VentanaAlertaGenerica vAlerta = new VentanaAlertaGenerica("--Datos no v�lidos--\n\nLos veh�culos y voluntarios\ndeben ser un n�mero");
 				vAlerta.setVisible(true);
-			}*/
+			}
 			break;
 		}
 		

@@ -19,6 +19,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextPane;
 
+/**
+ * 
+ * @author MiguelYanes
+ */
 public class VentanaConfirmarEliminar extends JDialog implements ActionListener{
 
 	private final JPanel contentPanel = new JPanel();
@@ -82,12 +86,10 @@ public class VentanaConfirmarEliminar extends JDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 		case BTN_CANCELAR:
-			System.out.println("cancelar eliminar");
 			this.dispose();
 			break;
 		case BTN_ELIMINAR:
-			System.out.println("confirmar eliminar: " + obj.toString());
-                        if(obj.getClass().isAssignableFrom(Object.class)){
+			if(obj.getClass().isAssignableFrom(Object.class)){
                             oyenteVista.notificacion(OyenteVista.Evento.ELIMINAR_PLAN,obj);
                         }else if(obj.getClass().isAssignableFrom(Emergencia.class)){
                             oyenteVista.notificacion(OyenteVista.Evento.ELIMINAR_EMERGENCIA,obj);

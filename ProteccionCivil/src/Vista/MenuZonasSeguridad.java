@@ -36,7 +36,6 @@ import javax.swing.SwingConstants;
 /**
  * 
  * @author MiguelYanes
- * @version P01 - 15/4/18
  */
 
 public class MenuZonasSeguridad extends JPanel implements ActionListener, Observer, ListSelectionListener {
@@ -203,7 +202,6 @@ public class MenuZonasSeguridad extends JPanel implements ActionListener, Observ
                 case ELIMINAR_ZONA:
                         if(selectedZona==null)
                             selectedZona = zonas.get(0);                     
-                        System.out.println("Zona menu zonas: "+selectedZona.toString());
                         //oyenteVista.notificacion(OyenteVista.Evento.ELIMINAR_PLAN,selectedPlan);
 			//this.dispose();
                     break;
@@ -236,7 +234,6 @@ public class MenuZonasSeguridad extends JPanel implements ActionListener, Observ
                         }
                     }
                 }
-            System.out.println("no existe");
             return null;
         }
 

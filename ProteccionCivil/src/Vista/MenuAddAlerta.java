@@ -25,6 +25,10 @@ import Modelo.PlanProteccion;
 import javax.swing.JCheckBox;
 import javax.swing.JSplitPane;
 
+/**
+ * 
+ * @author MiguelYanes
+ */
 public class MenuAddAlerta extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
@@ -199,7 +203,7 @@ public class MenuAddAlerta extends JFrame implements ActionListener{
 			this.dispose();
 			break;
 		case BTN_ADD_ALERTA:
-			//try {
+			try {
 				Coordenada coordenada = new Coordenada(Float.parseFloat(textCoordXForm.getText()), Float.parseFloat(textCoordYForm.getText()));
 				String idEmergencia = txtEmergencia.getText();
                                 Emergencia emergencia = null;
@@ -208,12 +212,11 @@ public class MenuAddAlerta extends JFrame implements ActionListener{
 				boolean activa = chckbxAlertaActiva.isSelected();
 				int afectados = Integer.parseInt(textAfectadosForm.getText());
 				Alerta alerta = new Alerta(coordenada, emergencia, id, activa, afectados);
-				System.out.println("add alerta: "+alerta.toString());
-                                oyenteVista.notificacion(OyenteVista.Evento.ADD_ALERTA, alerta);
-			/*}catch(Exception e1) {
+				oyenteVista.notificacion(OyenteVista.Evento.ADD_ALERTA, alerta);
+			}catch(Exception e1) {
 				VentanaAlertaGenerica vAlerta = new VentanaAlertaGenerica("--Datos no válidos--\n\nLos vehículos y voluntarios\ndeben ser un número");
 				vAlerta.setVisible(true);
-			}*/
+			}
 			break;
 		}
 	}

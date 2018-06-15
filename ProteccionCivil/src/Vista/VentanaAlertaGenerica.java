@@ -13,6 +13,10 @@ import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * 
+ * @author MiguelYanes
+ */
 public class VentanaAlertaGenerica extends JDialog implements ActionListener{
 
 	private final JPanel contentPanel = new JPanel();

@@ -34,19 +34,22 @@ import Modelo.PlanProteccion;
 
 import javax.swing.SpringLayout;
 
-
+/**
+ * 
+ * @author MiguelYanes
+ */
 public class MenuModEmergencia extends JFrame implements ActionListener, Observer{
 
 	private JPanel contentPane;
 	private JTextField txtProteccionCivil;
 	private JTextField textField;
-	private JTextField txtNombreForm;
-	private JTextField txtVehiculosForm;
-	private JTextField txtVoluntariosForm;
+	private JTextField txtPlanForm;
+	private JTextField txtTipoForm;
+	private JTextField txtNivelForm;
 	private JTextField txtActuacionesNecesariasForm;
-	private JTextField txtNombre;
-	private JTextField txtVehculosNecesarios;
-	private JTextField txtVoluntariosRequeridos;
+	private JTextField txtPlan;
+	private JTextField txtTipo;
+	private JTextField txtNivel;
 	private JTextField txtActuacionesNecesarias_1;
 	
 	private final OyenteVista oyenteVista;
@@ -54,22 +57,6 @@ public class MenuModEmergencia extends JFrame implements ActionListener, Observe
 	
 	private static final String BTN_VOLVER = "Volver";
 	private static final String BTN_MOD_PLAN = "Add Plan";
-
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenuModPlan frame = new MenuModPlan(new Object(""));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
 	/**
 	 * Create the frame.
@@ -119,69 +106,57 @@ public class MenuModEmergencia extends JFrame implements ActionListener, Observe
 		panel_1.setLayout(new BorderLayout(0, 0));
 		panel_1.setPreferredSize(new Dimension(200,200));
 		
-		txtNombre = new JTextField();
-		txtNombre.setEditable(false);
-		txtNombre.setText("Nombre");
-		panel_1.add(txtNombre, BorderLayout.NORTH);
-		txtNombre.setColumns(10);
+		txtPlan = new JTextField();
+		txtPlan.setEditable(false);
+		txtPlan.setText("Nombre");
+		panel_1.add(txtPlan, BorderLayout.NORTH);
+		txtPlan.setColumns(10);
 		
 		JPanel panel_6 = new JPanel();
 		panel_1.add(panel_6, BorderLayout.CENTER);
 		panel_6.setLayout(new BorderLayout(0, 0));
 		
-		txtVehculosNecesarios = new JTextField();
-		txtVehculosNecesarios.setEditable(false);
-		txtVehculosNecesarios.setText("Veh\u00EDculos necesarios");
-		panel_6.add(txtVehculosNecesarios, BorderLayout.NORTH);
-		txtVehculosNecesarios.setColumns(10);
+		txtTipo = new JTextField();
+		txtTipo.setEditable(false);
+		txtTipo.setText("Veh\u00EDculos necesarios");
+		panel_6.add(txtTipo, BorderLayout.NORTH);
+		txtTipo.setColumns(10);
 		
 		JPanel panel_7 = new JPanel();
 		panel_6.add(panel_7, BorderLayout.CENTER);
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
-		txtVoluntariosRequeridos = new JTextField();
-		txtVoluntariosRequeridos.setEditable(false);
-		txtVoluntariosRequeridos.setText("Voluntarios requeridos");
-		panel_7.add(txtVoluntariosRequeridos, BorderLayout.NORTH);
-		txtVoluntariosRequeridos.setColumns(10);
+		txtNivel = new JTextField();
+		txtNivel.setEditable(false);
+		txtNivel.setText("Voluntarios requeridos");
+		panel_7.add(txtNivel, BorderLayout.NORTH);
+		txtNivel.setColumns(10);
 		
-		JPanel panel_8 = new JPanel();
-		panel_7.add(panel_8, BorderLayout.CENTER);
-		panel_8.setLayout(new BorderLayout(0, 0));
-		
-		txtActuacionesNecesarias_1 = new JTextField();
-		txtActuacionesNecesarias_1.setEditable(false);
-		txtActuacionesNecesarias_1.setText("Actuaciones necesarias");
-		panel_8.add(txtActuacionesNecesarias_1, BorderLayout.NORTH);
-		txtActuacionesNecesarias_1.setColumns(10);
 		
 		JPanel panel_2 = new JPanel();
 		panel.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
-		txtNombreForm = new JTextField();
-		panel_2.add(txtNombreForm, BorderLayout.NORTH);
-		txtNombreForm.setColumns(10);
+		txtPlanForm = new JTextField();
+		panel_2.add(txtPlanForm, BorderLayout.NORTH);
+		txtPlanForm.setColumns(10);
 		
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3, BorderLayout.CENTER);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
-		txtVehiculosForm = new JTextField();
-		panel_3.add(txtVehiculosForm, BorderLayout.NORTH);
-		txtVehiculosForm.setColumns(10);
+		txtTipoForm = new JTextField();
+		panel_3.add(txtTipoForm, BorderLayout.NORTH);
+		txtTipoForm.setColumns(10);
 		
 		JPanel panel_4 = new JPanel();
 		panel_3.add(panel_4, BorderLayout.CENTER);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		txtVoluntariosForm = new JTextField();
-		panel_4.add(txtVoluntariosForm, BorderLayout.NORTH);
-		txtVoluntariosForm.setColumns(10);
+		txtNivelForm = new JTextField();
+		panel_4.add(txtNivelForm, BorderLayout.NORTH);
+		txtNivelForm.setColumns(10);
 		
-		txtActuacionesNecesariasForm = new JTextField();
-		panel_4.add(txtActuacionesNecesariasForm, BorderLayout.CENTER);
-		txtActuacionesNecesariasForm.setColumns(10);
 		
 		JPanel panel_5 = new JPanel();
 		panel.add(panel_5, BorderLayout.EAST);
@@ -190,11 +165,9 @@ public class MenuModEmergencia extends JFrame implements ActionListener, Observe
 	}
 
 	public void setValues(Emergencia emergencia) {
-		/*txtNombreForm.setText(plan.getNombre());
-		txtVehiculosForm.setText(String.valueOf(plan.getVehiculosNecesarios()));
-		txtVoluntariosForm.setText(String.valueOf(plan.getVoluntariosNecesarios()));
-		txtActuacionesNecesariasForm.setText(plan.getActuacionesNecesarias());
-		idPlan=plan.getId();*/
+            txtPlanForm.setText(emergencia.getPlan().getId());
+            txtTipoForm.setText(emergencia.getTipo());
+            txtNivelForm.setText(String.valueOf(emergencia.getNivel()));
 	}
 	
 	@Override
@@ -210,19 +183,18 @@ public class MenuModEmergencia extends JFrame implements ActionListener, Observe
 			this.dispose();
 			break;
 		case BTN_MOD_PLAN:
-			//try {
-				String nombre = txtNombreForm.getText();
-				int vehiculos = Integer.parseInt(txtVehiculosForm.getText());
-				int voluntarios = Integer.parseInt(txtVoluntariosForm.getText());
+			try {
+				String nombre = txtPlanForm.getText();
+				int vehiculos = Integer.parseInt(txtTipoForm.getText());
+				int voluntarios = Integer.parseInt(txtNivelForm.getText());
 				String actuaciones = txtActuacionesNecesariasForm.getText();
 				PlanProteccion plan = new PlanProteccion(idPlan, /*oyenteVista,*/ nombre, vehiculos, voluntarios, actuaciones);
-				System.out.println("PLAN MODIFICADO: id" + plan.getId() + "\n" + plan.toString() );
 				oyenteVista.notificacion(OyenteVista.Evento.MOD_PLAN,plan);
 				this.dispose();
-			/*}catch(Exception e1) {
+			}catch(Exception e1) {
 				VentanaAlertaGenerica vAlerta = new VentanaAlertaGenerica("--Datos no v�lidos--\n\nLos veh�culos y voluntarios\ndeben ser un n�mero");
 				vAlerta.setVisible(true);
-			}*/
+			}
 			break;
 		}
 		

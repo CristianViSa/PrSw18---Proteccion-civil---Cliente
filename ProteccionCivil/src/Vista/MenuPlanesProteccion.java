@@ -35,7 +35,6 @@ import javax.swing.SwingConstants;
 /**
  * 
  * @author MiguelYanes
- * @version P01 - 15/4/18
  */
 
 public class MenuPlanesProteccion extends JPanel implements ActionListener, Observer, ListSelectionListener {
@@ -215,7 +214,6 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
                 case ELIMINAR_PLAN:
                         if(selectedPlan==null)
                             selectedPlan = planes.get(0);                     
-                        System.out.println("Plan menu planes: "+selectedPlan.mostrar());
                         //oyenteVista.notificacion(OyenteVista.Evento.ELIMINAR_PLAN,selectedPlan);
 			//this.dispose();
                     break;
@@ -248,7 +246,6 @@ public class MenuPlanesProteccion extends JPanel implements ActionListener, Obse
                         }
                     }
                 }
-            System.out.println("no existe");
             return null;
         }
 
